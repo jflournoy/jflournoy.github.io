@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-250403-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-250403-13');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>John C. Flournoy: Power to detect mediation and other problems</title>
+  <meta name="description" content="fork this on gitlabI was reminded of this old R Club post recently by Rose, and decided to flesh it out a bit. The first part is about power to detect mediat...">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$']]}
+});
+</script>
+<script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="https://jflournoy.github.io/2016/09/02/mediation_power/">
+
+  <link rel="alternate" type="application/rss+xml" title="John C. Flournoy" href="https://jflournoy.github.io/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+	
+		
+		    
+		      <a href="/cv/">CV</a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a href="/blog/">Blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/">About</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/publications/">Publications</a>
+		    
+	    
+  	
+		
+  	
+	<!---<a href="/cv/johncflournoy-cv.pdf">CV</a>--->
+	<a href="https://osf.io/43niq/">OSF</a>
+	</nav>
+</header>
+
+    <article class="group">
+      <h1>Power to detect mediation and other problems</h1>
+<p class="subtitle">September 2, 2016</p>
+
+<p><em><a href="https://gitlab.com/jflournoy/misc-r-projects/tree/master/mediation">fork this on gitlab</a></em></p>
+
+<p>I was reminded of this old R Club post recently by <a href="https://twitter.com/roseberrymaier">Rose</a>, and decided to flesh it out a bit. The first part is about power to detect mediation in the standard 3 variable model people use. The second part examines how model misspecification gives rise to significant statistical tests of mediation when there is actually no mediation going on. Since publishing a paper (in press now, but written in ~2013) in which longitudinal data was subjected to a test of mediation, I’ve become increasingly skeptical of these kinds of analyses (including my own).</p>
+
+<!--more-->
+
+<p>If you haven’t read this article by John Bullock and colleagues, you really, really should. The <em>tl;dr</em> is that mediation is always a claim about a chain of causation, and since causation itself is very difficult to pin down, mediation is doubly so. It’s a great read, and a necessary starting place if you’re serious about pursuing research on mediating processes.</p>
+
+<blockquote>
+  <p>Bullock, J. G., Green, D. P., &amp; Ha, S. E. (2010). Yes, but what’s the mechanism? (don’t expect an easy answer). Journal of Personality and Social Psychology, 98(4), 550–558. <a href="http://doi.org/10.1037/a0018933">http://doi.org/10.1037/a0018933</a></p>
+</blockquote>
+
+<p>You’ll also probably want to check out docs for</p>
+
+<ul>
+  <li><a href="http://lavaan.ugent.be/tutorial/index.html">lavaan</a> and</li>
+  <li><a href="https://github.com/simsem/simsem/wiki/Vignette">simsem</a>.</li>
+</ul>
+
+<h2 id="power">Power</h2>
+
+<p>We’ll start as usual by loading packages – uncomment the <code class="highlighter-rouge">install.pacakges</code> lines if you don’t have them.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1">#install.packages('lavaan')
+</span><span class="n">library</span><span class="p">(</span><span class="n">lavaan</span><span class="p">)</span><span class="w">
+</span><span class="c1">#install.packages('semPlot')
+</span><span class="n">library</span><span class="p">(</span><span class="n">semPlot</span><span class="p">)</span><span class="w">
+</span><span class="c1">#install.packages('simsem')
+</span><span class="n">library</span><span class="p">(</span><span class="n">simsem</span><span class="p">)</span><span class="w">
+</span><span class="c1">#install.packages('dplyr')
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
+</span><span class="c1">#install.packages('ggplot2')
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">knitr</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>In the next step, we set the effect sizes for which we want to compute power, and generate a bunch of <code class="highlighter-rouge">lavaan</code> model syntax that will subsequently let us simulate data based on these effect sizes.</p>
+
+<p>The variable and path names corresond roughly to this diagram (I switched between using Z and M for the mediator variable).</p>
+
+<p><img src="/../figs/mediation_power/mediation_fig.png" alt="" /></p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">effectSizes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">.1</span><span class="p">,</span><span class="w">  </span><span class="m">.3</span><span class="p">,</span><span class="w"> </span><span class="m">.5</span><span class="p">)</span><span class="w">
+
+</span><span class="n">modelEffects</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">expand.grid</span><span class="p">(</span><span class="n">effectSizes</span><span class="p">,</span><span class="w"> </span><span class="n">effectSizes</span><span class="p">,</span><span class="w"> </span><span class="n">effectSizes</span><span class="p">)</span><span class="w">
+</span><span class="nf">names</span><span class="p">(</span><span class="n">modelEffects</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'a'</span><span class="p">,</span><span class="w"> </span><span class="s1">'b'</span><span class="p">,</span><span class="w"> </span><span class="s1">'c'</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># generate data (genModel) and then test the model (testModel)
+# if we want 80% power than in 80% of simulations we should find an effect
+</span><span class="w">
+</span><span class="n">models</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">modelEffects</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">rowwise</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">do</span><span class="p">({</span><span class="w">
+        </span><span class="n">genModel</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s1">'# direct effect
+                           Y ~ '</span><span class="p">,</span><span class="w"> </span><span class="n">.</span><span class="o">$</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="s1">'*X
+                           # mediator
+                           M ~ '</span><span class="p">,</span><span class="w"> </span><span class="n">.</span><span class="o">$</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="s1">'*X
+                           Y ~ '</span><span class="p">,</span><span class="w"> </span><span class="n">.</span><span class="o">$</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="s1">'*M
+                           X ~~ 1*X
+                           Y ~~ 1*Y
+                           M ~~ 1*M
+                           '</span><span class="p">)</span><span class="w">
+        </span><span class="n">testModel</span><span class="w"> </span><span class="o">&lt;-</span><span class="s1">'# direct effect
+                    Y ~ c*X
+                    # mediator
+                    M ~ a*X
+                    Y ~ b*M
+                    # indirect effect (a*b)
+                    ab := a*b
+                    # total effect
+                    total := c + (a*b)
+                    '</span><span class="w">
+        </span><span class="n">data.frame</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">c</span><span class="p">,</span><span class="w"> 
+                   </span><span class="n">gen</span><span class="o">=</span><span class="n">genModel</span><span class="p">,</span><span class="w"> </span><span class="n">test</span><span class="o">=</span><span class="n">testModel</span><span class="p">,</span><span class="w"> </span><span class="n">stringsAsFactors</span><span class="o">=</span><span class="nb">F</span><span class="p">)</span><span class="w">
+    </span><span class="p">})</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>The <code class="highlighter-rouge">testModel</code> above is the model we’ll estimate. Notice that it’s equivalent in structure to that which is generating the data. We’re not worrying about model misspecification at this point.</p>
+
+<p>We now have a data structure, in <code class="highlighter-rouge">models</code>, representing all combinations of the effect sizes, and we can run each of them at different sample sizes using the <code class="highlighter-rouge">simsem</code> package. Like most simulations, it’s probably a good idea to save the output so you don’t have to slog through the simulations again. You should set <code class="highlighter-rouge">REDOSIMS=T</code> below to run them the first time. Using 8 threads on a fairly modern machine takes about 10 minutes.</p>
+
+<p>The steps below are roughly:</p>
+
+<ul>
+  <li>Within each level combination of <code class="highlighter-rouge">a</code>, <code class="highlighter-rouge">b</code>, and <code class="highlighter-rouge">c</code> effect sizes,</li>
+  <li>for every sample size from 50 to 1500:</li>
+  <li>generate simulated data and estimate a model on those data.</li>
+</ul>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">REDOSIMS</span><span class="o">=</span><span class="nb">F</span><span class="w">
+</span><span class="k">if</span><span class="p">(</span><span class="n">REDOSIMS</span><span class="p">){</span><span class="w">
+    </span><span class="n">allModelPowerSim</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">models</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">rowwise</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">do</span><span class="p">({</span><span class="w">
+            </span><span class="n">manySims</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sim</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">test</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">n</span><span class="o">=</span><span class="m">50</span><span class="o">:</span><span class="m">1500</span><span class="p">,</span><span class="w"> </span><span class="n">generate</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">gen</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> 
+                            </span><span class="n">lavaanfun</span><span class="o">=</span><span class="s1">'sem'</span><span class="p">,</span><span class="w"> </span><span class="n">multicore</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w"> </span><span class="c1"># Enable multicore on your personal computer
+</span><span class="w">            </span><span class="n">data_frame</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">powersims</span><span class="o">=</span><span class="nf">list</span><span class="p">(</span><span class="n">manySims</span><span class="p">))</span><span class="w">
+        </span><span class="p">})</span><span class="w">
+        </span><span class="c1">#saving the above
+</span><span class="w">        </span><span class="n">saveRDS</span><span class="p">(</span><span class="n">allModelPowerSim</span><span class="p">,</span><span class="w"> </span><span class="s1">'power_simulations.RDS'</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="c1">#loading the above
+</span><span class="w">    </span><span class="n">allModelPowerSim</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">readRDS</span><span class="p">(</span><span class="s1">'power_simulations.RDS'</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Next, we’ll estimate the $\text{power}(\text{sample size})$ function to detect a significant a*b path for each of our levels of the effect sizes for the 3 paths.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">powerData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">allModelPowerSim</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">rowwise</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">do</span><span class="p">({</span><span class="w">
+        </span><span class="n">aSimPower</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">getPower</span><span class="p">(</span><span class="n">.</span><span class="o">$</span><span class="n">powersims</span><span class="p">,</span><span class="w"> 
+                                            </span><span class="n">nVal</span><span class="o">=</span><span class="n">seq</span><span class="p">(</span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">1500</span><span class="p">,</span><span class="w"> </span><span class="m">5</span><span class="p">),</span><span class="w">
+                                            </span><span class="n">powerParam</span><span class="o">=</span><span class="s1">'ab'</span><span class="p">))</span><span class="w">
+        </span><span class="n">data_frame</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="o">=</span><span class="n">.</span><span class="o">$</span><span class="n">c</span><span class="p">,</span><span class="w"> 
+                   </span><span class="n">alab</span><span class="o">=</span><span class="n">paste0</span><span class="p">(</span><span class="s1">'a='</span><span class="p">,</span><span class="n">.</span><span class="o">$</span><span class="n">a</span><span class="p">),</span><span class="w"> 
+                   </span><span class="n">blab</span><span class="o">=</span><span class="n">paste0</span><span class="p">(</span><span class="s1">'b='</span><span class="p">,</span><span class="n">.</span><span class="o">$</span><span class="n">b</span><span class="p">),</span><span class="w"> 
+                   </span><span class="n">clab</span><span class="o">=</span><span class="n">paste0</span><span class="p">(</span><span class="s1">'c='</span><span class="p">,</span><span class="n">.</span><span class="o">$</span><span class="n">c</span><span class="p">),</span><span class="w"> 
+                   </span><span class="n">N</span><span class="o">=</span><span class="n">aSimPower</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span><span class="w">
+                   </span><span class="n">ab</span><span class="o">=</span><span class="n">aSimPower</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span><span class="w">
+    </span><span class="p">})</span><span class="w">
+
+</span><span class="n">print</span><span class="p">(</span><span class="n">powerData</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Source: local data frame [7,857 x 8]
+## Groups: &lt;by row&gt;
+## 
+## # A tibble: 7,857 × 8
+##        a     b     c  alab  blab  clab     N         ab
+## *  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;
+## 1    0.1   0.1   0.1 a=0.1 b=0.1 c=0.1    50 0.03226034
+## 2    0.1   0.1   0.1 a=0.1 b=0.1 c=0.1    55 0.03284883
+## 3    0.1   0.1   0.1 a=0.1 b=0.1 c=0.1    60 0.03344768
+## 4    0.1   0.1   0.1 a=0.1 b=0.1 c=0.1    65 0.03405707
+## 5    0.1   0.1   0.1 a=0.1 b=0.1 c=0.1    70 0.03467715
+## 6    0.1   0.1   0.1 a=0.1 b=0.1 c=0.1    75 0.03530812
+## 7    0.1   0.1   0.1 a=0.1 b=0.1 c=0.1    80 0.03595014
+## 8    0.1   0.1   0.1 a=0.1 b=0.1 c=0.1    85 0.03660339
+## 9    0.1   0.1   0.1 a=0.1 b=0.1 c=0.1    90 0.03726805
+## 10   0.1   0.1   0.1 a=0.1 b=0.1 c=0.1    95 0.03794431
+## # ... with 7,847 more rows
+</code></pre>
+</div>
+
+<p>This produces a 7,857-row table (er, <code class="highlighter-rouge">tibble</code>). Sounds like something better to plot:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ggplot</span><span class="p">(</span><span class="n">powerData</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">ab</span><span class="p">))</span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_line</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">clab</span><span class="p">),</span><span class="n">alpha</span><span class="o">=</span><span class="m">.7</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="o">+</span><span class="w">
+    </span><span class="n">facet_grid</span><span class="p">(</span><span class="n">alab</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">blab</span><span class="p">,</span><span class="w"> </span><span class="n">as.table</span><span class="o">=</span><span class="nb">F</span><span class="p">)</span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="o">=</span><span class="m">.8</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="m">.5</span><span class="p">)</span><span class="o">+</span><span class="w">
+    </span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">'sample size'</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="s1">'power to detect a*b'</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="s1">'direct effect'</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/../figs/mediation_power/unnamed-chunk-5-1.png" alt="center" /></p>
+
+<p>And we can get the sample size for 80% power to detect an effect at any of our levels. As an example, let’s take the first row from <code class="highlighter-rouge">allModelPowerSims</code>:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">allModelPowerSim</span><span class="p">[</span><span class="m">1</span><span class="p">,]</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## # A tibble: 1 × 4
+##       a     b     c       powersims
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;          &lt;list&gt;
+## 1   0.1   0.1   0.1 &lt;S4: SimResult&gt;
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">aPowerTable</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">getPower</span><span class="p">(</span><span class="n">allModelPowerSim</span><span class="o">$</span><span class="n">powersims</span><span class="p">[[</span><span class="m">1</span><span class="p">]])</span><span class="w">
+</span><span class="c1">#?findPower
+</span><span class="n">findPower</span><span class="p">(</span><span class="n">aPowerTable</span><span class="p">,</span><span class="w"> 
+          </span><span class="n">iv</span><span class="o">=</span><span class="s2">"N"</span><span class="p">,</span><span class="w">
+          </span><span class="n">power</span><span class="o">=</span><span class="m">.8</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##     c     a     b  Y~~Y  M~~M    ab total 
+##   809   837   858   Inf   Inf  1332   687
+</code></pre>
+</div>
+
+<p>So, for a small effect for paths a and b, you need 1,332 participants for 80% power (and if you want to know why you should think about small effects, read <a href="https://hardsci.wordpress.com/2013/09/09/the-flawed-logic-of-chasing-large-effects-with-small-samples/">this</a>).</p>
+
+<p>When I first presented this in R club, I left the below as an exercise:</p>
+
+<p>Go ahead and make a data table of the power for 
+ finding the true mediated effect, ab, at each effect
+ size level using ‘do’, below.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">abPower80</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">allModelPowerSim</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+    </span><span class="n">group_by</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">do</span><span class="p">({</span><span class="w">
+        </span><span class="n">aPowerTable</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">getPower</span><span class="p">()</span><span class="w">
+        </span><span class="n">theNfor80percPower</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">findPower</span><span class="p">()</span><span class="w">
+        </span><span class="n">data.frame</span><span class="p">()</span><span class="w">
+    </span><span class="p">})</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>The c path doesn’t have much of an effect, so I left it out. Hopefully, you got something like this:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">a</th>
+      <th style="text-align: right">b</th>
+      <th style="text-align: right">c</th>
+      <th style="text-align: right">N_for_ab</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">0.1</td>
+      <td style="text-align: right">0.1</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">1297</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.1</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">842</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.1</td>
+      <td style="text-align: right">0.5</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">786</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">0.1</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">858</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">151</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">0.5</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">102</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.5</td>
+      <td style="text-align: right">0.1</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">862</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.5</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">110</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0.5</td>
+      <td style="text-align: right">0.5</td>
+      <td style="text-align: right">0.3</td>
+      <td style="text-align: right">51</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="misspecification">Misspecification</h2>
+
+<p>As I mentioned in the preamble, statistical mediation relies on a certain model of causal processes. What happens if the true process that gives rise to your observed data doesn’t conform to the simple mediation model? Using <code class="highlighter-rouge">lavaan</code> and <code class="highlighter-rouge">simsem</code>, it’s easy to generate data from one model and analyze it (repeatedly) with another. Mediation, being causal, necessitates the use of longitudinal data. According to Todd Little, two waves is enough assuming you have the model right<sup>[citation needed]</sup>.</p>
+
+<p>So our data generating model will use 3 variables measured twice: X, Y, and Z – the independent, dependent, and mediator respectively. These three variables will be highly stable (test-retest between the two waves of <em>r</em>=.7), and moderately correlated with each other at <em>r</em>=.3. Importantly, we’re going to generate data in which there is absolutely no causal effect between the three variables.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">generatingModel</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'
+y2 ~ .7*y1
+x2 ~ .7*x1
+z2 ~ .7*z1
+y1 ~~ .3*x1 + .3*z1
+x1 ~~ .3*z1
+y2 ~~ .3*x2 + .3*z2
+x2 ~~ .3*z2
+y2 ~ 0*x1 + 0*z1
+x2 ~ 0*y1 + 0*z1
+z2 ~ 0*y1 + 0*x1
+y1 ~~ 1*y1
+x1 ~~ 1*x1
+z1 ~~ 1*z1
+y2 ~~ 1*y2
+x2 ~~ 1*x2
+z2 ~~ 1*z2
+'</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>We can check out a few misspecifications. First, we’ll test the best case scenario short of testing the true model. In <code class="highlighter-rouge">mediationModelControlzT1</code> we do the usual longitudinal best-practice of regressing our wave 2 dependent variable on its wave 1 measurement (<code class="highlighter-rouge">y2 ~ y1 + c*x1 + b*z2</code>). In the regression of our wave 2 mediator on the independent variable, we can also include the mediator’s wave 1 measurement (<code class="highlighter-rouge">z2 ~ a*x1 + z1</code>). Conceptually, we’ve made sure to account for stability within each variable over time – most simple models of mediation don’t do this.</p>
+
+<p>In the two other misspecified models, we additionally leave out the measurement of the mediator at wave 1, and then also leave out the measurement of the dependent variable at wave 1.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">mediationModelControlzT1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'# direct effect
+y2 ~ y1 + c*x1 + b*z2
+z2 ~ a*x1 + z1
+# indirect effect (a*b)
+ab := a*b
+# total effect
+total := c + (a*b)
+'</span><span class="w">
+</span><span class="n">mediationModelNoControlzT1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'# direct effect
+y2 ~ y1 + c*x1 + b*z2
+z2 ~ a*x1  
+# indirect effect (a*b)
+ab := a*b
+# total effect
+total := c + (a*b)
+'</span><span class="w">
+</span><span class="n">mediationModelNoControlzOryT1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s1">'# direct effect
+y2 ~ c*x1 + b*z2
+z2 ~ a*x1  
+# indirect effect (a*b)
+ab := a*b
+# total effect
+total := c + (a*b)
+'</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Before running a buch of simulations, I’ll make sure the models are as expected by generating a single set, and fitting the above.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">someData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">simulateData</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">generatingModel</span><span class="p">,</span><span class="w"> </span><span class="n">sample.nobs</span><span class="o">=</span><span class="m">250</span><span class="p">,</span><span class="w"> </span><span class="n">empirical</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span><span class="n">fit.DGM</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sem</span><span class="p">(</span><span class="n">generatingModel</span><span class="p">,</span><span class="w"> </span><span class="n">someData</span><span class="p">,</span><span class="w"> </span><span class="n">fixed.x</span><span class="o">=</span><span class="nb">F</span><span class="p">)</span><span class="w">
+</span><span class="n">fit.CtrlT1.yz</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sem</span><span class="p">(</span><span class="n">mediationModelControlzT1</span><span class="p">,</span><span class="w"> </span><span class="n">someData</span><span class="p">)</span><span class="w">
+</span><span class="n">fit.noCtrlT1.z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sem</span><span class="p">(</span><span class="n">mediationModelNoControlzT1</span><span class="p">,</span><span class="w"> </span><span class="n">someData</span><span class="p">)</span><span class="w">
+</span><span class="n">fit.noCtrlT1.yz</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sem</span><span class="p">(</span><span class="n">mediationModelNoControlzOryT1</span><span class="p">,</span><span class="w"> </span><span class="n">someData</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>First, the data generating model:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">fit.DGM</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## ** WARNING ** lavaan (0.5-20) model has NOT been fitted
+## ** WARNING ** Estimates below are simply the starting values
+## 
+##   Number of observations                           250
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic                   NA
+##   Degrees of freedom                                NA
+##   P-value                                           NA
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+## Regressions:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##   y2 ~                                                
+##     y1                0.700                           
+##   x2 ~                                                
+##     x1                0.700                           
+##   z2 ~                                                
+##     z1                0.700                           
+##   y2 ~                                                
+##     x1                0.000                           
+##     z1                0.000                           
+##   x2 ~                                                
+##     y1                0.000                           
+##     z1                0.000                           
+##   z2 ~                                                
+##     y1                0.000                           
+##     x1                0.000                           
+## 
+## Covariances:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##   y1 ~~                                               
+##     x1                0.300                           
+##     z1                0.300                           
+##   x1 ~~                                               
+##     z1                0.300                           
+##   y2 ~~                                               
+##     x2                0.300                           
+##     z2                0.300                           
+##   x2 ~~                                               
+##     z2                0.300                           
+## 
+## Variances:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##     y1                1.000                           
+##     x1                1.000                           
+##     z1                1.000                           
+##     y2                1.000                           
+##     x2                1.000                           
+##     z2                1.000
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">semPaths</span><span class="p">(</span><span class="n">fit.DGM</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="o">=</span><span class="s1">'est'</span><span class="p">,</span><span class="w"> </span><span class="n">rotation</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">exoCov</span><span class="o">=</span><span class="nb">F</span><span class="p">,</span><span class="w"> </span><span class="n">exoVar</span><span class="o">=</span><span class="nb">F</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/../figs/mediation_power/unnamed-chunk-10-1.png" alt="center" /></p>
+
+<p>Next, our best shot, controlling for the mediator and dependent variable at wave 1.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">fit.CtrlT1.yz</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## lavaan (0.5-20) converged normally after  12 iterations
+## 
+##   Number of observations                           250
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic                7.234
+##   Degrees of freedom                                 2
+##   P-value (Chi-square)                           0.027
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+## Regressions:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##   y2 ~                                                
+##     y1                0.666    0.065   10.292    0.000
+##     x1         (c)   -0.034    0.065   -0.527    0.598
+##     z2         (b)    0.211    0.051    4.110    0.000
+##   z2 ~                                                
+##     x1         (a)    0.000    0.066    0.000    1.000
+##     z1                0.700    0.066   10.558    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##     y2                0.937    0.084   11.180    0.000
+##     z2                1.000    0.089   11.180    0.000
+## 
+## Defined Parameters:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##     ab                0.000    0.014    0.000    1.000
+##     total            -0.034    0.066   -0.515    0.607
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">semPaths</span><span class="p">(</span><span class="n">fit.CtrlT1.yz</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="o">=</span><span class="s1">'est'</span><span class="p">,</span><span class="w"> </span><span class="n">rotation</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">exoCov</span><span class="o">=</span><span class="nb">F</span><span class="p">,</span><span class="w"> </span><span class="n">exoVar</span><span class="o">=</span><span class="nb">F</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/../figs/mediation_power/unnamed-chunk-11-1.png" alt="center" /></p>
+
+<p>Now, progressively leaving things out….</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">fit.noCtrlT1.z</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## lavaan (0.5-20) converged normally after  12 iterations
+## 
+##   Number of observations                           250
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic                4.140
+##   Degrees of freedom                                 1
+##   P-value (Chi-square)                           0.042
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+## Regressions:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##   y2 ~                                                
+##     y1                0.666    0.064   10.378    0.000
+##     x1         (c)   -0.034    0.065   -0.524    0.600
+##     z2         (b)    0.211    0.051    4.144    0.000
+##   z2 ~                                                
+##     x1         (a)    0.210    0.076    2.761    0.006
+## 
+## Variances:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##     y2                0.937    0.084   11.180    0.000
+##     z2                1.446    0.129   11.180    0.000
+## 
+## Defined Parameters:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##     ab                0.044    0.019    2.298    0.022
+##     total             0.010    0.066    0.155    0.877
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">semPaths</span><span class="p">(</span><span class="n">fit.noCtrlT1.z</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="o">=</span><span class="s1">'est'</span><span class="p">,</span><span class="w"> </span><span class="n">rotation</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">exoCov</span><span class="o">=</span><span class="nb">F</span><span class="p">,</span><span class="w"> </span><span class="n">exoVar</span><span class="o">=</span><span class="nb">F</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/../figs/mediation_power/unnamed-chunk-12-1.png" alt="center" /></p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">fit.noCtrlT1.yz</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## lavaan (0.5-20) converged normally after  13 iterations
+## 
+##   Number of observations                           250
+## 
+##   Estimator                                         ML
+##   Minimum Function Test Statistic                0.000
+##   Degrees of freedom                                 0
+##   Minimum Function Value               0.0000000000000
+## 
+## Parameter Estimates:
+## 
+##   Information                                 Expected
+##   Standard Errors                             Standard
+## 
+## Regressions:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##   y2 ~                                                
+##     x1         (c)    0.151    0.074    2.043    0.041
+##     z2         (b)    0.279    0.061    4.588    0.000
+##   z2 ~                                                
+##     x1         (a)    0.210    0.076    2.761    0.006
+## 
+## Variances:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##     y2                1.334    0.119   11.180    0.000
+##     z2                1.446    0.129   11.180    0.000
+## 
+## Defined Parameters:
+##                    Estimate  Std.Err  Z-value  P(&gt;|z|)
+##     ab                0.059    0.025    2.366    0.018
+##     total             0.210    0.076    2.761    0.006
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">semPaths</span><span class="p">(</span><span class="n">fit.noCtrlT1.yz</span><span class="p">,</span><span class="w"> </span><span class="n">what</span><span class="o">=</span><span class="s1">'est'</span><span class="p">,</span><span class="w"> </span><span class="n">rotation</span><span class="o">=</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">exoCov</span><span class="o">=</span><span class="nb">F</span><span class="p">,</span><span class="w"> </span><span class="n">exoVar</span><span class="o">=</span><span class="nb">F</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/../figs/mediation_power/unnamed-chunk-13-1.png" alt="center" /></p>
+
+<p>You can see that we’re getting a hint that the <code class="highlighter-rouge">ab</code> path might be getting bigger as we further misspecify the model. To find out for sure, let’s run the simulations. Our outcome of interest will be the measure of power to detect a significant <code class="highlighter-rouge">ab</code> path – the mediated effect. Usually power is a good thing, but if you have power to detect something that’s not there, it’s an indication that your model is reliably giving you the wrong answer.</p>
+
+<p>Again, if you want to redo these simulations, you can set <code class="highlighter-rouge">REDOSIMS=T</code>.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">REDOSIMS</span><span class="o">=</span><span class="nb">F</span><span class="w">
+</span><span class="k">if</span><span class="p">(</span><span class="n">REDOSIMS</span><span class="p">){</span><span class="w">
+    </span><span class="n">sim.CtrlT1.yz</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">simsem</span><span class="o">::</span><span class="n">sim</span><span class="p">(</span><span class="n">nRep</span><span class="o">=</span><span class="m">1000</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="n">model</span><span class="o">=</span><span class="n">mediationModelControlzT1</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="n">n</span><span class="o">=</span><span class="m">250</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="n">generate</span><span class="o">=</span><span class="n">generatingModel</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="n">lavaanfun</span><span class="o">=</span><span class="s2">"sem"</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="n">std.lv</span><span class="o">=</span><span class="nb">F</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="n">multicore</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+    </span><span class="n">sim.noCtrlT1.z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">simsem</span><span class="o">::</span><span class="n">sim</span><span class="p">(</span><span class="n">nRep</span><span class="o">=</span><span class="m">1000</span><span class="p">,</span><span class="w"> 
+                                  </span><span class="n">model</span><span class="o">=</span><span class="n">mediationModelNoControlzT1</span><span class="p">,</span><span class="w"> 
+                                  </span><span class="n">n</span><span class="o">=</span><span class="m">250</span><span class="p">,</span><span class="w"> 
+                                  </span><span class="n">generate</span><span class="o">=</span><span class="n">generatingModel</span><span class="p">,</span><span class="w"> 
+                                  </span><span class="n">lavaanfun</span><span class="o">=</span><span class="s2">"sem"</span><span class="p">,</span><span class="w"> 
+                                  </span><span class="n">std.lv</span><span class="o">=</span><span class="nb">F</span><span class="p">,</span><span class="w"> 
+                                  </span><span class="n">multicore</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+    </span><span class="n">sim.noCtrlT1.yz</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">simsem</span><span class="o">::</span><span class="n">sim</span><span class="p">(</span><span class="n">nRep</span><span class="o">=</span><span class="m">1000</span><span class="p">,</span><span class="w"> 
+                                   </span><span class="n">model</span><span class="o">=</span><span class="n">mediationModelNoControlzOryT1</span><span class="p">,</span><span class="w"> 
+                                   </span><span class="n">n</span><span class="o">=</span><span class="m">250</span><span class="p">,</span><span class="w"> 
+                                   </span><span class="n">generate</span><span class="o">=</span><span class="n">generatingModel</span><span class="p">,</span><span class="w"> 
+                                   </span><span class="n">lavaanfun</span><span class="o">=</span><span class="s2">"sem"</span><span class="p">,</span><span class="w"> 
+                                   </span><span class="n">std.lv</span><span class="o">=</span><span class="nb">F</span><span class="p">,</span><span class="w"> 
+                                   </span><span class="n">multicore</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+    </span><span class="n">saveRDS</span><span class="p">(</span><span class="n">object</span><span class="o">=</span><span class="n">sim.CtrlT1.yz</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="o">=</span><span class="s1">'sim_CtrlT1_yz.RDS'</span><span class="p">)</span><span class="w">
+    </span><span class="n">saveRDS</span><span class="p">(</span><span class="n">object</span><span class="o">=</span><span class="n">sim.noCtrlT1.z</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="o">=</span><span class="s1">'sim_noCtrlT1_z.RDS'</span><span class="p">)</span><span class="w">
+    </span><span class="n">saveRDS</span><span class="p">(</span><span class="n">object</span><span class="o">=</span><span class="n">sim.noCtrlT1.yz</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="o">=</span><span class="s1">'sim_noCtrlT1_yz.RDS'</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">sim.CtrlT1.yz</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">readRDS</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s1">'sim_CtrlT1_yz.RDS'</span><span class="p">)</span><span class="w">
+    </span><span class="n">sim.noCtrlT1.z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">readRDS</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s1">'sim_noCtrlT1_z.RDS'</span><span class="p">)</span><span class="w">
+    </span><span class="n">sim.noCtrlT1.yz</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">readRDS</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s1">'sim_noCtrlT1_yz.RDS'</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">kable</span><span class="p">(</span><span class="n">summaryParam</span><span class="p">(</span><span class="n">sim.CtrlT1.yz</span><span class="p">),</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: right">Estimate Average</th>
+      <th style="text-align: right">Estimate SD</th>
+      <th style="text-align: right">Average SE</th>
+      <th style="text-align: right">Power (Not equal 0)</th>
+      <th style="text-align: right">Std Est</th>
+      <th style="text-align: right">Std Est SD</th>
+      <th style="text-align: right">Std Ave SE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">y2~y1</td>
+      <td style="text-align: right">0.67</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.55</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">c</td>
+      <td style="text-align: right">-0.04</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">-0.03</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.05</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">b</td>
+      <td style="text-align: right">0.21</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.98</td>
+      <td style="text-align: right">0.21</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.05</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">a</td>
+      <td style="text-align: right">0.00</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.00</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.05</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">z2~z1</td>
+      <td style="text-align: right">0.70</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.57</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">y2~~y2</td>
+      <td style="text-align: right">0.92</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.62</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">z2~~z2</td>
+      <td style="text-align: right">0.99</td>
+      <td style="text-align: right">0.09</td>
+      <td style="text-align: right">0.09</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.67</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ab</td>
+      <td style="text-align: right">0.00</td>
+      <td style="text-align: right">0.01</td>
+      <td style="text-align: right">0.01</td>
+      <td style="text-align: right">0.03</td>
+      <td style="text-align: right">0.00</td>
+      <td style="text-align: right">0.01</td>
+      <td style="text-align: right">0.01</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: right">-0.04</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.09</td>
+      <td style="text-align: right">-0.03</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.05</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">kable</span><span class="p">(</span><span class="n">summaryParam</span><span class="p">(</span><span class="n">sim.noCtrlT1.z</span><span class="p">),</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: right">Estimate Average</th>
+      <th style="text-align: right">Estimate SD</th>
+      <th style="text-align: right">Average SE</th>
+      <th style="text-align: right">Power (Not equal 0)</th>
+      <th style="text-align: right">Std Est</th>
+      <th style="text-align: right">Std Est SD</th>
+      <th style="text-align: right">Std Ave SE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">y2~y1</td>
+      <td style="text-align: right">0.67</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.56</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">c</td>
+      <td style="text-align: right">-0.04</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">-0.03</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.05</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">b</td>
+      <td style="text-align: right">0.21</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.99</td>
+      <td style="text-align: right">0.21</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.05</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">a</td>
+      <td style="text-align: right">0.21</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">0.78</td>
+      <td style="text-align: right">0.17</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.06</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">y2~~y2</td>
+      <td style="text-align: right">0.92</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.64</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">z2~~z2</td>
+      <td style="text-align: right">1.44</td>
+      <td style="text-align: right">0.13</td>
+      <td style="text-align: right">0.13</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.97</td>
+      <td style="text-align: right">0.02</td>
+      <td style="text-align: right">0.02</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ab</td>
+      <td style="text-align: right">0.04</td>
+      <td style="text-align: right">0.02</td>
+      <td style="text-align: right">0.02</td>
+      <td style="text-align: right">0.64</td>
+      <td style="text-align: right">0.04</td>
+      <td style="text-align: right">0.02</td>
+      <td style="text-align: right">0.02</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: right">0.01</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.01</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.05</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">kable</span><span class="p">(</span><span class="n">summaryParam</span><span class="p">(</span><span class="n">sim.noCtrlT1.yz</span><span class="p">),</span><span class="w"> </span><span class="n">digits</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: right">Estimate Average</th>
+      <th style="text-align: right">Estimate SD</th>
+      <th style="text-align: right">Average SE</th>
+      <th style="text-align: right">Power (Not equal 0)</th>
+      <th style="text-align: right">Std Est</th>
+      <th style="text-align: right">Std Est SD</th>
+      <th style="text-align: right">Std Ave SE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">c</td>
+      <td style="text-align: right">0.15</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">0.07</td>
+      <td style="text-align: right">0.52</td>
+      <td style="text-align: right">0.12</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.06</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">b</td>
+      <td style="text-align: right">0.28</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.28</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.06</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">a</td>
+      <td style="text-align: right">0.21</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">0.78</td>
+      <td style="text-align: right">0.17</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.06</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">y2~~y2</td>
+      <td style="text-align: right">1.32</td>
+      <td style="text-align: right">0.12</td>
+      <td style="text-align: right">0.12</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.89</td>
+      <td style="text-align: right">0.04</td>
+      <td style="text-align: right">0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">z2~~z2</td>
+      <td style="text-align: right">1.44</td>
+      <td style="text-align: right">0.13</td>
+      <td style="text-align: right">0.13</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.97</td>
+      <td style="text-align: right">0.02</td>
+      <td style="text-align: right">0.02</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ab</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.03</td>
+      <td style="text-align: right">0.03</td>
+      <td style="text-align: right">0.69</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">0.02</td>
+      <td style="text-align: right">0.02</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">total</td>
+      <td style="text-align: right">0.21</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">0.78</td>
+      <td style="text-align: right">0.17</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">0.06</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Looking across those <code class="highlighter-rouge">ab</code> lines, you see that we’re not too bad off if we control for our wave 1 measurements. However, if we don’t do that, we end up with ~64-69% power to detect a significant mediation. To me, this warrants extreme caution.</p>
+
+
+
+ 
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+var disqus_config = function () {
+    this.page.url = "https://jflournoy.github.io/2016/09/02/mediation_power/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = "/2016/09/02/mediation_power"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jflournoy-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    </article>
+    <span class="print-footer">Power to detect mediation and other problems - September 2, 2016 - John C. Flournoy</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:flournoy@uoregon.edu"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//www.twitter.com/flourneuro"><span class="icon-twitter"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/jflournoy"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;&nbsp;JOHN C. FLOURNOY</span></br> <br>
+<span>This site created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a> in <a href="//jekyllrb.com">Jekyll</a>.</span> 
+</div>  
+</footer>
+
+  </body>
+</html>

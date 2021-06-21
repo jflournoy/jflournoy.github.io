@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-250403-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-250403-13');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>John C. Flournoy: Blog</title>
+  <meta name="description" content="Academic website for John Flournoy">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$']]}
+});
+</script>
+<script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="https://jflournoy.github.io/blog/">
+
+  <link rel="alternate" type="application/rss+xml" title="John C. Flournoy" href="https://jflournoy.github.io/feed.xml" />
+</head>
+
+  <body class="full-width">
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+	
+		
+		    
+		      <a href="/cv/">CV</a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a class="active" href="/blog/" class="active">Blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/">About</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/publications/">Publications</a>
+		    
+	    
+  	
+		
+  	
+	<!---<a href="/cv/johncflournoy-cv.pdf">CV</a>--->
+	<a href="https://osf.io/43niq/">OSF</a>
+	</nav>
+</header>
+
+    <article>
+      <h1 class="content-listing-header sans">Usually R snippets, with explanation</h1>
+<p>Much of the code for these posts can also be found in <a href="http://github.com/jflournoy/misc-r-projects/">this github repo</a>.</p>
+<ul class="content-listing ">
+          
+        <li class="listing">
+          <hr class="slender" />
+          <a href="/2018/09/26/riclpm-openmx-demo/"><h3 class="contrast">The RI-CLPM in OpenMx</h3></a>
+          <br /><span class="smaller">September 26, 2018</span>  <br />
+          <div><p>Lavaan is great. I love lavaan. But a lot of folks prefer <a href="https://openmx.ssri.psu.edu/">OpenMx</a>, and given its long and widespread usage, especially in fields outside psychology, it might be a bit better road tested. So this is a brief addendum to my previous post, showing you how to implement a RI-CLPM in OpenMx.</p>
+
+</div> 
+        </li>
+          
+        <li class="listing">
+          <hr class="slender" />
+          <a href="/2017/10/20/riclpm-lavaan-demo/"><h3 class="contrast">A better cross-lagged panel model, from Hamaker et al. (2015)</h3></a>
+          <br /><span class="smaller">October 20, 2017</span>  <br />
+          <div><p><em>Update, 2019-11-11:</em> There are a couple of new bits of code online that could be helpful if you are interested in these models.</p>
+
+<ol>
+  <li>I wrote an R package called <a href="https://github.com/jflournoy/riclpmr"><code class="highlighter-rouge">riclpmr</code></a> that will <code class="highlighter-rouge">lavaan</code> generate syntax for multivariate RI-CLPMs (and also provides the proper call to <code class="highlighter-rouge">lavaan</code> for estimating it).</li>
+  <li>Christoph Nhuyen (<a href="https://twitter.com/cgnguyen_online">@cgnguyen_online</a>) wrote a <a href="https://github.com/cgnguyen/cross_lag_plot">function to generate graphs</a> (path diagrams) for displaying the results from these models.</li>
+</ol>
+
+<hr />
+
+<p>This walk-through explains, briefly, why and how to run a RI-CLPM in R.</p>
+
+<p><em>All code and data are available <a href="https://github.com/jflournoy/misc-r-projects/tree/master/lavaan_ri-clpm">in the github repository</a></em></p>
+
+<h1 id="critique-of-cross-lagged-pannel-models">Critique of cross-lagged pannel models</h1>
+
+<p>This post summarizes critiques of the traditional cross-lagged panel model (CLPM), and an improved model by Hamaker, Kuiper, and Grasman <a href="#hamaker_critique_2015">(2015)</a>.</p>
+
+<p>The primary point Hamaker and colleagues make regarding the CLPM is that it assumes that there are “no trait-like individual differences that endure.” That is, looking at the structure of a CLPM it is clear that individual-level stability must be accounted for entirely by the auto-regressive path between waves. As they put it, it imposes an assumption that there is no between-subject variance of time-invariant, trait-like stability, but only temporal stability, wave to wave, of subjects around the mean score for any particular wave.</p>
+
+</div> 
+        </li>
+          
+        <li class="listing">
+          <hr class="slender" />
+          <a href="/r/tutorials/2016/09/20/mlm_intro/"><h3 class="contrast">Brief MLM tutorial</h3></a>
+          <br /><span class="smaller">September 20, 2016</span>  <br />
+          <div><script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { 
+    TagSide: "left",
+    equationNumbers: {
+      autoNumber: "AMS"
+    } 
+  },
+  "HTML-CSS": {
+    linebreaks: {
+      width: "80% containter"
+    }
+  }
+});
+</script>
+
+<p><strong>Updated: <a href="/r/tutorials/2016/09/20/mlm_intro/#plotting-model-estimates">plotting estimates</a> from real data using <code class="highlighter-rouge">predict</code>.</strong></p>
+
+<p>This is a brief description of how to think about multi-level models, especially the link between the formal expression of these models and how that looks in <code class="highlighter-rouge">lme4</code>. The data set consists of 4 observations per day over 2 days of cortisol in a developmental sample. The relevant theoretical questions are: what individual-level predictors are related to cortisol intercepts and slopes.</p>
+
+</div> 
+        </li>
+          
+        <li class="listing">
+          <hr class="slender" />
+          <a href="/2016/09/12/plot_using_predict/"><h3 class="contrast">Plotting using `predict`</h3></a>
+          <br /><span class="smaller">September 12, 2016</span>  <br />
+          <div><p><a href="https://gitlab.com/jflournoy/misc-r-projects/tree/master/plot_using_predict">fork this on gitlab</a></p>
+
+<p>One of my favorite functions in R is <code class="highlighter-rouge">predict</code>, and so in response to this recent question on SlackRs#plots (“Anyone know how to plot an interaction at a moderators mean, +1SD, and -1SD?”) I thought I’d write up a quick demo of it’s usefulness.</p>
+
+</div> 
+        </li>
+          
+        <li class="listing">
+          <hr class="slender" />
+          <a href="/2016/09/02/mediation_power/"><h3 class="contrast">Power to detect mediation and other problems</h3></a>
+          <br /><span class="smaller">September 2, 2016</span>  <br />
+          <div><p><em><a href="https://gitlab.com/jflournoy/misc-r-projects/tree/master/mediation">fork this on gitlab</a></em></p>
+
+<p>I was reminded of this old R Club post recently by <a href="https://twitter.com/roseberrymaier">Rose</a>, and decided to flesh it out a bit. The first part is about power to detect mediation in the standard 3 variable model people use. The second part examines how model misspecification gives rise to significant statistical tests of mediation when there is actually no mediation going on. Since publishing a paper (in press now, but written in ~2013) in which longitudinal data was subjected to a test of mediation, I’ve become increasingly skeptical of these kinds of analyses (including my own).</p>
+
+</div> 
+        </li>
+          
+        <li class="listing">
+          <hr class="slender" />
+          <a href="/r/tutorials/2014/11/14/bootstrapexample/"><h3 class="contrast">Intro to Bootstrapping</h3></a>
+          <br /><span class="smaller">November 14, 2014</span>  <br />
+          <div><p><em>“It just works”</em></p>
+
+<p>All of the information you have about the population is in your sample – you can learn something
+about the ‘empirical sampling distribution’ of your parameters by estimating them in new samples drawn, with replacement, from
+your sample. Replacement is crucial – your bootstrap samples will be the same size
+as your observed sample, but will be comprised of observations from your sample at a rate proportional to the frequency in the sample.
+<em>Note:</em> There are several different methods for producing replicates.</p>
+
+</div> 
+        </li>
+          
+        <li class="listing">
+          <hr class="slender" />
+          <a href="/r%20tutorial/2014/11/12/simulationexample/"><h3 class="contrast">Simulation Example</h3></a>
+          <br /><span class="smaller">November 12, 2014</span>  <br />
+          <div><p>The motivation for this example has to do with different ways one can calculate individual differences with regard to the effect of some manipulation that pushes around cortisol levels.</p>
+
+<p>As a general resource for simulation in R, I highly recommend <a href="http://had.co.nz/stat480/lectures/15-simulation.pdf">Hadley Wickham’s simulation presntation</a>. Also, the <a href="http://cran.r-project.org/web/packages/psych/psych.pdf"><code class="highlighter-rouge">psych</code> package</a> has some great tools for generating data (with great support in <a href="http://www.personality-project.org/r/psych_for_sem.pdf">this helpful guide</a> by William Revelle).</p>
+
+</div> 
+        </li>
+          
+        <li class="listing">
+          <hr class="slender" />
+          <a href="/presentations/2014/09/11/srcd_methods_fMRI_presentation/"><h3 class="contrast">Using fMRI to study child and adolescent development</h3></a>
+          <br /><span class="smaller">September 11, 2014</span>  <br />
+          <div><p>Every other year, The Society for Research in Child Development hosts a series of smaller, special topic conferences. This year I was lucky to go to the <a href="http://www.srcd.org/meetings/special-topic-meetings/2-developmental-methodology">Developmental Methodology</a> conference. I was blown away by what I saw there, and left very inspired.</p>
+
+<p>My contribution was to present the DSN lab’s guide to best practices both for our fellow imagers, as well as for those reading the literature without much background. Here it is:</p>
+
+<blockquote>
+  <p>Flournoy, J. C., Moore III, W. E., &amp; Pfeifer, J. H. (2014, September 11). <a href="http://pages.uoregon.edu/flournoy/thoughts_from_the_trenches/#/">Using fMRI to study child and adolescent development: Thoughts from the trenches</a>. Presented at Developmental Methodology, San Diego, CA.</p>
+</blockquote>
+</div> 
+        </li>
+    
+  </ul>
+
+
+    </article>
+    <span class="print-footer">Blog - John C. Flournoy</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:flournoy@uoregon.edu"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//www.twitter.com/flourneuro"><span class="icon-twitter"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/jflournoy"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;&nbsp;JOHN C. FLOURNOY</span></br> <br>
+<span>This site created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a> in <a href="//jekyllrb.com">Jekyll</a>.</span> 
+</div>  
+</footer>
+
+  </body>
+</html>

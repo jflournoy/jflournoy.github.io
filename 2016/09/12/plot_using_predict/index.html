@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-250403-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-250403-13');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>John C. Flournoy: Plotting using `predict`</title>
+  <meta name="description" content="fork this on gitlabOne of my favorite functions in R is predict, and so in response to this recent question on SlackRs#plots (“Anyone know how to plot an int...">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$']]}
+});
+</script>
+<script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="https://jflournoy.github.io/2016/09/12/plot_using_predict/">
+
+  <link rel="alternate" type="application/rss+xml" title="John C. Flournoy" href="https://jflournoy.github.io/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+	
+		
+		    
+		      <a href="/cv/">CV</a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a href="/blog/">Blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/">About</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/publications/">Publications</a>
+		    
+	    
+  	
+		
+  	
+	<!---<a href="/cv/johncflournoy-cv.pdf">CV</a>--->
+	<a href="https://osf.io/43niq/">OSF</a>
+	</nav>
+</header>
+
+    <article class="group">
+      <h1>Plotting using `predict`</h1>
+<p class="subtitle">September 12, 2016</p>
+
+<p><a href="https://gitlab.com/jflournoy/misc-r-projects/tree/master/plot_using_predict">fork this on gitlab</a></p>
+
+<p>One of my favorite functions in R is <code class="highlighter-rouge">predict</code>, and so in response to this recent question on SlackRs#plots (“Anyone know how to plot an interaction at a moderators mean, +1SD, and -1SD?”) I thought I’d write up a quick demo of it’s usefulness.</p>
+
+<!--more-->
+
+<p>Let’s assume a simple interaction effect between two continuous variables:</p>
+
+<script type="math/tex; mode=display">y = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2} + \beta_{3}x_{1}x_{2}+\epsilon</script>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">set.seed</span><span class="p">(</span><span class="m">92299</span><span class="p">)</span><span class="w">
+</span><span class="n">N</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">500</span><span class="w">
+</span><span class="n">b</span><span class="m">0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span><span class="n">b</span><span class="m">1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">.3</span><span class="w">
+</span><span class="n">b</span><span class="m">2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">.5</span><span class="w">
+</span><span class="n">b</span><span class="m">3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">-.2</span><span class="w">
+
+</span><span class="n">aDF</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">within</span><span class="p">(</span><span class="n">data.frame</span><span class="p">(</span><span class="n">x</span><span class="m">1</span><span class="o">=</span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)),</span><span class="w"> 
+     </span><span class="p">{</span><span class="w">
+	     </span><span class="n">x</span><span class="m">2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+	     </span><span class="n">x</span><span class="m">1</span><span class="n">x</span><span class="m">2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="m">1</span><span class="o">*</span><span class="n">x</span><span class="m">2</span><span class="w">
+	     </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">b</span><span class="m">0</span><span class="o">+</span><span class="n">b</span><span class="m">1</span><span class="o">*</span><span class="n">x</span><span class="m">1</span><span class="o">+</span><span class="n">b</span><span class="m">2</span><span class="o">*</span><span class="n">x</span><span class="m">2</span><span class="o">+</span><span class="n">b</span><span class="m">3</span><span class="o">*</span><span class="n">x</span><span class="m">1</span><span class="n">x</span><span class="m">2</span><span class="o">+</span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">)</span><span class="w">
+     </span><span class="p">})</span><span class="w">
+
+</span><span class="n">head</span><span class="p">(</span><span class="n">aDF</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##           x1           y        x1x2          x2
+## 1 -0.4732279  0.79910376 -0.55652246  1.17601350
+## 2  0.2699430  0.18102388 -0.31458272 -1.16536700
+## 3 -1.1218179  1.15182465 -1.24691895  1.11151635
+## 4  0.1047639  1.58974408  0.06749747  0.64428201
+## 5 -0.7177402 -1.80769438 -0.14404438  0.20069152
+## 6  1.5776371  0.07835544 -0.10464178 -0.06632817
+</code></pre>
+</div>
+
+<p>Now that we’ve generated data, we can fit a model:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">aMod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">y</span><span class="o">~</span><span class="m">1</span><span class="o">+</span><span class="n">x</span><span class="m">1</span><span class="o">*</span><span class="n">x</span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">aDF</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">aMod</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## 
+## Call:
+## lm(formula = y ~ 1 + x1 * x2, data = aDF)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.2827 -0.6737  0.0105  0.6840  3.1072 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.05362    0.04495  -1.193    0.233    
+## x1           0.30942    0.04223   7.327 9.58e-13 ***
+## x2           0.51358    0.04289  11.975  &lt; 2e-16 ***
+## x1:x2       -0.16785    0.03765  -4.458 1.02e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.001 on 496 degrees of freedom
+## Multiple R-squared:  0.3147,	Adjusted R-squared:  0.3106 
+## F-statistic: 75.93 on 3 and 496 DF,  p-value: &lt; 2.2e-16
+</code></pre>
+</div>
+
+<p>How do we plot the relationship between <em>y</em> and <em>x1</em> at different levels of <em>x2</em>? We can use <code class="highlighter-rouge">predict</code> to get the expected <em>y</em> for every <em>x1</em> at the mean and +/-1 SD of <em>x2</em> by creating a new data frame with those values.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">minx1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">min</span><span class="p">(</span><span class="n">aDF</span><span class="o">$</span><span class="n">x</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">maxx1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">aDF</span><span class="o">$</span><span class="n">x</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">steps</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="c1">#we want to get y values for 100 values in the real range of x1 
+</span><span class="n">x</span><span class="m">1</span><span class="err">_</span><span class="n">values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="n">minx1</span><span class="p">,</span><span class="w"> 
+		 </span><span class="n">maxx1</span><span class="p">,</span><span class="w"> 
+		 </span><span class="n">length.out</span><span class="o">=</span><span class="n">steps</span><span class="p">)</span><span class="w">
+</span><span class="c1">#We'll use `rep` to repeat these values for every value of x2 we want below...
+</span><span class="n">x</span><span class="m">2</span><span class="n">.sd</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sd</span><span class="p">(</span><span class="n">aDF</span><span class="o">$</span><span class="n">x</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">x</span><span class="m">2</span><span class="n">.mean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">aDF</span><span class="o">$</span><span class="n">x</span><span class="m">2</span><span class="p">)</span><span class="w">
+
+</span><span class="n">newData</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">x</span><span class="m">1</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="n">x</span><span class="m">1</span><span class="err">_</span><span class="n">values</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="c1">#for each val of x2
+</span><span class="w">		      </span><span class="n">x</span><span class="m">2</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">x</span><span class="m">2</span><span class="n">.mean</span><span class="o">-</span><span class="n">x</span><span class="m">2</span><span class="n">.sd</span><span class="p">,</span><span class="w">
+			       </span><span class="n">x</span><span class="m">2</span><span class="n">.mean</span><span class="p">,</span><span class="w">
+			       </span><span class="n">x</span><span class="m">2</span><span class="n">.mean</span><span class="o">+</span><span class="n">x</span><span class="m">2</span><span class="n">.sd</span><span class="p">),</span><span class="w"> 
+			     </span><span class="n">each</span><span class="o">=</span><span class="n">steps</span><span class="p">),</span><span class="w">
+		      </span><span class="n">x</span><span class="m">2</span><span class="err">_</span><span class="n">level</span><span class="o">=</span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s1">'-1 SD'</span><span class="p">,</span><span class="w">
+				     </span><span class="s1">'Mean'</span><span class="p">,</span><span class="w">
+				     </span><span class="s1">'+1 SD'</span><span class="p">),</span><span class="w">
+				   </span><span class="n">each</span><span class="o">=</span><span class="n">steps</span><span class="p">))</span><span class="w"> </span><span class="c1">#each val of x2 for all x1
+</span><span class="n">head</span><span class="p">(</span><span class="n">newData</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##          x1        x2 x2_level
+## 1 -2.992855 -1.065048    -1 SD
+## 2 -2.931769 -1.065048    -1 SD
+## 3 -2.870684 -1.065048    -1 SD
+## 4 -2.809598 -1.065048    -1 SD
+## 5 -2.748513 -1.065048    -1 SD
+## 6 -2.687427 -1.065048    -1 SD
+</code></pre>
+</div>
+
+<p>Now use <code class="highlighter-rouge">predict</code> to get y values.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">newData</span><span class="o">$</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">aMod</span><span class="p">,</span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newData</span><span class="p">)</span><span class="w"> 
+</span><span class="n">head</span><span class="p">(</span><span class="n">newData</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##          x1        x2 x2_level         y
+## 1 -2.992855 -1.065048    -1 SD -2.061668
+## 2 -2.931769 -1.065048    -1 SD -2.031847
+## 3 -2.870684 -1.065048    -1 SD -2.002026
+## 4 -2.809598 -1.065048    -1 SD -1.972205
+## 5 -2.748513 -1.065048    -1 SD -1.942384
+## 6 -2.687427 -1.065048    -1 SD -1.912564
+</code></pre>
+</div>
+
+<p>Let’s plot it using ggplot2.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">newData</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="o">=</span><span class="n">x</span><span class="m">2</span><span class="err">_</span><span class="n">level</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="n">x</span><span class="m">2</span><span class="err">_</span><span class="n">level</span><span class="p">))</span><span class="o">+</span><span class="w">
+	</span><span class="n">geom_line</span><span class="p">()</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/../figs/plot_using_predict/unnamed-chunk-5-1.png" alt="center" /></p>
+
+
+
+ 
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+var disqus_config = function () {
+    this.page.url = "https://jflournoy.github.io/2016/09/12/plot_using_predict/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = "/2016/09/12/plot_using_predict"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jflournoy-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    </article>
+    <span class="print-footer">Plotting using `predict` - September 12, 2016 - John C. Flournoy</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:flournoy@uoregon.edu"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//www.twitter.com/flourneuro"><span class="icon-twitter"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/jflournoy"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;&nbsp;JOHN C. FLOURNOY</span></br> <br>
+<span>This site created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a> in <a href="//jekyllrb.com">Jekyll</a>.</span> 
+</div>  
+</footer>
+
+  </body>
+</html>

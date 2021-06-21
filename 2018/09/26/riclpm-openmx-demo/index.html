@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-250403-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-250403-13');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>John C. Flournoy: The RI-CLPM in OpenMx</title>
+  <meta name="description" content="Lavaan is great. I love lavaan. But a lot of folks prefer OpenMx, and given its long and widespread usage, especially in fields outside psychology, it might ...">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$']]}
+});
+</script>
+<script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="https://jflournoy.github.io/2018/09/26/riclpm-openmx-demo/">
+
+  <link rel="alternate" type="application/rss+xml" title="John C. Flournoy" href="https://jflournoy.github.io/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+	
+		
+		    
+		      <a href="/cv/">CV</a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a href="/blog/">Blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/">About</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/publications/">Publications</a>
+		    
+	    
+  	
+		
+  	
+	<!---<a href="/cv/johncflournoy-cv.pdf">CV</a>--->
+	<a href="https://osf.io/43niq/">OSF</a>
+	</nav>
+</header>
+
+    <article class="group">
+      <h1>The RI-CLPM in OpenMx</h1>
+<p class="subtitle">September 26, 2018</p>
+
+<p>Lavaan is great. I love lavaan. But a lot of folks prefer <a href="https://openmx.ssri.psu.edu/">OpenMx</a>, and given its long and widespread usage, especially in fields outside psychology, it might be a bit better road tested. So this is a brief addendum to my previous post, showing you how to implement a RI-CLPM in OpenMx.</p>
+
+<!--more-->
+
+<h1 id="ri-clpm">RI-CLPM</h1>
+
+<p>As a reminder, the model looks like this:</p>
+
+<p><img src="/../figs/riclpm-lavaan-demo/hamaker-diagram.png" alt="RI-CLPM Diagram" /></p>
+
+<h1 id="the-packages">The packages</h1>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1">#if you need to install anything, uncomment the below install lines for now
+#install.packages('OpenMx')
+#install.packages('tidyverse')
+</span><span class="n">require</span><span class="p">(</span><span class="n">OpenMx</span><span class="p">)</span><span class="w">
+</span><span class="n">require</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<h1 id="some-data-a-reminder">Some data: a reminder</h1>
+
+<p>I’ll use the same data from before, which was presented on at a methods symposium at SRCD in 1997. Supporting documentation can be found <a href="/assets/pdf/srcdmeth.pdf">in this pdf</a>. Data and code for importing it was helpfully provided by <a href="http://twitter.com/hardsci">Sanjay Srivastava</a>.</p>
+
+<p>The variables we’re considering are a measure of antisocial behavior (<code class="highlighter-rouge">anti</code>) and reading recognition (<code class="highlighter-rouge">read</code>). See the docs for descriptions of the other variables. And for the purpose of the model fitting below, <code class="highlighter-rouge">x &lt;- anit</code> and <code class="highlighter-rouge">y &lt;- read</code>. Following are some descriptions of the raw data:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">antiread</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.table</span><span class="p">(</span><span class="s2">"srcddata.dat"</span><span class="p">,</span><span class="w">
+                       </span><span class="n">na.strings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"999.00"</span><span class="p">),</span><span class="w">
+                       </span><span class="n">col.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"anti1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"anti2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"anti3"</span><span class="p">,</span><span class="w"> </span><span class="s2">"anti4"</span><span class="p">,</span><span class="w"> 
+                                     </span><span class="s2">"read1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"read2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"read3"</span><span class="p">,</span><span class="w"> </span><span class="s2">"read4"</span><span class="p">,</span><span class="w">
+                                     </span><span class="s2">"gen"</span><span class="p">,</span><span class="w"> </span><span class="s2">"momage"</span><span class="p">,</span><span class="w"> </span><span class="s2">"kidage"</span><span class="p">,</span><span class="w"> </span><span class="s2">"homecog"</span><span class="p">,</span><span class="w"> 
+                                     </span><span class="s2">"homeemo"</span><span class="p">,</span><span class="w"> </span><span class="s2">"id"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">rename</span><span class="p">(</span><span class="n">x</span><span class="m">1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">anti1</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="m">2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">anti2</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="m">3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">anti3</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="m">4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">anti4</span><span class="p">,</span><span class="w">
+         </span><span class="n">y</span><span class="m">1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read1</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="m">2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read2</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="m">3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read3</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="m">4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read4</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">matches</span><span class="p">(</span><span class="s1">'[xy][1-4]'</span><span class="p">))</span><span class="w">
+
+</span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">summary</span><span class="p">(</span><span class="n">antiread</span><span class="p">),</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'markdown'</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: left">x1</th>
+      <th style="text-align: left">x2</th>
+      <th style="text-align: left">x3</th>
+      <th style="text-align: left">x4</th>
+      <th style="text-align: left">y1</th>
+      <th style="text-align: left">y2</th>
+      <th style="text-align: left">y3</th>
+      <th style="text-align: left">y4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Min.   :0.000</td>
+      <td style="text-align: left">Min.   : 0.000</td>
+      <td style="text-align: left">Min.   : 0.000</td>
+      <td style="text-align: left">Min.   : 0.000</td>
+      <td style="text-align: left">Min.   :0.100</td>
+      <td style="text-align: left">Min.   :1.600</td>
+      <td style="text-align: left">Min.   :2.200</td>
+      <td style="text-align: left">Min.   :2.500</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">1st Qu.:0.000</td>
+      <td style="text-align: left">1st Qu.: 0.000</td>
+      <td style="text-align: left">1st Qu.: 0.000</td>
+      <td style="text-align: left">1st Qu.: 0.000</td>
+      <td style="text-align: left">1st Qu.:1.800</td>
+      <td style="text-align: left">1st Qu.:3.300</td>
+      <td style="text-align: left">1st Qu.:4.200</td>
+      <td style="text-align: left">1st Qu.:4.925</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Median :1.000</td>
+      <td style="text-align: left">Median : 1.500</td>
+      <td style="text-align: left">Median : 1.000</td>
+      <td style="text-align: left">Median : 1.500</td>
+      <td style="text-align: left">Median :2.300</td>
+      <td style="text-align: left">Median :4.100</td>
+      <td style="text-align: left">Median :5.000</td>
+      <td style="text-align: left">Median :5.800</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Mean   :1.662</td>
+      <td style="text-align: left">Mean   : 2.027</td>
+      <td style="text-align: left">Mean   : 1.828</td>
+      <td style="text-align: left">Mean   : 2.061</td>
+      <td style="text-align: left">Mean   :2.523</td>
+      <td style="text-align: left">Mean   :4.076</td>
+      <td style="text-align: left">Mean   :5.005</td>
+      <td style="text-align: left">Mean   :5.774</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">3rd Qu.:3.000</td>
+      <td style="text-align: left">3rd Qu.: 3.000</td>
+      <td style="text-align: left">3rd Qu.: 3.000</td>
+      <td style="text-align: left">3rd Qu.: 3.000</td>
+      <td style="text-align: left">3rd Qu.:3.000</td>
+      <td style="text-align: left">3rd Qu.:4.900</td>
+      <td style="text-align: left">3rd Qu.:5.800</td>
+      <td style="text-align: left">3rd Qu.:6.675</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Max.   :9.000</td>
+      <td style="text-align: left">Max.   :10.000</td>
+      <td style="text-align: left">Max.   :10.000</td>
+      <td style="text-align: left">Max.   :10.000</td>
+      <td style="text-align: left">Max.   :7.200</td>
+      <td style="text-align: left">Max.   :8.200</td>
+      <td style="text-align: left">Max.   :8.400</td>
+      <td style="text-align: left">Max.   :8.300</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">NA</td>
+      <td style="text-align: left">NA’s   :31</td>
+      <td style="text-align: left">NA’s   :108</td>
+      <td style="text-align: left">NA’s   :111</td>
+      <td style="text-align: left">NA</td>
+      <td style="text-align: left">NA’s   :30</td>
+      <td style="text-align: left">NA’s   :130</td>
+      <td style="text-align: left">NA’s   :135</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">antiread</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="m">4</span><span class="p">,</span><span class="o">-</span><span class="n">y</span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="p">())</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">gather</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">pid</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">extract</span><span class="p">(</span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'var'</span><span class="p">,</span><span class="w"> </span><span class="s1">'wave'</span><span class="p">),</span><span class="w"> </span><span class="n">regex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'(\\w)(\\d)'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_density</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">facet_grid</span><span class="p">(</span><span class="n">wave</span><span class="o">~</span><span class="n">var</span><span class="p">,</span><span class="w"> </span><span class="n">scales</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'free'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">theme_classic</span><span class="p">()</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Warning: Removed 299 rows containing non-finite values (stat_density).
+</code></pre>
+</div>
+
+<p><img src="/../figs/riclpm-openmx-demo/Variable density-1.png" alt="center" /></p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">antireadLong</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">antiread</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="m">4</span><span class="p">,</span><span class="o">-</span><span class="n">y</span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="p">())</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">gather</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">pid</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">extract</span><span class="p">(</span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'var'</span><span class="p">,</span><span class="w"> </span><span class="s1">'wave'</span><span class="p">),</span><span class="w"> </span><span class="n">regex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'(\\w)(\\d)'</span><span class="p">)</span><span class="w">
+
+</span><span class="n">antireadLong</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wave</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">var</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">var</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">position_jitter</span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.2</span><span class="p">),</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_line</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'identity'</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interaction</span><span class="p">(</span><span class="n">var</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">)),</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.04</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_line</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'smooth'</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'lm'</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">theme_classic</span><span class="p">()</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Warning: Removed 299 rows containing non-finite values (stat_smooth).
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Warning: Removed 299 rows containing missing values (geom_point).
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Warning: Removed 271 rows containing missing values (geom_path).
+</code></pre>
+</div>
+
+<p><img src="/../figs/riclpm-openmx-demo/Variables over time-1.png" alt="center" /></p>
+
+<h1 id="fitting-a-ri-clpm-in-openmx">Fitting a RI-CLPM in OpenMx</h1>
+
+<p>Below is the code to specify and fit the RI-CLPM with equality constraints on the autoregressive, cross-lagged, and residual (for wave 2 and 3) paths (see this in lavaan <a href="https://jflournoy.github.io/2017/10/20/riclpm-lavaan-demo/#adding-constraints-to-ri-clpm"><em>here</em></a>).</p>
+
+<p>If you’re not familiar with OpenMx syntax, but you know what a latent growth curve model looks like, check out the <a href="https://vipbg.vcu.edu/vipbg/OpenMx2/docs//OpenMx/latest/TimeSeries_Path.html">OpenMx LGCM example</a>. You construct your model using a series of functions to create each element. Note that OpenMx likes everything to be very explicit, which can be a good thing. You should think about and specify reasonable starting values, and you should be prepared to put bounds on variables that have them (e.g., variances shouldn’t be negative). I’ll call these out as they come up. Also, equality constraints are achieved through the use of path labels, and so I’ll introduce some shorthand to create labels with similar or identical names.</p>
+
+<h2 id="data-specification">Data specification</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">antireadRaw</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxData</span><span class="p">(</span><span class="n">observed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">antiread</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'raw'</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>This specifies that the data is in the <code class="highlighter-rouge">antiread</code> data.frame, with ‘raw’ indicating that it is not a covariance matrix, but rather a data.frame with a row per observation, and a column per variable. It will look in the column names for any manifest variables that are specified.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">manifestsX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'x1'</span><span class="p">,</span><span class="w"> </span><span class="s1">'x2'</span><span class="p">,</span><span class="w"> </span><span class="s1">'x3'</span><span class="p">)</span><span class="w">
+</span><span class="n">manifestsY</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'y1'</span><span class="p">,</span><span class="w"> </span><span class="s1">'y2'</span><span class="p">,</span><span class="w"> </span><span class="s1">'y3'</span><span class="p">)</span><span class="w">
+
+</span><span class="n">latentResX</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'p1'</span><span class="p">,</span><span class="w"> </span><span class="s1">'p2'</span><span class="p">,</span><span class="w"> </span><span class="s1">'p3'</span><span class="p">)</span><span class="w">
+</span><span class="n">latentResY</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'q1'</span><span class="p">,</span><span class="w"> </span><span class="s1">'q2'</span><span class="p">,</span><span class="w"> </span><span class="s1">'q3'</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>The above is just to be able to have single variables that contain all the manifest and latent variables I will be using for each construct. Note that these are <em>all</em> the manifests, but not all the latents.</p>
+
+<h2 id="latent-intercepts">Latent intercepts</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">kappa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"kappa"</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manifestsX</span><span class="p">,</span><span class="w"> 
+                </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+</span><span class="n">omega</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"omega"</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manifestsY</span><span class="p">,</span><span class="w"> 
+                </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">),</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+
+</span><span class="n">print</span><span class="p">(</span><span class="n">omega</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## mxPath
+## omega -&gt; y1 [value=1, free=FALSE]
+## omega -&gt; y2 [value=1, free=FALSE]
+## omega -&gt; y3 [value=1, free=FALSE]
+</code></pre>
+</div>
+
+<p>This is how to specify the two latent random intercepts. Keep track of the names you use here, because you will need to indicate them in the model construction call. Also, note that printing the resulting variables gives helpful information you can check against your intended specification. The path weights are set to 1 and set to not be freed for estimation.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">latentInterceptVars</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'kappa'</span><span class="p">,</span><span class="w"> </span><span class="s1">'omega'</span><span class="p">),</span><span class="w"> </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w">
+                              </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> </span><span class="n">connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'unique.pairs'</span><span class="p">,</span><span class="w">
+                              </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'kappaVar'</span><span class="p">,</span><span class="w">
+                                         </span><span class="s1">'koCovar'</span><span class="p">,</span><span class="w">
+                                         </span><span class="s1">'omegaVar'</span><span class="p">),</span><span class="w">
+                              </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">),</span><span class="w">
+                              </span><span class="n">lbound</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>This creates free variance and covariance paths between the random intercepts. The ‘unique.pairs’ option will generate a path between each unique combination of the names you use in the “from” parameter. Giving them labels will help you identify them in the output, but are otherwise not strictly necessary. Note that the starting values are set with variances at 1, and the covariance at 0 (because it could be positive or negative), and lower bounds are set on the variance parameters.</p>
+
+<h2 id="mean-structure">Mean structure</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">meanPathNames</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">unlist</span><span class="p">(</span><span class="n">lapply</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s1">'mu'</span><span class="p">,</span><span class="w"> </span><span class="s1">'pi'</span><span class="p">),</span><span class="w"> </span><span class="n">paste</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">sep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">''</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Instead of writing out each of the path labels for the means of each manifest variable, I call the above. It’s more characters than just writing it out, but maybe less prone to typos.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">intercepts</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"one"</span><span class="p">,</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">manifestsX</span><span class="p">,</span><span class="w"> </span><span class="n">manifestsY</span><span class="p">),</span><span class="w">
+                     </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+                     </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">meanPathNames</span><span class="p">,</span><span class="w">
+                     </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="o">=</span><span class="m">3</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>The name “one” is reserved to refer to the intercept, and we allow the paths to be estimated freely, labeled with the names created above. It’s probably not necessary to set starting values here, but I glanced at the histograms above and gave it my best guess, just in case.</p>
+
+<h2 id="latent-temporal-deviations">Latent temporal deviations</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">latentRes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResX</span><span class="p">,</span><span class="w"> </span><span class="n">latentResY</span><span class="p">),</span><span class="w"> 
+                    </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">manifestsX</span><span class="p">,</span><span class="w"> </span><span class="n">manifestsY</span><span class="p">),</span><span class="w">
+                    </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">F</span><span class="p">,</span><span class="w"> 
+                    </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">6</span><span class="p">),</span><span class="w">
+                    </span><span class="n">connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'single'</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>This call creates the paths to the latent variables that are also sometimes called “latent residuals.” Each of the latent variable paths is fixed to 1.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">arPaths</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResX</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">latentResY</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]),</span><span class="w">
+                  </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResX</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">3</span><span class="p">],</span><span class="w"> </span><span class="n">latentResY</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">3</span><span class="p">]),</span><span class="w">
+                  </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> </span><span class="n">connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'single'</span><span class="p">,</span><span class="w">
+                  </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s1">'alpha'</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s1">'delta'</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)),</span><span class="w">
+                  </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.2</span><span class="p">)</span><span class="w">
+
+</span><span class="n">lagPaths</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResX</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">latentResY</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]),</span><span class="w">
+                  </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResY</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">3</span><span class="p">],</span><span class="w"> </span><span class="n">latentResX</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">3</span><span class="p">]),</span><span class="w">
+                  </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> </span><span class="n">connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'single'</span><span class="p">,</span><span class="w">
+                  </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s1">'gamma'</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s1">'beta'</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)),</span><span class="w">
+                  </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">
+
+</span><span class="n">print</span><span class="p">(</span><span class="n">arPaths</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## mxPath
+## p1 -&gt; p2 [value=0.2, free=TRUE, label='alpha']
+## p2 -&gt; p3 [value=0.2, free=TRUE, label='alpha']
+## q1 -&gt; q2 [value=0.2, free=TRUE, label='delta']
+## q2 -&gt; q3 [value=0.2, free=TRUE, label='delta']
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">print</span><span class="p">(</span><span class="n">lagPaths</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## mxPath
+## p1 -&gt; q2 [value=0, free=TRUE, label='gamma']
+## p2 -&gt; q3 [value=0, free=TRUE, label='gamma']
+## q1 -&gt; p2 [value=0, free=TRUE, label='beta']
+## q2 -&gt; p3 [value=0, free=TRUE, label='beta']
+</code></pre>
+</div>
+
+<p>These calls establish the paths between the latent residuals. In the first call (that creates the <code class="highlighter-rouge">arPaths</code> variable) the first two latent variables for X and Y are connected to the second two. In the second call (that creates the <code class="highlighter-rouge">lagPaths</code> variable), the first two X and Y variables are connected to the second two Y and X variables, respectively, to establish the lagged relations. <strong>Paths with the same labels are constrained to equality</strong>, which is why these paths have the labels assigned as they do. The starting values are based on the expectation that the autoregressive paths are probably positive.</p>
+
+<h2 id="residual-variance-structure">Residual variance structure</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">resVar</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResX</span><span class="p">,</span><span class="w"> </span><span class="n">latentResY</span><span class="p">),</span><span class="w">
+                 </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> 
+                 </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s1">'u'</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">rep</span><span class="w"> </span><span class="p">(</span><span class="s1">'v'</span><span class="p">,</span><span class="m">3</span><span class="p">)),</span><span class="w">
+                                 </span><span class="nf">c</span><span class="p">(</span><span class="s1">'1'</span><span class="p">,</span><span class="w"> </span><span class="s1">''</span><span class="p">,</span><span class="w"> </span><span class="s1">''</span><span class="p">)),</span><span class="w">
+                 </span><span class="n">connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'single'</span><span class="p">,</span><span class="w">
+                 </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">lbound</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">
+
+</span><span class="n">resCovar</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">latentResX</span><span class="p">,</span><span class="w">
+                   </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">latentResY</span><span class="p">,</span><span class="w">
+                   </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> 
+                   </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">rep</span><span class="w"> </span><span class="p">(</span><span class="s1">'rescovar'</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> 
+                                   </span><span class="nf">c</span><span class="p">(</span><span class="s1">'1'</span><span class="p">,</span><span class="w"> </span><span class="s1">''</span><span class="p">,</span><span class="w"> </span><span class="s1">''</span><span class="p">)),</span><span class="w"> 
+                   </span><span class="n">connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'single'</span><span class="p">,</span><span class="w">
+                   </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Finally, the residuals have to be specified. Any path left unspecified will not be included in the model – unlike <code class="highlighter-rouge">lavaan</code>, <code class="highlighter-rouge">OpenMx</code> doesn’t assume anything about your model. Note that the code <code class="highlighter-rouge">paste0(c(rep('u',3), rep ('v',3)), c('1', '', ''))</code> results in the labels: u1, u, u, v1, v, v. These labels constrain the residuals (or disturbances) from wave 2 and 3 to be equal, with those from wave 1 estimated freely. The bivariate covariance is similarly constrained via the labels generated by <code class="highlighter-rouge">paste0(rep ('rescovar',3), c('1', '', ''))</code>: rescovar1, rescovar, rescovar. Again, the ‘value’ and ‘lbound’ options are set to a reasonable value for the variances. The starting value for the covariances is also set explicitly, though <code class="highlighter-rouge">0</code> is the default.</p>
+
+<h2 id="fitting-the-model-and-viewing-output">Fitting the model and viewing output</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">riclpm</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxModel</span><span class="p">(</span><span class="s1">'RICLPM'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'RAM'</span><span class="p">,</span><span class="w">
+                  </span><span class="n">manifestVars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">manifestsX</span><span class="p">,</span><span class="w"> </span><span class="n">manifestsY</span><span class="p">),</span><span class="w">
+                  </span><span class="n">latentVars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResX</span><span class="p">,</span><span class="w"> </span><span class="n">latentResY</span><span class="p">,</span><span class="w"> 
+                                 </span><span class="s1">'kappa'</span><span class="p">,</span><span class="w"> </span><span class="s1">'omega'</span><span class="p">),</span><span class="w">
+                  </span><span class="n">antireadRaw</span><span class="p">,</span><span class="w">
+                  </span><span class="n">kappa</span><span class="p">,</span><span class="w">
+                  </span><span class="n">omega</span><span class="p">,</span><span class="w">
+                  </span><span class="n">latentInterceptVars</span><span class="p">,</span><span class="w">
+                  </span><span class="n">intercepts</span><span class="p">,</span><span class="w">
+                  </span><span class="n">latentRes</span><span class="p">,</span><span class="w">
+                  </span><span class="n">arPaths</span><span class="p">,</span><span class="w">
+                  </span><span class="n">lagPaths</span><span class="p">,</span><span class="w">
+                  </span><span class="n">resVar</span><span class="p">,</span><span class="w">
+                  </span><span class="n">resCovar</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>This call actually puts everything together, translating the path specification into estimable matrices. The first argument is the model name (whatever you wish to call it). After that, you must specify all manifest and latent variables that appear in the path specifications (except for “one”). The rest of the call includes all of the path constructors we generated in the above code (including the data specification).</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">mxOption</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="s2">"Default optimizer"</span><span class="p">,</span><span class="s2">"CSOLNP"</span><span class="p">)</span><span class="w">
+</span><span class="n">riclpm_fit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxRun</span><span class="p">(</span><span class="n">riclpm</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Running RICLPM with 19 parameters
+</code></pre>
+</div>
+
+<p>This is how you run the model. The optimizer “CSOLNP” is already the default, but I’ve included this code because often convergence issues can be solved by changing the optimizer. Check out the help on the <code class="highlighter-rouge">mxOption</code> function for more info. Passing your model variable to the <code class="highlighter-rouge">mxRun</code> function is where the magic happens.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">riclpm_fit</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Summary of RICLPM 
+##  
+## free parameters:
+##         name matrix   row   col    Estimate  Std.Error A lbound ubound
+## 1      alpha      A    p2    p1  0.30604054 0.09194632                
+## 2      gamma      A    q2    p1 -0.03907640 0.03051416                
+## 3       beta      A    p2    q1 -0.21187505 0.14789152                
+## 4      delta      A    q2    q1  0.71263799 0.07591069                
+## 5         u1      S    p1    p1  1.71796121 0.25419453        0       
+## 6          u      S    p2    p2  2.56920450 0.19932832        0       
+## 7  rescovar1      S    p1    q1 -0.05643856 0.14585502                
+## 8         v1      S    q1    q1  0.53528020 0.16608606        0       
+## 9   rescovar      S    p2    q2 -0.11632638 0.05968509                
+## 10         v      S    q2    q2  0.59039300 0.03577737        0       
+## 11  kappaVar      S kappa kappa  1.05159902 0.25302282        0       
+## 12   koCovar      S kappa omega -0.04570729 0.14256251                
+## 13  omegaVar      S omega omega  0.32016254 0.16727194        0       
+## 14       mu1      M     1    x1  1.66172802 0.08269640                
+## 15       mu2      M     1    x2  1.99042683 0.09980390                
+## 16       mu3      M     1    x3  1.88963264 0.11131688                
+## 17       pi1      M     1    y1  2.52271584 0.04595897                
+## 18       pi2      M     1    y2  4.06661921 0.05511448                
+## 19       pi3      M     1    y3  5.01826850 0.06430956                
+## 
+## Model Statistics: 
+##                |  Parameters  |  Degrees of Freedom  |  Fit (-2lnL units)
+##        Model:             19                   2112              6782.158
+##    Saturated:             27                   2104                    NA
+## Independence:             12                   2119                    NA
+## Number of observations/statistics: 405/2131
+## 
+## Information Criteria: 
+##       |  df Penalty  |  Parameters Penalty  |  Sample-Size Adjusted
+## AIC:       2558.158               6820.158                 6822.132
+## BIC:      -5898.052               6896.231                 6835.942
+## To get additional fit indices, see help(mxRefModels)
+## timestamp: 2018-09-26 17:22:28 
+## Wall clock time: 0.1292243 secs 
+## optimizer:  CSOLNP 
+## OpenMx version number: 2.9.6 
+## Need help?  See help(mxSummary)
+</code></pre>
+</div>
+
+<p>If you compare the fitted model summary to the <code class="highlighter-rouge">lavaan</code> output in the previous post, you’ll see they match up very nicely.</p>
+
+<h2 id="unconstraining-and-comparing-fits">Unconstraining and comparing fits</h2>
+
+<p>Editing an OpenMx model is fairly straightforward. In order to compare the model with and without equality constraints, we can create new path definitions without the label constraints, then call the <code class="highlighter-rouge">mxModel</code> function again with the original model and the new path elements. It will overwrite the old paths with the new specifications.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1">#free autoregressive and cross-lagged paths
+</span><span class="n">arPaths_uc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="w">
+  </span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResX</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">latentResY</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]),</span><span class="w">
+  </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResX</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">3</span><span class="p">],</span><span class="w"> </span><span class="n">latentResY</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">3</span><span class="p">]),</span><span class="w">
+  </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> </span><span class="n">connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'single'</span><span class="p">,</span><span class="w">
+  </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s1">'alpha'</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s1">'delta'</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)),</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">),</span><span class="w">
+  </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.2</span><span class="p">)</span><span class="w">
+</span><span class="n">lagPaths_uc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="w">
+  </span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResX</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">latentResY</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">]),</span><span class="w">
+  </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResY</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">3</span><span class="p">],</span><span class="w"> </span><span class="n">latentResX</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">3</span><span class="p">]),</span><span class="w">
+  </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> </span><span class="n">connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'single'</span><span class="p">,</span><span class="w">
+  </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s1">'gamma'</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="s1">'beta'</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)),</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">),</span><span class="w">
+  </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">#free residuals
+</span><span class="n">resVar_uc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="w">
+  </span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">latentResX</span><span class="p">,</span><span class="w"> </span><span class="n">latentResY</span><span class="p">),</span><span class="w">
+  </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> 
+  </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="s1">'u'</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">rep</span><span class="w"> </span><span class="p">(</span><span class="s1">'v'</span><span class="p">,</span><span class="m">3</span><span class="p">)),</span><span class="w">
+                  </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">),</span><span class="w">
+  </span><span class="n">connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'single'</span><span class="p">,</span><span class="w">
+  </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">lbound</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">
+
+</span><span class="n">resCovar_uc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxPath</span><span class="p">(</span><span class="w">
+  </span><span class="n">from</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">latentResX</span><span class="p">,</span><span class="w">
+  </span><span class="n">to</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">latentResY</span><span class="p">,</span><span class="w">
+  </span><span class="n">arrows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">free</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">,</span><span class="w"> 
+  </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="n">rep</span><span class="w"> </span><span class="p">(</span><span class="s1">'rescovar'</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w"> 
+                  </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">),</span><span class="w"> 
+  </span><span class="n">connect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'single'</span><span class="p">,</span><span class="w">
+  </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">
+
+</span><span class="n">riclpm_uc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxModel</span><span class="p">(</span><span class="n">riclpm</span><span class="p">,</span><span class="w"> 
+                     </span><span class="n">arPaths_uc</span><span class="p">,</span><span class="w"> </span><span class="n">lagPaths_uc</span><span class="p">,</span><span class="w"> 
+                     </span><span class="n">resVar_uc</span><span class="p">,</span><span class="w"> </span><span class="n">resCovar_uc</span><span class="p">,</span><span class="w">
+                     </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"RICLPM UC"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">summary</span><span class="p">(</span><span class="n">riclpm_uc_fit</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxRun</span><span class="p">(</span><span class="n">riclpm_uc</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Running RICLPM UC with 26 parameters
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Summary of RICLPM UC 
+##  
+## free parameters:
+##         name matrix   row   col     Estimate  Std.Error A lbound ubound
+## 1     alpha1      A    p2    p1  0.162484732 0.16897508                
+## 2     gamma1      A    q2    p1 -0.057561087 0.07843618                
+## 3     alpha2      A    p3    p2  0.352612940 0.07752322                
+## 4     gamma2      A    q3    p2 -0.008105237 0.03363872                
+## 5      beta1      A    p2    q1 -0.089544921 0.45570009                
+## 6     delta1      A    q2    q1  0.374146351 0.35005315                
+## 7      beta2      A    p3    q2 -0.274430873 0.15349585                
+## 8     delta2      A    q3    q2  0.737837863 0.07340915                
+## 9         u1      S    p1    p1  1.504287257 0.28044074        0       
+## 10        u2      S    p2    p2  2.821441372 0.31594765        0       
+## 11        u3      S    p3    p3  2.109697219 0.20402446        0       
+## 12 rescovar1      S    p1    q1  0.017013374 0.15930937                
+## 13        v1      S    q1    q1  0.315640287 0.17213266        0       
+## 14 rescovar2      S    p2    q2 -0.116941167 0.11390653                
+## 15        v2      S    q2    q2  0.582452465 0.08547403        0       
+## 16 rescovar3      S    p3    q3 -0.114698904 0.07061014                
+## 17        v3      S    q3    q3  0.509168510 0.04576731        0       
+## 18  kappaVar      S kappa kappa  1.231980754 0.27065286        0       
+## 19   koCovar      S kappa omega -0.118491763 0.15683489                
+## 20  omegaVar      S omega omega  0.538749506 0.17694636        0       
+## 21       mu1      M     1    x1  1.661728759 0.08219595                
+## 22       mu2      M     1    x2  1.985451719 0.10346911                
+## 23       mu3      M     1    x3  1.898120810 0.10749165                
+## 24       pi1      M     1    y1  2.522715853 0.04593036                
+## 25       pi2      M     1    y2  4.065972155 0.05474760                
+## 26       pi3      M     1    y3  5.023311788 0.06413183                
+## 
+## Model Statistics: 
+##                |  Parameters  |  Degrees of Freedom  |  Fit (-2lnL units)
+##        Model:             26                   2105              6762.106
+##    Saturated:             27                   2104                    NA
+## Independence:             12                   2119                    NA
+## Number of observations/statistics: 405/2131
+## 
+## Information Criteria: 
+##       |  df Penalty  |  Parameters Penalty  |  Sample-Size Adjusted
+## AIC:       2552.106               6814.106                 6817.821
+## BIC:      -5876.076               6918.207                 6835.706
+## To get additional fit indices, see help(mxRefModels)
+## timestamp: 2018-09-26 17:22:28 
+## Wall clock time: 0.2689583 secs 
+## optimizer:  CSOLNP 
+## OpenMx version number: 2.9.6 
+## Need help?  See help(mxSummary)
+</code></pre>
+</div>
+
+<p>The comparison can be made using <code class="highlighter-rouge">mxCompare</code>:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">mxCompare</span><span class="p">(</span><span class="n">riclpm_uc_fit</span><span class="p">,</span><span class="w"> </span><span class="n">riclpm_fit</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##        base comparison ep minus2LL   df      AIC   diffLL diffdf
+## 1 RICLPM UC       &lt;NA&gt; 26 6762.106 2105 2552.106       NA     NA
+## 2 RICLPM UC     RICLPM 19 6782.158 2112 2558.158 20.05131      7
+##            p
+## 1         NA
+## 2 0.00545991
+</code></pre>
+</div>
+
+<p>Note that the default output uses the degrees-of-freedom penalized AIC. The conclusion is still the same, though – the constrained model fits more poorly, significantly so if you believe the statistical test.</p>
+
+<p>Here are the estimated parameters:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">riclpm_uc_fit</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Summary of RICLPM UC 
+##  
+## free parameters:
+##         name matrix   row   col     Estimate  Std.Error A lbound ubound
+## 1     alpha1      A    p2    p1  0.162484732 0.16897508                
+## 2     gamma1      A    q2    p1 -0.057561087 0.07843618                
+## 3     alpha2      A    p3    p2  0.352612940 0.07752322                
+## 4     gamma2      A    q3    p2 -0.008105237 0.03363872                
+## 5      beta1      A    p2    q1 -0.089544921 0.45570009                
+## 6     delta1      A    q2    q1  0.374146351 0.35005315                
+## 7      beta2      A    p3    q2 -0.274430873 0.15349585                
+## 8     delta2      A    q3    q2  0.737837863 0.07340915                
+## 9         u1      S    p1    p1  1.504287257 0.28044074        0       
+## 10        u2      S    p2    p2  2.821441372 0.31594765        0       
+## 11        u3      S    p3    p3  2.109697219 0.20402446        0       
+## 12 rescovar1      S    p1    q1  0.017013374 0.15930937                
+## 13        v1      S    q1    q1  0.315640287 0.17213266        0       
+## 14 rescovar2      S    p2    q2 -0.116941167 0.11390653                
+## 15        v2      S    q2    q2  0.582452465 0.08547403        0       
+## 16 rescovar3      S    p3    q3 -0.114698904 0.07061014                
+## 17        v3      S    q3    q3  0.509168510 0.04576731        0       
+## 18  kappaVar      S kappa kappa  1.231980754 0.27065286        0       
+## 19   koCovar      S kappa omega -0.118491763 0.15683489                
+## 20  omegaVar      S omega omega  0.538749506 0.17694636        0       
+## 21       mu1      M     1    x1  1.661728759 0.08219595                
+## 22       mu2      M     1    x2  1.985451719 0.10346911                
+## 23       mu3      M     1    x3  1.898120810 0.10749165                
+## 24       pi1      M     1    y1  2.522715853 0.04593036                
+## 25       pi2      M     1    y2  4.065972155 0.05474760                
+## 26       pi3      M     1    y3  5.023311788 0.06413183                
+## 
+## Model Statistics: 
+##                |  Parameters  |  Degrees of Freedom  |  Fit (-2lnL units)
+##        Model:             26                   2105              6762.106
+##    Saturated:             27                   2104                    NA
+## Independence:             12                   2119                    NA
+## Number of observations/statistics: 405/2131
+## 
+## Information Criteria: 
+##       |  df Penalty  |  Parameters Penalty  |  Sample-Size Adjusted
+## AIC:       2552.106               6814.106                 6817.821
+## BIC:      -5876.076               6918.207                 6835.706
+## To get additional fit indices, see help(mxRefModels)
+## timestamp: 2018-09-26 17:22:28 
+## Wall clock time: 0.2689583 secs 
+## optimizer:  CSOLNP 
+## OpenMx version number: 2.9.6 
+## Need help?  See help(mxSummary)
+</code></pre>
+</div>
+
+<p>You can also request standardized parameters (here, for the constrained model):</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">mxStandardizeRAMpaths</span><span class="p">(</span><span class="n">riclpm_fit</span><span class="p">,</span><span class="w"> </span><span class="n">SE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">T</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##               name     label matrix   row   col   Raw.Value     Raw.SE
+## 1    RICLPM.A[1,7]      &lt;NA&gt;      A    x1    p1  1.00000000 0.00000000
+## 2    RICLPM.A[8,7]     alpha      A    p2    p1  0.30604054 0.09194632
+## 3   RICLPM.A[11,7]     gamma      A    q2    p1 -0.03907640 0.03051416
+## 4    RICLPM.A[2,8]      &lt;NA&gt;      A    x2    p2  1.00000000 0.00000000
+## 5    RICLPM.A[9,8]     alpha      A    p3    p2  0.30604054 0.09194632
+## 6   RICLPM.A[12,8]     gamma      A    q3    p2 -0.03907640 0.03051416
+## 7    RICLPM.A[3,9]      &lt;NA&gt;      A    x3    p3  1.00000000 0.00000000
+## 8   RICLPM.A[4,10]      &lt;NA&gt;      A    y1    q1  1.00000000 0.00000000
+## 9   RICLPM.A[8,10]      beta      A    p2    q1 -0.21187505 0.14789152
+## 10 RICLPM.A[11,10]     delta      A    q2    q1  0.71263799 0.07591069
+## 11  RICLPM.A[5,11]      &lt;NA&gt;      A    y2    q2  1.00000000 0.00000000
+## 12  RICLPM.A[9,11]      beta      A    p3    q2 -0.21187505 0.14789152
+## 13 RICLPM.A[12,11]     delta      A    q3    q2  0.71263799 0.07591069
+## 14  RICLPM.A[6,12]      &lt;NA&gt;      A    y3    q3  1.00000000 0.00000000
+## 15  RICLPM.A[1,13]      &lt;NA&gt;      A    x1 kappa  1.00000000 0.00000000
+## 16  RICLPM.A[2,13]      &lt;NA&gt;      A    x2 kappa  1.00000000 0.00000000
+## 17  RICLPM.A[3,13]      &lt;NA&gt;      A    x3 kappa  1.00000000 0.00000000
+## 18  RICLPM.A[4,14]      &lt;NA&gt;      A    y1 omega  1.00000000 0.00000000
+## 19  RICLPM.A[5,14]      &lt;NA&gt;      A    y2 omega  1.00000000 0.00000000
+## 20  RICLPM.A[6,14]      &lt;NA&gt;      A    y3 omega  1.00000000 0.00000000
+## 21   RICLPM.S[7,7]        u1      S    p1    p1  1.71796121 0.25419453
+## 22  RICLPM.S[10,7] rescovar1      S    q1    p1 -0.05643856 0.14585502
+## 23   RICLPM.S[8,8]         u      S    p2    p2  2.56920450 0.19932832
+## 24  RICLPM.S[11,8]  rescovar      S    q2    p2 -0.11632638 0.05968509
+## 25   RICLPM.S[9,9]         u      S    p3    p3  2.56920450 0.19932832
+## 26  RICLPM.S[12,9]  rescovar      S    q3    p3 -0.11632638 0.05968509
+## 27 RICLPM.S[10,10]        v1      S    q1    q1  0.53528020 0.16608606
+## 28 RICLPM.S[11,11]         v      S    q2    q2  0.59039300 0.03577737
+## 29 RICLPM.S[12,12]         v      S    q3    q3  0.59039300 0.03577737
+## 30 RICLPM.S[13,13]  kappaVar      S kappa kappa  1.05159902 0.25302282
+## 31 RICLPM.S[14,13]   koCovar      S omega kappa -0.04570729 0.14256251
+## 32 RICLPM.S[14,14]  omegaVar      S omega omega  0.32016254 0.16727194
+##      Std.Value       Std.SE
+## 1   0.78759195 5.368619e-02
+## 2   0.24138839 7.382613e-02
+## 3  -0.05497441 4.382509e-02
+## 4   0.85100593 3.707330e-02
+## 5   0.29881098 8.684717e-02
+## 6  -0.06342326 4.956579e-02
+## 7   0.85653817 3.791408e-02
+## 8   0.79103394 1.213583e-01
+## 9  -0.09328270 6.582846e-02
+## 10  0.55962731 9.023985e-02
+## 11  0.85471662 7.897057e-02
+## 12 -0.11598152 8.120753e-02
+## 13  0.64847673 6.643914e-02
+## 14  0.87523478 6.957208e-02
+## 15  0.61619714 6.861897e-02
+## 16  0.52515608 6.007661e-02
+## 17  0.51608368 6.292557e-02
+## 18  0.61177227 1.569187e-01
+## 19  0.51909488 1.300291e-01
+## 20  0.48369833 1.258882e-01
+## 21  1.00000000 1.463091e-14
+## 22 -0.05885436 1.470338e-01
+## 23  0.93037949 3.831862e-02
+## 24 -0.07513604 3.937617e-02
+## 25  0.88694219 5.568539e-02
+## 26 -0.06675615 3.462057e-02
+## 27  1.00000000 6.625593e-12
+## 28  0.68017376 1.045606e-01
+## 29  0.56321047 8.684052e-02
+## 30  1.00000000 1.582982e-14
+## 31 -0.07877259 2.360775e-01
+## 32  1.00000000 2.268831e-12
+</code></pre>
+</div>
+
+<h2 id="plotting-model-expectations">Plotting model expectations</h2>
+
+<p>There are just a couple of changes to the code from the previous post having to do with how we extract information from the fitted model.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1">#get the model-expected means
+</span><span class="n">means</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxGetExpected</span><span class="p">(</span><span class="n">riclpm_fit</span><span class="p">,</span><span class="w"> </span><span class="n">component</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'means'</span><span class="p">)</span><span class="w">
+</span><span class="n">meansDF</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">means</span><span class="p">[</span><span class="m">1</span><span class="p">,],</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">dimnames</span><span class="p">(</span><span class="n">means</span><span class="p">)[[</span><span class="m">2</span><span class="p">]])</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">extract</span><span class="p">(</span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'var'</span><span class="p">,</span><span class="w"> </span><span class="s1">'wave'</span><span class="p">),</span><span class="w"> </span><span class="n">regex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'(\\w)(\\d)'</span><span class="p">)</span><span class="w">
+
+</span><span class="n">factorScores</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mxFactorScores</span><span class="p">(</span><span class="n">riclpm_fit</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'regression'</span><span class="p">,</span><span class="w"> </span><span class="n">minManifests</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">#plot the model-expected random intercepts
+</span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">factorScores</span><span class="p">[,,</span><span class="m">1</span><span class="p">])</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="n">n</span><span class="p">())</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">gather</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">latentvalue</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">pid</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">kappa</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">omega</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">extract</span><span class="p">(</span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'latentvar'</span><span class="p">,</span><span class="w"> </span><span class="s1">'wave'</span><span class="p">),</span><span class="w"> </span><span class="n">regex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'(\\w)(\\d)'</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">mutate</span><span class="p">(</span><span class="n">var</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'x'</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'y'</span><span class="p">)[</span><span class="n">latentvar</span><span class="p">])</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">left_join</span><span class="p">(</span><span class="n">meansDF</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1">#those means from above
+</span><span class="w">  </span><span class="n">left_join</span><span class="p">(</span><span class="n">antireadLong</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'pid'</span><span class="p">,</span><span class="w"> </span><span class="s1">'wave'</span><span class="p">,</span><span class="w"> </span><span class="s1">'var'</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="c1">#the raw data
+</span><span class="w">  </span><span class="n">mutate</span><span class="p">(</span><span class="n">expectedLine</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ifelse</span><span class="p">(</span><span class="n">var</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'x'</span><span class="p">,</span><span class="w"> </span><span class="n">kappa</span><span class="p">,</span><span class="w"> </span><span class="n">omega</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">mean</span><span class="p">,</span><span class="w">
+         </span><span class="n">wave</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">wave</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">rowwise</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wave</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expectedLine</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">var</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">var</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wave</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interaction</span><span class="p">(</span><span class="n">var</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">)),</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.2</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">position_jitter</span><span class="p">(</span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.2</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_line</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expectedLine</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">interaction</span><span class="p">(</span><span class="n">var</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p">)),</span><span class="w"> </span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'identity'</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_line</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">),</span><span class="w"> </span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'identity'</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'black'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">var</span><span class="p">,</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">theme_classic</span><span class="p">()</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/../figs/riclpm-openmx-demo/Plot predictions-1.png" alt="center" /></p>
+
+<p>The correlations between the latent residuals from this model are just about as easy to look at as the <code class="highlighter-rouge">lavaan</code> version.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">GGally</span><span class="p">)</span><span class="w">
+</span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">factorScores</span><span class="p">[,,</span><span class="m">1</span><span class="p">])</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">kappa</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">omega</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">ggpairs</span><span class="p">(</span><span class="n">lower</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">continuous</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wrap</span><span class="p">(</span><span class="n">ggally_smooth</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.5</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">theme_classic</span><span class="p">()</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="/../figs/riclpm-openmx-demo/Plot clpm-1.png" alt="center" /></p>
+
+
+
+ 
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+var disqus_config = function () {
+    this.page.url = "https://jflournoy.github.io/2018/09/26/riclpm-openmx-demo/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = "/2018/09/26/riclpm-openmx-demo"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jflournoy-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    </article>
+    <span class="print-footer">The RI-CLPM in OpenMx - September 26, 2018 - John C. Flournoy</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:flournoy@uoregon.edu"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//www.twitter.com/flourneuro"><span class="icon-twitter"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/jflournoy"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;&nbsp;JOHN C. FLOURNOY</span></br> <br>
+<span>This site created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a> in <a href="//jekyllrb.com">Jekyll</a>.</span> 
+</div>  
+</footer>
+
+  </body>
+</html>

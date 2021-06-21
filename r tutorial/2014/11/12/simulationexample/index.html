@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-250403-13"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-250403-13');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>John C. Flournoy: Simulation Example</title>
+  <meta name="description" content="The motivation for this example has to do with different ways one can calculate individual differences with regard to the effect of some manipulation that pu...">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$']]}
+});
+</script>
+<script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <link rel="stylesheet" type="text/css" href="/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="https://jflournoy.github.io/r%20tutorial/2014/11/12/simulationexample/">
+
+  <link rel="alternate" type="application/rss+xml" title="John C. Flournoy" href="https://jflournoy.github.io/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/"><img class="badge" src="/assets/img/badge_1.png" alt="CH"></a>
+	
+		
+		    
+		      <a href="/cv/">CV</a>
+		    
+	    
+  	
+		
+  	
+		
+		    
+		      <a href="/blog/">Blog</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/">About</a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/css/print.css"></a>
+		    
+	    
+  	
+		
+		    
+		      <a href="/publications/">Publications</a>
+		    
+	    
+  	
+		
+  	
+	<!---<a href="/cv/johncflournoy-cv.pdf">CV</a>--->
+	<a href="https://osf.io/43niq/">OSF</a>
+	</nav>
+</header>
+
+    <article class="group">
+      <h1>Simulation Example</h1>
+<p class="subtitle">November 12, 2014</p>
+
+<p>The motivation for this example has to do with different ways one can calculate individual differences with regard to the effect of some manipulation that pushes around cortisol levels.</p>
+
+<p>As a general resource for simulation in R, I highly recommend <a href="http://had.co.nz/stat480/lectures/15-simulation.pdf">Hadley Wickham’s simulation presntation</a>. Also, the <a href="http://cran.r-project.org/web/packages/psych/psych.pdf"><code class="highlighter-rouge">psych</code> package</a> has some great tools for generating data (with great support in <a href="http://www.personality-project.org/r/psych_for_sem.pdf">this helpful guide</a> by William Revelle).</p>
+
+<!--more-->
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">plyr</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">reshape2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Set parameters here</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">cortPopMeanT1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="c1"># Mean of population 
+</span><span class="n">cortPopSDT1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">2</span><span class="c1"># SD of population
+</span><span class="n">cortIndivDiffMean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="c1"># Mean of true absolute difference
+</span><span class="n">cortIndivDiffSD</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1"># SD of true absolute difference
+</span><span class="n">epsilonM</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="c1"># Mean of error
+</span><span class="n">epsilonSD</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1"># SD of error
+</span><span class="n">N</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="c1"># sample size
+</span><span class="n">ITERS</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">
+
+</span><span class="n">expRawDiff</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cortIndivDiffMean</span><span class="w">
+</span><span class="n">expPercDiff</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cortIndivDiffMean</span><span class="o">/</span><span class="n">cortPopMeanT1</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="1--make-a-function-to-let-us-draw-from-some-distributions-without-worrying-about-their-parameterization">1.  Make a function to let us draw from some distributions without worrying about their parameterization.</h2>
+
+<p>We can also use this to get each person’s difference score.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">someSample</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">popmean</span><span class="p">,</span><span class="n">popsd</span><span class="p">,</span><span class="n">dist</span><span class="o">=</span><span class="s1">'gamma'</span><span class="p">){</span><span class="w">
+	</span><span class="k">if</span><span class="p">(</span><span class="n">dist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'gamma'</span><span class="p">){</span><span class="w">
+		</span><span class="n">shape</span><span class="o">=</span><span class="n">popmean</span><span class="o">^</span><span class="m">2</span><span class="o">/</span><span class="n">popsd</span><span class="o">^</span><span class="m">2</span><span class="w">
+		</span><span class="n">scale</span><span class="o">=</span><span class="n">popsd</span><span class="o">^</span><span class="m">2</span><span class="o">/</span><span class="n">popmean</span><span class="w">
+		</span><span class="nf">return</span><span class="p">(</span><span class="n">rgamma</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">))</span><span class="w">
+	</span><span class="p">}</span><span class="w">
+	</span><span class="k">if</span><span class="p">(</span><span class="n">dist</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'norm'</span><span class="p">){</span><span class="w">
+		</span><span class="nf">return</span><span class="p">(</span><span class="n">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">mean</span><span class="o">=</span><span class="n">popmean</span><span class="p">,</span><span class="n">sd</span><span class="o">=</span><span class="n">popsd</span><span class="p">))</span><span class="w">
+	</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="2-now-lets-write-a-function-to-build-our-data-frame">2. Now, let’s write a function to build our data frame</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">prePostDFgen</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">meanInit</span><span class="p">,</span><span class="n">sdInit</span><span class="p">,</span><span class="n">meanDiff</span><span class="p">,</span><span class="n">sdDiff</span><span class="p">,</span><span class="n">eM</span><span class="p">,</span><span class="n">eSD</span><span class="p">,</span><span class="n">distInit</span><span class="o">=</span><span class="s1">'gamma'</span><span class="p">,</span><span class="n">distDiff</span><span class="o">=</span><span class="s1">'norm'</span><span class="p">){</span><span class="w">
+	</span><span class="c1">#Returns a DF with c('pre','post') %in% names(DF)  
+</span><span class="w">
+	</span><span class="n">initSamp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">someSample</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">meanInit</span><span class="p">,</span><span class="n">sdInit</span><span class="p">,</span><span class="n">distInit</span><span class="p">)</span><span class="w">
+	</span><span class="n">diffSamp</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">someSample</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">meanDiff</span><span class="p">,</span><span class="n">sdDiff</span><span class="p">,</span><span class="n">distDiff</span><span class="p">)</span><span class="w">
+	</span><span class="n">errSampI</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">eM</span><span class="p">,</span><span class="n">eSD</span><span class="p">)</span><span class="w">
+	</span><span class="n">errSampD</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">eM</span><span class="p">,</span><span class="n">eSD</span><span class="p">)</span><span class="w">
+
+	</span><span class="n">data.frame</span><span class="p">(</span><span class="w">
+		</span><span class="n">pre</span><span class="o">=</span><span class="n">initSamp</span><span class="o">+</span><span class="n">errSampI</span><span class="p">,</span><span class="w">
+		</span><span class="n">post</span><span class="o">=</span><span class="n">initSamp</span><span class="o">+</span><span class="n">diffSamp</span><span class="o">+</span><span class="n">errSampD</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="3-now-three-functions-to-calculate-the-within-person-changes">3. Now, three functions to calculate the within-person changes</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">testDF</span><span class="o">&lt;-</span><span class="n">prePostDFgen</span><span class="p">(</span><span class="w">
+  </span><span class="n">N</span><span class="p">,</span><span class="w">
+  </span><span class="n">cortPopMeanT1</span><span class="p">,</span><span class="w">
+  </span><span class="n">cortPopSDT1</span><span class="p">,</span><span class="w">
+  </span><span class="n">cortIndivDiffMean</span><span class="p">,</span><span class="w">
+  </span><span class="n">cortIndivDiffSD</span><span class="p">,</span><span class="w">
+  </span><span class="n">epsilonM</span><span class="p">,</span><span class="w">
+  </span><span class="n">epsilonSD</span><span class="p">,</span><span class="w">
+  </span><span class="n">distInit</span><span class="o">=</span><span class="s1">'gamma'</span><span class="p">,</span><span class="w">
+  </span><span class="n">distDiff</span><span class="o">=</span><span class="s1">'norm'</span><span class="p">)</span><span class="w">
+
+</span><span class="n">rawDiff</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w"> </span><span class="n">post</span><span class="o">-</span><span class="n">pre</span><span class="w"> </span><span class="c1"># pre and post should be vectors
+</span><span class="n">percDiff</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="n">post</span><span class="o">-</span><span class="n">pre</span><span class="p">)</span><span class="o">/</span><span class="n">pre</span><span class="w">
+</span><span class="n">residDiff</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w"> </span><span class="n">resid</span><span class="p">(</span><span class="n">lm</span><span class="p">(</span><span class="n">post</span><span class="o">~</span><span class="m">1</span><span class="o">+</span><span class="n">pre</span><span class="p">))</span><span class="w">
+
+</span><span class="n">rawDiffMean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">rawDiff</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">))</span><span class="w">
+</span><span class="n">percDiffMean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">percDiff</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">))</span><span class="w">
+</span><span class="n">residDiffMean</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w"> </span><span class="n">mean</span><span class="p">(</span><span class="n">residDiff</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">))</span><span class="w">
+
+</span><span class="n">rawDiffSD</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w"> </span><span class="n">sd</span><span class="p">(</span><span class="n">rawDiff</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">))</span><span class="w">
+</span><span class="n">percDiffSD</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w"> </span><span class="n">sd</span><span class="p">(</span><span class="n">percDiff</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">))</span><span class="w">
+</span><span class="n">residDiffSD</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w"> </span><span class="n">sd</span><span class="p">(</span><span class="n">residDiff</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">))</span><span class="w">
+
+</span><span class="n">corrDiffTests</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+	</span><span class="n">aDF</span><span class="o">&lt;-</span><span class="n">data.frame</span><span class="p">(</span><span class="w">
+		</span><span class="n">rawDiff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rawDiff</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">),</span><span class="w">
+		</span><span class="n">percDiff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">percDiff</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">),</span><span class="w">
+		</span><span class="n">residDiff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">residDiff</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w">
+		</span><span class="p">)</span><span class="w">
+
+	</span><span class="n">aCor</span><span class="o">&lt;-</span><span class="n">cor</span><span class="p">(</span><span class="n">aDF</span><span class="p">)</span><span class="w">
+	</span><span class="n">aList</span><span class="o">&lt;-</span><span class="n">as.list</span><span class="p">(</span><span class="n">aCor</span><span class="p">[</span><span class="n">lower.tri</span><span class="p">(</span><span class="n">aCor</span><span class="p">)])</span><span class="w">
+	</span><span class="nf">names</span><span class="p">(</span><span class="n">aList</span><span class="p">)</span><span class="o">&lt;-</span><span class="n">combn</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">aCor</span><span class="p">),</span><span class="m">2</span><span class="p">,</span><span class="n">FUN</span><span class="o">=</span><span class="n">paste</span><span class="p">,</span><span class="n">collapse</span><span class="o">=</span><span class="s1">'_'</span><span class="p">)</span><span class="w">
+	</span><span class="n">aList</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="4-for-each-iteration-we-want-to-do-some-things-to-the-df-and-record-our-results">4. For each iteration, we want to do some things to the DF and record our results.</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">getPrePostSummary</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">,</span><span class="n">listOfStatsFuncs</span><span class="p">){</span><span class="w">
+	</span><span class="n">library</span><span class="p">(</span><span class="n">plyr</span><span class="p">)</span><span class="w">
+	</span><span class="n">llply</span><span class="p">(</span><span class="n">listOfStatsFuncs</span><span class="p">,</span><span class="w">
+		</span><span class="k">function</span><span class="p">(</span><span class="n">aFunc</span><span class="p">){</span><span class="w">
+			</span><span class="n">rez</span><span class="o">&lt;-</span><span class="n">aFunc</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span><span class="n">post</span><span class="p">)</span><span class="w">
+			</span><span class="n">rez</span><span class="w">
+		</span><span class="p">})</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>I want  to put the list of functions together so we can pass it to our summary function.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">listOfFunc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">rawDiffMean</span><span class="p">,</span><span class="w"> </span><span class="n">rawDiffSD</span><span class="p">,</span><span class="w"> </span><span class="n">percDiffMean</span><span class="p">,</span><span class="w"> </span><span class="n">percDiffSD</span><span class="p">,</span><span class="w"> </span><span class="n">residDiffMean</span><span class="p">,</span><span class="w"> </span><span class="n">residDiffSD</span><span class="p">,</span><span class="w"> </span><span class="n">corrDiffTests</span><span class="p">)</span><span class="w">
+</span><span class="nf">names</span><span class="p">(</span><span class="n">listOfFunc</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'rawDiffMean'</span><span class="p">,</span><span class="w"> </span><span class="s1">'rawDiffSD'</span><span class="p">,</span><span class="w"> </span><span class="s1">'percDiffMean'</span><span class="p">,</span><span class="w"> </span><span class="s1">'percDiffSD'</span><span class="p">,</span><span class="w"> </span><span class="s1">'residDiffMean'</span><span class="p">,</span><span class="w"> </span><span class="s1">'residDiffSD'</span><span class="p">,</span><span class="s1">'corrDiffTests'</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="5-lets-put-it-all-together">5. Let’s put it all together.</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">simRezzies</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ldply</span><span class="p">(</span><span class="w">
+	</span><span class="m">1</span><span class="o">:</span><span class="n">ITERS</span><span class="p">,</span><span class="w">
+	</span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="w">
+		</span><span class="n">aDF</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">prePostDFgen</span><span class="p">(</span><span class="w">
+			</span><span class="n">N</span><span class="p">,</span><span class="w">
+			</span><span class="n">cortPopMeanT1</span><span class="p">,</span><span class="w">
+			</span><span class="n">cortPopSDT1</span><span class="p">,</span><span class="w">
+			</span><span class="n">cortIndivDiffMean</span><span class="p">,</span><span class="w">
+			</span><span class="n">cortIndivDiffSD</span><span class="p">,</span><span class="w">
+			</span><span class="n">epsilonM</span><span class="p">,</span><span class="w">
+			</span><span class="n">epsilonSD</span><span class="p">,</span><span class="w">
+			</span><span class="n">distInit</span><span class="o">=</span><span class="s1">'gamma'</span><span class="p">,</span><span class="w">
+			</span><span class="n">distDiff</span><span class="o">=</span><span class="s1">'norm'</span><span class="p">)</span><span class="w">
+		</span><span class="n">sumStats</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">getPrePostSummary</span><span class="p">(</span><span class="n">aDF</span><span class="o">$</span><span class="n">pre</span><span class="p">,</span><span class="w"> </span><span class="n">aDF</span><span class="o">$</span><span class="n">post</span><span class="p">,</span><span class="w"> </span><span class="n">listOfFunc</span><span class="p">)</span><span class="w">
+		</span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">sumStats</span><span class="p">)</span><span class="w">
+	</span><span class="p">})</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Here’s a sample of a one of our simulated data sets</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">testDF</span><span class="o">&lt;-</span><span class="n">prePostDFgen</span><span class="p">(</span><span class="w">
+  </span><span class="n">N</span><span class="p">,</span><span class="w">
+  </span><span class="n">cortPopMeanT1</span><span class="p">,</span><span class="w">
+  </span><span class="n">cortPopSDT1</span><span class="p">,</span><span class="w">
+  </span><span class="n">cortIndivDiffMean</span><span class="p">,</span><span class="w">
+  </span><span class="n">cortIndivDiffSD</span><span class="p">,</span><span class="w">
+  </span><span class="n">epsilonM</span><span class="p">,</span><span class="w">
+  </span><span class="n">epsilonSD</span><span class="p">,</span><span class="w">
+  </span><span class="n">distInit</span><span class="o">=</span><span class="s1">'gamma'</span><span class="p">,</span><span class="w">
+  </span><span class="n">distDiff</span><span class="o">=</span><span class="s1">'norm'</span><span class="p">)</span><span class="w">
+
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">melt</span><span class="p">(</span><span class="n">testDF</span><span class="p">),</span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">value</span><span class="p">))</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_histogram</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">variable</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">..density..</span><span class="p">),</span><span class="n">position</span><span class="o">=</span><span class="n">position_dodge</span><span class="p">())</span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_density</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="m">.2</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">variable</span><span class="p">))</span><span class="o">+</span><span class="n">theme</span><span class="p">(</span><span class="n">panel.background</span><span class="o">=</span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="s1">'#FFFFFF'</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## No id variables; using all as measure variables
+## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+</code></pre>
+</div>
+
+<p><img src="/figs/simulationexample/sample.png" alt="sample" /></p>
+
+<p>Here’s the result!</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">simRezzies</span><span class="o">$</span><span class="n">RawBias</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">expRawDiff</span><span class="o">-</span><span class="n">simRezzies</span><span class="o">$</span><span class="n">rawDiffMean</span><span class="w">
+</span><span class="n">simRezzies</span><span class="o">$</span><span class="n">PercBias</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">expPercDiff</span><span class="o">-</span><span class="n">simRezzies</span><span class="o">$</span><span class="n">percDiffMean</span><span class="w">
+
+</span><span class="n">library</span><span class="p">(</span><span class="n">knitr</span><span class="p">)</span><span class="w">
+</span><span class="n">kable</span><span class="p">(</span><span class="n">simRezzies</span><span class="p">,</span><span class="n">digits</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">rawDiffMean</th>
+      <th style="text-align: right">rawDiffSD</th>
+      <th style="text-align: right">percDiffMean</th>
+      <th style="text-align: right">percDiffSD</th>
+      <th style="text-align: right">residDiffMean</th>
+      <th style="text-align: right">residDiffSD</th>
+      <th style="text-align: right">corrDiffTests.rawDiff_percDiff</th>
+      <th style="text-align: right">corrDiffTests.rawDiff_residDiff</th>
+      <th style="text-align: right">corrDiffTests.percDiff_residDiff</th>
+      <th style="text-align: right">RawBias</th>
+      <th style="text-align: right">PercBias</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">4.01</td>
+      <td style="text-align: right">1.73</td>
+      <td style="text-align: right">0.44</td>
+      <td style="text-align: right">0.26</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.62</td>
+      <td style="text-align: right">0.87</td>
+      <td style="text-align: right">0.94</td>
+      <td style="text-align: right">0.67</td>
+      <td style="text-align: right">-0.01</td>
+      <td style="text-align: right">-0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.09</td>
+      <td style="text-align: right">1.49</td>
+      <td style="text-align: right">0.43</td>
+      <td style="text-align: right">0.22</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.42</td>
+      <td style="text-align: right">0.87</td>
+      <td style="text-align: right">0.95</td>
+      <td style="text-align: right">0.69</td>
+      <td style="text-align: right">-0.09</td>
+      <td style="text-align: right">-0.03</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3.95</td>
+      <td style="text-align: right">1.74</td>
+      <td style="text-align: right">0.43</td>
+      <td style="text-align: right">0.23</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.55</td>
+      <td style="text-align: right">0.92</td>
+      <td style="text-align: right">0.89</td>
+      <td style="text-align: right">0.68</td>
+      <td style="text-align: right">0.05</td>
+      <td style="text-align: right">-0.03</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.23</td>
+      <td style="text-align: right">1.81</td>
+      <td style="text-align: right">0.48</td>
+      <td style="text-align: right">0.27</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.70</td>
+      <td style="text-align: right">0.85</td>
+      <td style="text-align: right">0.94</td>
+      <td style="text-align: right">0.65</td>
+      <td style="text-align: right">-0.23</td>
+      <td style="text-align: right">-0.08</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.02</td>
+      <td style="text-align: right">1.82</td>
+      <td style="text-align: right">0.45</td>
+      <td style="text-align: right">0.35</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.67</td>
+      <td style="text-align: right">0.80</td>
+      <td style="text-align: right">0.92</td>
+      <td style="text-align: right">0.59</td>
+      <td style="text-align: right">-0.02</td>
+      <td style="text-align: right">-0.05</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.29</td>
+      <td style="text-align: right">1.72</td>
+      <td style="text-align: right">0.46</td>
+      <td style="text-align: right">0.23</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.64</td>
+      <td style="text-align: right">0.88</td>
+      <td style="text-align: right">0.95</td>
+      <td style="text-align: right">0.71</td>
+      <td style="text-align: right">-0.29</td>
+      <td style="text-align: right">-0.06</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.04</td>
+      <td style="text-align: right">1.89</td>
+      <td style="text-align: right">0.44</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.81</td>
+      <td style="text-align: right">0.88</td>
+      <td style="text-align: right">0.95</td>
+      <td style="text-align: right">0.71</td>
+      <td style="text-align: right">-0.04</td>
+      <td style="text-align: right">-0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.28</td>
+      <td style="text-align: right">1.98</td>
+      <td style="text-align: right">0.47</td>
+      <td style="text-align: right">0.29</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.86</td>
+      <td style="text-align: right">0.87</td>
+      <td style="text-align: right">0.94</td>
+      <td style="text-align: right">0.68</td>
+      <td style="text-align: right">-0.28</td>
+      <td style="text-align: right">-0.07</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3.94</td>
+      <td style="text-align: right">1.67</td>
+      <td style="text-align: right">0.43</td>
+      <td style="text-align: right">0.22</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.66</td>
+      <td style="text-align: right">0.86</td>
+      <td style="text-align: right">0.99</td>
+      <td style="text-align: right">0.79</td>
+      <td style="text-align: right">0.06</td>
+      <td style="text-align: right">-0.03</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3.92</td>
+      <td style="text-align: right">1.73</td>
+      <td style="text-align: right">0.44</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.69</td>
+      <td style="text-align: right">0.89</td>
+      <td style="text-align: right">0.98</td>
+      <td style="text-align: right">0.78</td>
+      <td style="text-align: right">0.08</td>
+      <td style="text-align: right">-0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.33</td>
+      <td style="text-align: right">1.61</td>
+      <td style="text-align: right">0.47</td>
+      <td style="text-align: right">0.21</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.61</td>
+      <td style="text-align: right">0.79</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.79</td>
+      <td style="text-align: right">-0.33</td>
+      <td style="text-align: right">-0.07</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.22</td>
+      <td style="text-align: right">1.65</td>
+      <td style="text-align: right">0.46</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.58</td>
+      <td style="text-align: right">0.85</td>
+      <td style="text-align: right">0.96</td>
+      <td style="text-align: right">0.69</td>
+      <td style="text-align: right">-0.22</td>
+      <td style="text-align: right">-0.06</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3.61</td>
+      <td style="text-align: right">1.39</td>
+      <td style="text-align: right">0.41</td>
+      <td style="text-align: right">0.23</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.33</td>
+      <td style="text-align: right">0.80</td>
+      <td style="text-align: right">0.96</td>
+      <td style="text-align: right">0.62</td>
+      <td style="text-align: right">0.39</td>
+      <td style="text-align: right">-0.01</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3.99</td>
+      <td style="text-align: right">1.50</td>
+      <td style="text-align: right">0.46</td>
+      <td style="text-align: right">0.28</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.39</td>
+      <td style="text-align: right">0.84</td>
+      <td style="text-align: right">0.93</td>
+      <td style="text-align: right">0.63</td>
+      <td style="text-align: right">0.01</td>
+      <td style="text-align: right">-0.06</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3.75</td>
+      <td style="text-align: right">1.62</td>
+      <td style="text-align: right">0.42</td>
+      <td style="text-align: right">0.22</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.51</td>
+      <td style="text-align: right">0.89</td>
+      <td style="text-align: right">0.94</td>
+      <td style="text-align: right">0.71</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">-0.02</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3.90</td>
+      <td style="text-align: right">1.92</td>
+      <td style="text-align: right">0.43</td>
+      <td style="text-align: right">0.28</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.83</td>
+      <td style="text-align: right">0.83</td>
+      <td style="text-align: right">0.95</td>
+      <td style="text-align: right">0.66</td>
+      <td style="text-align: right">0.10</td>
+      <td style="text-align: right">-0.03</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.22</td>
+      <td style="text-align: right">1.75</td>
+      <td style="text-align: right">0.44</td>
+      <td style="text-align: right">0.22</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.74</td>
+      <td style="text-align: right">0.87</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.82</td>
+      <td style="text-align: right">-0.22</td>
+      <td style="text-align: right">-0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.10</td>
+      <td style="text-align: right">1.66</td>
+      <td style="text-align: right">0.45</td>
+      <td style="text-align: right">0.22</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.64</td>
+      <td style="text-align: right">0.90</td>
+      <td style="text-align: right">0.99</td>
+      <td style="text-align: right">0.82</td>
+      <td style="text-align: right">-0.10</td>
+      <td style="text-align: right">-0.05</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.25</td>
+      <td style="text-align: right">1.49</td>
+      <td style="text-align: right">0.46</td>
+      <td style="text-align: right">0.21</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.45</td>
+      <td style="text-align: right">0.87</td>
+      <td style="text-align: right">0.98</td>
+      <td style="text-align: right">0.75</td>
+      <td style="text-align: right">-0.25</td>
+      <td style="text-align: right">-0.06</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3.77</td>
+      <td style="text-align: right">1.75</td>
+      <td style="text-align: right">0.40</td>
+      <td style="text-align: right">0.22</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.74</td>
+      <td style="text-align: right">0.87</td>
+      <td style="text-align: right">1.00</td>
+      <td style="text-align: right">0.84</td>
+      <td style="text-align: right">0.23</td>
+      <td style="text-align: right">0.00</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.07</td>
+      <td style="text-align: right">1.80</td>
+      <td style="text-align: right">0.44</td>
+      <td style="text-align: right">0.22</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.76</td>
+      <td style="text-align: right">0.89</td>
+      <td style="text-align: right">0.98</td>
+      <td style="text-align: right">0.80</td>
+      <td style="text-align: right">-0.07</td>
+      <td style="text-align: right">-0.04</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">3.90</td>
+      <td style="text-align: right">1.86</td>
+      <td style="text-align: right">0.41</td>
+      <td style="text-align: right">0.27</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.80</td>
+      <td style="text-align: right">0.88</td>
+      <td style="text-align: right">0.97</td>
+      <td style="text-align: right">0.76</td>
+      <td style="text-align: right">0.10</td>
+      <td style="text-align: right">-0.01</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">4.23</td>
+      <td style="text-align: right">1.67</td>
+      <td style="text-align: right">0.46</td>
+      <td style="text-align: right">0.25</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1.60</td>
+      <td style="text-align: right">0.88</td>
+      <td style="text-align: right">0.96</td>
+      <td style="text-align: right">0.72</td>
+      <td style="text-align: right">-0.23</td>
+      <td style="text-align: right">-0.06</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">…</td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+      <td style="text-align: right"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">sumSimRezzies</span><span class="o">&lt;-</span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">sapply</span><span class="p">(</span><span class="n">simRezzies</span><span class="p">,</span><span class="n">mean</span><span class="p">))</span><span class="w">
+
+</span><span class="n">kable</span><span class="p">(</span><span class="n">sumSimRezzies</span><span class="p">,</span><span class="n">col.names</span><span class="o">=</span><span class="s1">'Mean'</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: right">Mean</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">rawDiffMean</td>
+      <td style="text-align: right">4.0030541</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">rawDiffSD</td>
+      <td style="text-align: right">1.7294373</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">percDiffMean</td>
+      <td style="text-align: right">0.4341326</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">percDiffSD</td>
+      <td style="text-align: right">0.2447261</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">residDiffMean</td>
+      <td style="text-align: right">0.0000000</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">residDiffSD</td>
+      <td style="text-align: right">1.6614440</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">corrDiffTests.rawDiff_percDiff</td>
+      <td style="text-align: right">0.8648646</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">corrDiffTests.rawDiff_residDiff</td>
+      <td style="text-align: right">0.9610976</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">corrDiffTests.percDiff_residDiff</td>
+      <td style="text-align: right">0.7275404</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">RawBias</td>
+      <td style="text-align: right">-0.0030541</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">PercBias</td>
+      <td style="text-align: right">-0.0341326</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+ 
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+var disqus_config = function () {
+    this.page.url = "https://jflournoy.github.io/r%20tutorial/2014/11/12/simulationexample/";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = "/r%20tutorial/2014/11/12/simulationexample"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://jflournoy-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    </article>
+    <span class="print-footer">Simulation Example - November 12, 2014 - John C. Flournoy</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:flournoy@uoregon.edu"><span class="icon-mail"></span></a></li>    
+    
+      <li>
+        <a href="//www.twitter.com/flourneuro"><span class="icon-twitter"></span></a>
+      </li>
+    
+      <li>
+        <a href="//github.com/jflournoy"><span class="icon-github"></span></a>
+      </li>
+    
+      <li>
+        <a href="/feed"><span class="icon-feed"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;&nbsp;JOHN C. FLOURNOY</span></br> <br>
+<span>This site created with the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a> in <a href="//jekyllrb.com">Jekyll</a>.</span> 
+</div>  
+</footer>
+
+  </body>
+</html>
