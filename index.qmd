@@ -8,8 +8,7 @@ fontsize: 12pt
 
 ![](profile_drawing.png){fig-alt='A picture of my face, smiling' style="border-radius: 50%; width: 250px; height: 250px; object-fit: cover" fig-align='center' }
 
-Hi there. I am a principal research scientist, statistics and psychometrics focus, with the Developer Success Lab at Pluralsight where we learn about how software engineering teams and technologist learners can thrive. I have a PhD in psychology and am a (reformed fMRI) neuroscientist with previous background in adolescent development, stress, and well-being. 
-
+I'm a principal research scientist at Pluralsight's Developer Success Lab, where I study how software engineering teams and technologists learn and thrive. My unique perspective comes from bridging multiple disciplines:
 
 :::{.column-margin style="font-size: 80%; text-align: center"}
 
@@ -19,11 +18,19 @@ Since 1996
 
 :::
 
-I am passionate about methodological and empirical rigor. For a long time, this has pirmarily meant statistical rigor to me, entailing expertise in robust modeling and uncertainty quantification of phenomena including survey responses, experiments, and incidental observational data (like Jira tickets, in forthcoming work). I tend to use Bayesian methods via Stan and <code class='bg-dark'>brms</code> in R, and have a wealth of experience with longitudinal data at a variety of cadences.
+- Deep methodological and empirical rigor (which has primarily meant statistical rigor to me), with particular strength in Bayesian modeling using Stan and <code class='bg-dark'>brms</code> in R
+- A PhD in psychology and background as a (reformed fMRI) neuroscientist, specializing in adolescent development, stress, and well-being
+- Strong focus on both empirical and conceptual rigor, integrating quantitative methods with philosophical frameworks
 
-Connecting our research to the real experiences of the people we serve is paramount. So my understanding of rigor has expanded to further incorporate questions of construct validity (of course), but even more importantly, conceptual and philosophical clarity. Anna Alexandrova’s “A Philosophy for the Science of Well-Being” has shaped my understanding of both how to do this, and the urgency I feel we need to do more of this work. [Alexandrova, A. (2017). _A philosophy for the science of well-being_. Oxford university press.]{.aside}.
+My research approach stands out through:
 
-<big>I strive to be effective through this intimate dialogue between our numeric approach, our theory, and our philosophy of the phenomena of interest.</big>
+- Advanced statistical modeling and uncertainty quantification across diverse data sources - from traditional surveys and experiments to incidental observational data like Jira tickets (in forthcoming work)
+- Extensive experience with longitudinal data at various cadences
+- Deep commitment to construct validity and philosophical foundations, shaped profoundly by works like Alexandrova's "A Philosophy for the Science of Well-Being"[Alexandrova, A. (2017). _A philosophy for the science of well-being_. Oxford university press.]{.aside}.
+
+I strive to be effective through this intimate dialogue between our numeric approach, our theory, and our philosophy of the phenomena of interest
+
+
 
 ![](favicon.png){style='background: #666; border-radius: 10%; object-fit: cover; height: 1em' fig-align='center'} 
 
