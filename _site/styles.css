@@ -1,1 +1,5 @@
 /* css styles */
+html, body {
+    min-height: 100vh;
+    background-attachment: fixed;
+}
