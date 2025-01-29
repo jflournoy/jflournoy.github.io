@@ -1,0 +1,29 @@
+---
+title: "John C. Flournoy, PhD"
+subtitle: "Developer Science Methods Geek"
+page-layout: article
+fontsize: 12pt
+---
+
+
+![](profile_drawing.png){fig-alt='A picture of my face, smiling' style="border-radius: 50%; width: 250px; height: 250px; object-fit: cover" fig-align='center' }
+
+Hi there. I'm a psychologist and (reformed fMRI) neuroscientist studying software engineering teams and technologist learners. I am a prinicipal research scientist, statistics and psychometrics focus, with the Developer Success Lab at Pluralsight, under the direction of [Dr. Cat Hicks](https://www.drcathicks.com/).
+
+:::{.column-margin style="font-size: 80%; text-align: center"}
+
+![](under-construction90s-90s.gif){fig-alt='Under construction 90s gif' width="100px"}
+
+Since 1996
+
+:::
+
+I am passionate about methodological and empirical rigor. For a long time, this has meant _statistical_ rigor to me, entailing expertise in robust modeling and uncertainty quantification of phenomena from survey responses to task behavior to Jira tickets (in forthcoming work). I tend to use Bayesian methods via Stan and `brms` in R, and have a wealth of experience with longitudinal data at a variety of cadences.
+
+My understanding of rigor has expanded to further incorporate questions of construct validity (of course), but even more importantly, conceptual and philosophical clarity. Anna Alexandrova's "A Philosophy for the Science of Well-Being" has shaped my understanding of both how to do this, and the urgency I feel we need to do more of this work [Alexandrova, A. (2017). _A philosophy for the science of well-being_. Oxford university press.]{.aside}.
+
+<big>In short, there is an intimate dialogue between our numeric approach, our theory, and our philosophy of the phenomena of interest.</big>
+
+
+<a href="trophy.html" style='text-decoration:none; color: blue'>.</a>
+

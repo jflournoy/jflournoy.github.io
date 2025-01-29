@@ -1,0 +1,7 @@
+---
+title: silly trophies
+---
+
+
+[![trophy](https://github-profile-trophy.vercel.app/?username=jflournoy&no-frame=true&theme=dark_lover)](https://github.com/ryo-ma/github-profile-trophy)
+

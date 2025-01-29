@@ -1,0 +1,42 @@
+project:
+  type: website
+
+website:
+  title: "science is a verb"
+  favicon: 'favicon.png'
+  navbar:
+    background: dark
+    right:
+      - text: "{{< fa brands bluesky >}}"
+        href: https://bsky.app/profile/flournoy.bsky.social
+      - text: "{{< fa brands github >}}"
+        href: https://www.github.com/jflournoy
+      - text: "{{< fa brands linkedin >}}"
+        href: https://www.linkedin.com/in/johnflournoy/
+    search: true
+    left:
+      - href: index.qmd
+        text: Home
+      - pubs.qmd
+      - resume.qmd
+  page-footer: 
+    background: none
+    right: "{{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}} <a href='https://creativecommons.org/licenses/by/4.0/'>CC BY 4.0</a>"
+  
+format:
+  html:
+    theme: vapor
+    css: styles.css
+    toc: true
+    include-in-header: 
+      - text: |
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    mainfont: Cormorant
+    monofont: Fira Code
+    code-block-bg: true
+    code-line-numbers: true
+
+
+
