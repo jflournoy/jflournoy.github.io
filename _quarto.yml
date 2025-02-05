@@ -19,6 +19,8 @@ website:
         text: Home
       - pubs.qmd
       - resume.qmd
+      - href: https://dsl.pubpub.org
+        text: "Developer Science Review {{< fa solid square-up-right>}}"
   page-footer: 
     background: none
     right: "{{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}} <a href='https://creativecommons.org/licenses/by/4.0/'>CC BY 4.0</a>"
@@ -32,7 +34,7 @@ format:
       - text: |
           <link rel="preconnect" href="https://fonts.googleapis.com">
           <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-          <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Fira+Code:wght@300..700&family=Fira+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     mainfont: Cormorant
     monofont: Fira Code
     code-block-bg: true

@@ -3,3 +3,8 @@ html, body {
     min-height: 100vh;
     background-attachment: fixed;
 }
+pre code:not([class]) {
+  background-color: #111111;
+  color: #bbbbaa;
+  font-family: Fira Mono;
+}
