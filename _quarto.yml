@@ -24,6 +24,9 @@ website:
   page-footer: 
     background: none
     right: "{{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}} <a href='https://creativecommons.org/licenses/by/4.0/'>CC BY 4.0</a>"
+    left: |
+          <!-- 100% privacy-first analytics -->
+          <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
   
 format:
   html:
