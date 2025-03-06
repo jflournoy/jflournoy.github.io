@@ -172,6 +172,10 @@ window.Quarto = {
 <span class="menu-text">Resume</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./cv_page.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="https://dsl.pubpub.org"> 
 <span class="menu-text">Developer Science Review <i class="fa-solid fa-square-up-right" aria-label="square-up-right"></i></span></a>
   </li>  
@@ -976,12 +980,7 @@ window.Quarto = {
 <span id="cb19-21"><a href="#cb19-21"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> mean), <span class="at">stat =</span> <span class="st">'identity'</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">'black'</span>) <span class="sc">+</span> </span>
 <span id="cb19-22"><a href="#cb19-22"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>var, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
 <span id="cb19-23"><a href="#cb19-23"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figs/riclpm-lavaan-demo/Plot predictions-1.png" class="img-fluid figure-img"></p>
-<figcaption>center</figcaption>
-</figure>
-</div>
+<p><img src="figs/riclpm-lavaan-demo/Plot predictions-1.png" class="img-fluid"></p>
 <p>We can also look at the correlations between the latent residuals, which are essentially the parts of the observed scores that are not accounted for by the stable individual differences in the above graph.</p>
 <p>{% quote hamaker_critique_2015 %} That is, the autoregressive parameters <span class="math inline">\(\alpha^{*}_{t}\)</span> and <span class="math inline">\(\delta^{*}_{t}\)</span> do not represent the stability of the rank order of individuals from one occasion to the next, but rather the amount of within-person carry-over effect (cf., Hamaker, 2012; Kuppens, Allen, &amp; Sheeber, 2010; Suls, Green, &amp; Hillis, 1998): If it is positive, it implies that occasions on which a person scored above his or her expected score are likely to be followed by occasions on which he or she still scores above the expected score again, and vice versa. (p.&nbsp;104-105) {% endquote %}</p>
 <p>So you may interpret the raw correlations in the graph below as the basis for the constrained model estimates of the path weights above. In the interest of checking against over-interpreting these relations, though, here is the authors’ footnote to the above statement:</p>
@@ -992,23 +991,13 @@ window.Quarto = {
 <span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">select</span>(<span class="sc">-</span>kappa, <span class="sc">-</span>omega) <span class="sc">%&gt;%</span></span>
 <span id="cb20-5"><a href="#cb20-5"></a>  <span class="fu">ggpairs</span>(<span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(ggally_smooth, <span class="at">alpha =</span> .<span class="dv">5</span>))) <span class="sc">+</span> </span>
 <span id="cb20-6"><a href="#cb20-6"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figs/riclpm-lavaan-demo/Plot clpm-1.png" class="img-fluid figure-img"></p>
-<figcaption>center</figcaption>
-</figure>
-</div>
+<p><img src="figs/riclpm-lavaan-demo/Plot clpm-1.png" class="img-fluid"></p>
 <p>Note how different, and one might say diminished, the relations in the above graph are versus the relations in the scatter-plot matrix of the raw data, below. The strength of this model seems to lie in its ability to keep one from being fooled into a within-person explanation of what are largely between-person relations.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>antiread <span class="sc">%&gt;%</span> </span>
 <span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">select</span>(<span class="sc">-</span>x4, <span class="sc">-</span>y4) <span class="sc">%&gt;%</span></span>
 <span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">ggpairs</span>(<span class="at">lower =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(ggally_smooth, <span class="at">alpha =</span> .<span class="dv">5</span>))) <span class="sc">+</span> </span>
 <span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figs/riclpm-lavaan-demo/Plot raw data scatter-1.png" class="img-fluid figure-img"></p>
-<figcaption>center</figcaption>
-</figure>
-</div>
+<p><img src="figs/riclpm-lavaan-demo/Plot raw data scatter-1.png" class="img-fluid"></p>
 
 
 </section>
