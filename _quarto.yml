@@ -8,7 +8,7 @@ website:
     background: dark
     right:
       - text: "{{< fa brands bluesky >}}"
-        href: https://bsky.app/profile/flournoy.bsky.social
+        href: https://bsky.app/profile/johnflournoy.science
       - text: "{{< fa brands github >}}"
         href: https://www.github.com/jflournoy
       - text: "{{< fa brands linkedin >}}"
