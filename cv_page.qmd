@@ -1,0 +1,11 @@
+---
+title: CV
+---
+
+:::{.column-page}
+
+![](jcflournoy-cv.pdf){width='100%' style="height: 50vh;"}
+
+:::
+
+[Download it](jcflournoy-cv.pdf)
