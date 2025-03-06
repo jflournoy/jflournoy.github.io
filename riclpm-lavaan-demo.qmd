@@ -715,7 +715,7 @@ predict(fitConstrainedARCL) %>%
   theme_classic()
 ```
 
-![center](figs/riclpm-lavaan-demo/Plot predictions-1.png)
+![](figs/riclpm-lavaan-demo/Plot predictions-1.png)
 
 We can also look at the correlations between the latent residuals, which are essentially the parts of the observed scores that are not accounted for by the stable individual differences in the above graph. 
 
@@ -747,7 +747,7 @@ predict(fitConstrainedARCL) %>%
   theme_classic()
 ```
 
-![center](figs/riclpm-lavaan-demo/Plot clpm-1.png)
+![](figs/riclpm-lavaan-demo/Plot clpm-1.png)
 
 Note how different, and one might say diminished, the relations in the above graph are versus the relations in the scatter-plot matrix of the raw data, below. The strength of this model seems to lie in its ability to keep one from being fooled into a within-person explanation of what are largely between-person relations.
 
@@ -759,5 +759,5 @@ antiread %>%
   theme_classic()
 ```
 
-![center](figs/riclpm-lavaan-demo/Plot raw data scatter-1.png)
+![](figs/riclpm-lavaan-demo/Plot raw data scatter-1.png)
 
