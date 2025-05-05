@@ -23,6 +23,8 @@ website:
         text: CV
       - href: https://dsl.pubpub.org
         text: "Developer Science Review {{< fa solid square-up-right>}}"
+      - href: lol.qmd
+        text: Links
   page-footer: 
     background: none
     right: "{{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}} <a href='https://creativecommons.org/licenses/by/4.0/'>CC BY 4.0</a>"

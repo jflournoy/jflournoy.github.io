@@ -1,0 +1,10 @@
+---
+title: "List of Links"
+page-layout: article
+---
+
+Before (good) search engines, we relied on lists of links on web pages we already knew how to find. For all of the magic an algorithmic recommendation system evinces, this is still a damn fine way to discover stuff you might like.
+
+- [A collection of images of maps on Unsplash I use as rotating new-tab backgrounds](https://unsplash.com/collections/-QxzbVy07E4/maps-of-interest)
+  - There wasn't a collection that targeted maps (and nothing else, excluding images of, e.g., people holding maps). I use the term "map" a little bit broadly to also include renderings of topographic data and e.g., needlepoint of middle-earth.
+- More coming soon!
