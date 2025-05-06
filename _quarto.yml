@@ -17,6 +17,8 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - text: "{{< fa regular lightbulb >}} Consulting"
+        href: consulting.qmd
       - pubs.qmd
       - resume.qmd
       - href: https://dsl.pubpub.org
@@ -30,7 +32,7 @@ website:
   
 format:
   html:
-    theme: vapor
+    theme: cosmo
     css: styles.css
     toc: true
     include-in-header: 
