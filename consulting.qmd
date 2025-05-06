@@ -1,0 +1,22 @@
+---
+title: "Consulting"
+format:
+  html:
+    theme: cosmo
+---
+
+
+:::{.container .mt-5 .p-5 .bg-light .bg-opacity-75 .rounded .text-dark}
+# Consulting Services
+
+I offer strategic research consulting at the intersection of behavioral science and software development. Whether you need help with experimental design, survey strategy, or data analysis, I bring academic rigor and industry know-how.
+
+**Let's work together on:**
+
+- Developer research strategy  
+- Mixed-methods study design  
+- Bayesian analysis & modeling  
+- Technical writing & reports  
+
+📬 [Contact me](mailto:your@email.com)
+:::
