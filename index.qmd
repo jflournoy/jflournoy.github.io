@@ -1,6 +1,6 @@
 ---
 title: "John C. Flournoy, PhD"
-subtitle: "Developer Scientist, Methods Geek"
+subtitle: "Social Scientist, Methods Geek"
 page-layout: article
 fontsize: 12pt
 ---
@@ -8,7 +8,7 @@ fontsize: 12pt
 
 ![](profile_drawing.png){fig-alt='A picture of my face, smiling' style="border-radius: 50%; width: 250px; height: 250px; object-fit: cover" fig-align='center' }
 
-I'm a principal research scientist at Pluralsight's Developer Success Lab, where I study how software engineering teams and technologists learn and thrive. My unique perspective comes from bridging multiple disciplines:
+I am a research scientist with a focus on statistical methodology, psychometrics, and research computing infrastructure. I have published on adolescent health and development, and driven business strategy with insights about software developers and other technologists. My unique perspective and skillset comes from:
 
 :::{.column-margin style="font-size: 80%; text-align: center"}
 
@@ -20,7 +20,7 @@ Since 1996
 
 - Deep methodological and empirical rigor (which has primarily meant statistical rigor to me), with particular strength in Bayesian modeling using Stan and <code class='bg-dark'>brms</code> in R
 - A PhD in psychology and background as a (reformed fMRI) neuroscientist, specializing in adolescent development, stress, and well-being
-- Strong focus on both empirical and conceptual rigor, integrating quantitative methods with philosophical frameworks
+- A strong focus on both empirical and conceptual rigor, integrating quantitative methods with philosophical frameworks and qualitative discovery
 
 My research approach stands out through:
 
@@ -29,7 +29,6 @@ My research approach stands out through:
 - Deep commitment to construct validity and philosophical foundations, shaped profoundly by works like Alexandrova's "A Philosophy for the Science of Well-Being"[Alexandrova, A. (2017). _A philosophy for the science of well-being_. Oxford university press.]{.aside}.
 
 I strive to be effective through this intimate dialogue between our numeric approach, our theory, and our philosophy of the phenomena of interest
-
 
 
 ![](favicon.png){style='background: #666; border-radius: 10%; object-fit: cover; height: 1em' fig-align='center'} 
