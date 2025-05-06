@@ -4,8 +4,8 @@ title: Resume
 
 :::{.column-page}
 
-![](jflournoy-resume-20250127.pdf){width='100%' style="height: 50vh;"}
+![](jflournoy-resume-20250423.pdf){width='100%' style="height: 50vh;"}
 
 :::
 
-[Download it](jflournoy-resume-20250127.pdf)
+[Download it](jflournoy-resume-20250423.pdf)

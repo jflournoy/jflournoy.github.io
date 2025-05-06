@@ -1,0 +1,151 @@
+---
+author-meta: 'John C. Flournoy, PhD'
+description: 'Research Scientist, Stats Maven'
+title-block-banner: false 
+title-block: false
+bibliography: Flournoy.bib
+format: 
+  pdf:
+    pdf-engine: xelatex
+    include-in-header: 
+      text: |
+        \usepackage{fontspec}
+        \usepackage{geometry}
+        \usepackage{fontawesome5}
+        \usepackage{enumitem}
+        \usepackage{etoolbox}
+        \usepackage{changepage}
+        \defaultfontfeatures{Ligatures=TeX, Contextuals=Alternate}
+        
+        % Adjust page margins to be more compact
+        \geometry{margin=0.75in}
+        
+        % MAIN (SERIF) FONT: Cormorant
+        \setmainfont[
+          Path = fonts/,
+          UprightFont    = {Cormorant-Regular.ttf},
+          ItalicFont     = {Cormorant-Italic.ttf},
+          BoldFont       = {Cormorant-Bold.ttf},
+          BoldItalicFont = {Cormorant-BoldItalic.ttf}
+        ]{Cormorant}
+
+        % SANS FONT: Montserrat
+        \setsansfont[
+          Path = fonts/,
+          UprightFont    = {Montserrat-Regular.ttf},
+          ItalicFont     = {Montserrat-Italic.ttf},
+          BoldFont       = {Montserrat-Bold.ttf},
+          BoldItalicFont = {Montserrat-BoldItalic.ttf}
+        ]{Montserrat}
+
+        % MONO FONT: FiraCode
+        \setmonofont[
+          Path = fonts/,
+          UprightFont = {FiraCode-Regular.ttf},
+          BoldFont    = {FiraCode-Bold.ttf},
+          Ligatures   = TeX,
+          Contextuals = Alternate
+        ]{Fira Code}
+
+        % If you want headings in sans:
+        \usepackage{sectsty}
+        \allsectionsfont{\sffamily}
+        
+        \usepackage[%
+          backend=biber,
+          natbib=true,
+          style=apa,
+          sorting=ydnt,
+        ]{biblatex} 
+        \renewcommand*\bibfont{\small} 
+        \DeclareLanguageMapping{american}{american-apa}
+        \DeclareLanguageMapping{english}{english-apa}
+        \newcommand{\entry}[2]{%
+          \noindent \textbf{#1} \hfill {\small #2}
+        }
+        
+        % Customize all itemize environments globally
+        \setlist[itemize]{
+          leftmargin=1em,
+          itemsep=0.2em,
+          parsep=0em,
+          topsep=0.3em,
+          rightmargin=10em
+        }
+        
+        % Additional customization for itemize in work experience sections
+        \BeforeBeginEnvironment{itemize}{\vspace{0.1em}\setlength{\parindent}{0pt}}
+        \AfterEndEnvironment{itemize}{\vspace{0.4em}}
+    include-before-body:
+      text: |
+        % Custom title with less spacing
+        \begin{center}
+        {\LARGE\sffamily\textbf{John C. Flournoy, PhD}\par}
+        \vspace{0.2em}
+        {\large\sffamily Research Scientist, Stats Maven\par}
+        \vspace{0.3em}
+        
+        % Contact information with Font Awesome icons
+        \sffamily\small
+        \faEnvelope\ \href{mailto:jcflournoyphd@pm.me}{jcflournoyphd@pm.me} \quad
+        \faGlobe\ \href{https://johnflournoy.science}{johnflournoy.science} \quad
+        \faGithub\ \href{https://github.com/jflournoy}{github.com/jflournoy} \quad
+        \faAt\ \href{https://bsky.app/profile/johnflournoy.science}{johnflournoy.science}
+        \end{center}
+        \vspace{0.5em}
+    toc: false
+    cite-method: biblatex
+    fontsize: 10pt
+    keep-tex: true
+output-file: jcflournoy-cv.pdf
+nocite: |
+  @*
+---
+
+# Education
+
+\entry{Ph.D., Psychology, University of Oregon \\ \textmd{Dissertation: \textit{Adolescent Social Motives: Measurement and Implications}}}{2018}
+
+\entry{M.S., Psychology, University of Oregon}{2014}
+
+\entry{B.A., Cognitive Science, University of California, Berkeley}{2005}
+
+# Work Experience
+
+\entry{Principal Research Scientist, Developer Success Lab, Pluralsight}{2024--present}
+
+
+- Lead scientist on analysis of yearly ticket data from over 11k developers
+- Drove organizational insights across multiple research projects
+- Spearheaded community engagement overlay journal at [dsl.pubpub.org](http://dsl.pubpub.org)
+
+
+\entry{Research Associate, Harvard University, Cambridge, MA}{2018–2024}
+
+
+- Lead analyst on intensive longitudinal fMRI neuroimaging study of mechanisms linking stress to psychopathology in adolescents
+- Lead author of report on fMRI measurement reliability
+- Supported co-authors on intensive longitudinal digital phenotyping analysis of stress, sleep, digital communication, and physical activity
+- Lead analyst of task-based fMRI for multi-site adolescent cognitive control study (NIMH U01-MH109589, $17.1M)
+- Developed digital phenotyping data processing for NIMH R37-MH119194 ($9M)
+- Provided methodology and scientific computing support across two lab groups
+- note: post-doctoral scholar from 2018-2020
+
+
+\entry{Graduate Research Fellow, University of Oregon, Eugene, OR}{2012–2018}
+
+- Developed hierarchical Bayesian model of reinforcement learning for adolescent social motives
+- Collected data from 300+ participants, including foster-care-involved adolescents
+- Dissertation: *Adolescent Social Motives: Measurement and Implications*
+- Developed expertise in longitudinal personality, fMRI, and cognitive task data using multilevel and structural equation modeling
+- Validated new self-report and task measures, and evaluated validity and reliability of existing measures
+
+\entry{Research Coordinator, Stanford University, Stanford, CA}{2009–2012}
+
+- Coordinated Simons Foundation-funded study on sleep problems in autism using ambulatory polysomnography
+- Site coordinator for clinical trial testing a novel PET marker for $\beta$-amyloid in dementia patients
+
+# Publications
+
+::: {#refs}
+:::
