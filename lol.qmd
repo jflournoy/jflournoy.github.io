@@ -1,0 +1,14 @@
+---
+title: "List of Links"
+page-layout: article
+---
+
+Before (good) search engines, we relied on lists of links on web pages we already knew how to find. For all of the magic an algorithmic recommendation system evinces, this is still a damn fine way to discover stuff you might like.
+
+- [A collection of images of maps on Unsplash I use as rotating new-tab backgrounds](https://unsplash.com/collections/-QxzbVy07E4/maps-of-interest)
+  - There wasn't a collection that targeted maps (and nothing else, excluding images of, e.g., people holding maps). I use the term "map" a little bit broadly to also include renderings of topographic data and e.g., needlepoint of middle-earth.
+- [A list of authors and books (of fiction) that use extensive footnotes or indexing](https://www.miskatonic.org/footnotes.html)
+  - Thanks to [Finn Brunton](https://sts.ucdavis.edu/people/finn-brunton) for my first introduction, in one of his undergraduate essays, to the delight of footnotes.
+- [The website of Gene Keyes, author of the Cahill-Keyes map](https://www.genekeyes.com/index.html)
+  - This is a paragon exemplar of early internet website design, and hosts a wealth of thinking on map making, such as [this scathing review of the Fuller Dymaxion map](https://genekeyes.com/FULLER/BF-1-intro.html)
+- More coming soon!

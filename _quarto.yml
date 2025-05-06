@@ -8,7 +8,7 @@ website:
     background: dark
     right:
       - text: "{{< fa brands bluesky >}}"
-        href: https://bsky.app/profile/flournoy.bsky.social
+        href: https://bsky.app/profile/johnflournoy.science
       - text: "{{< fa brands github >}}"
         href: https://www.github.com/jflournoy
       - text: "{{< fa brands linkedin >}}"
@@ -21,8 +21,12 @@ website:
         href: consulting.qmd
       - pubs.qmd
       - resume.qmd
+      - href: cv_page.qmd
+        text: CV
       - href: https://dsl.pubpub.org
         text: "Developer Science Review {{< fa solid square-up-right>}}"
+      - href: lol.qmd
+        text: Links
   page-footer: 
     background: none
     right: "{{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}} <a href='https://creativecommons.org/licenses/by/4.0/'>CC BY 4.0</a>"
