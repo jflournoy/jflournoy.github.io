@@ -1,0 +1,9 @@
+---
+title: "Thank You"
+---
+
+:::{.badge-vapour .lead}
+
+Thank you! I will email you shortly.
+
+:::

@@ -8,7 +8,12 @@ fontsize: 12pt
 
 ![](profile_drawing.png){fig-alt='A picture of my face, smiling' style="border-radius: 50%; width: 250px; height: 250px; object-fit: cover" fig-align='center' }
 
+:::{.lead}
+
 I am a research scientist with a focus on statistical methodology, psychometrics, and research computing infrastructure. I have published on adolescent health and development, and driven business strategy with insights about software developers and other technologists. My unique perspective and skillset comes from:
+
+
+
 
 :::{.column-margin style="font-size: 80%; text-align: center"}
 
@@ -18,7 +23,7 @@ Since 1996
 
 :::
 
-- Deep methodological and empirical rigor (which has primarily meant statistical rigor to me), with particular strength in Bayesian modeling using Stan and <code class='bg-dark'>brms</code> in R
+- Deep methodological and empirical rigor (which has primarily meant statistical rigor to me), with particular strength in Bayesian modeling using Stan and <code class='bg-light'>brms</code> in R
 - A PhD in psychology and background as a (reformed fMRI) neuroscientist, specializing in adolescent development, stress, and well-being
 - A strong focus on both empirical and conceptual rigor, integrating quantitative methods with philosophical frameworks and qualitative discovery
 
@@ -30,11 +35,13 @@ My research approach stands out through:
 
 I strive to be effective through this intimate dialogue between our numeric approach, our theory, and our philosophy of the phenomena of interest
 
+:::
 
-![](favicon.png){style='background: #666; border-radius: 10%; object-fit: cover; height: 1em' fig-align='center'} 
+
+![](favicon.png){class=badge-vapor style='border-radius: 10%; object-fit: cover; height: 1.25em' fig-align='center'} 
 
 :::{style="text-align: center"}
 
-<a href="trophy.html" style='text-decoration:none; color: blue;'>.</a>
+<a href="trophy.html" style='text-decoration:none; color: #ccccff;'>.</a>
 
 :::
