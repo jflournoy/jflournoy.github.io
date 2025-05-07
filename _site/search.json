@@ -74,7 +74,7 @@
     "href": "riclpm-lavaan-demo.html",
     "title": "A better cross-lagged panel model, from Hamaker et al. (2015)",
     "section": "",
-    "text": "Update, 2019-11-11: There are a couple of new bits of code online that could be helpful if you are interested in these models.\nThis walk-through explains, briefly, why and how to run a RI-CLPM in R.\nAll code and data are available in the github repository"
+    "text": "Note\n\n\n\nHey! While you’re here, you should know that I’m looking for new consulting contracts and employment opportunities. Feel free to reach out if you’d like to chat about how I can help your team!\nUpdate, 2019-11-11: There are a couple of new bits of code online that could be helpful if you are interested in these models.\nThis walk-through explains, briefly, why and how to run a RI-CLPM in R.\nAll code and data are available in the github repository"
   },
   {
     "objectID": "riclpm-lavaan-demo.html#some-data",

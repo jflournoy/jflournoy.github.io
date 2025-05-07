@@ -9,6 +9,12 @@ format:
     toc: true
 ---
 
+:::{.callout-note .badge-vapor .lead}
+
+Hey! While you're here, you should know that I'm looking for new consulting contracts and employment opportunities. Feel free to reach out if you'd like to chat about how I can help your team!
+
+:::
+
 _Update, 2019-11-11:_ There are a couple of new bits of code online that could be helpful if you are interested in these models.
 
 1. I wrote an R package called [`riclpmr`](https://github.com/jflournoy/riclpmr) that will `lavaan` generate syntax for multivariate RI-CLPMs (and also provides the proper call to `lavaan` for estimating it).
