@@ -4,7 +4,46 @@ title: "Consulting Services"
 
 
 :::{.container .mt-5 .p-5 .bg-light .bg-opacity-75 .rounded .text-dark}
-I partner with teams to design and execute rigorous, reproducible research—combining advanced statistical methods with robust study design to inform decision-making. After earning a PhD in Psychology completing post-doctoral work at Harvard, and most recently leading technologist-focused science as Principal Research Scientist at the Developer Success Lab. I'm available to bring that same rigor directly to your projects. <span class=badge-vapor>📬 [Contact me](mailto:consulting@johnflournoy.science)</span>
+
+:::{.lead}
+I partner with teams to design and execute rigorous, reproducible research—combining advanced statistical methods with robust study design to inform decision-making. After earning a PhD in Psychology completing post-doctoral work at Harvard, and most recently leading technologist-focused science as Principal Research Scientist at the Developer Success Lab. I'm available to bring that same rigor directly to your projects. 
+:::
+
+::: {.card .shadow-sm .p-3 .mx-auto style="max-width:390px;"}
+
+<h3><span class="me-2 text-primary">{{< fa regular paper-plane >}}</span>Request a chat</h3>
+
+<p class="small text-muted mb-3">
+Or email me directly at <a href="mailto:consulting@johnflournoy.science">consulting@johnflournoy.science</a>
+</p>
+
+<form action="https://api.web3forms.com/submit" method="POST" class="row g-3">
+<input type="hidden" name="access_key" value="6e5f8ed8-2b4a-4b16-86f1-76fd0376b81f">
+<input type="hidden" name="redirect" value="https://johnflournoy.science/thankyou.html">
+
+<div class="col-md-6">
+<label for="name" class="form-label">Name</label>
+<input id="name" name="name" type="text" class="form-control" placeholder="Your name" required>
+</div>
+
+<div class="col-md-6">
+<label for="email" class="form-label">Email</label>
+<input id="email" name="email" type="email" class="form-control" placeholder="you@domain.com" required>
+</div>
+
+<div class="col-12">
+<label for="message" class="form-label">Message</label>
+<textarea id="message" name="message" rows="2" class="form-control" placeholder="How can I help?" required></textarea>
+</div>
+
+<input type="checkbox" name="botcheck" class="hidden" class="sr-only">
+
+<div class="col-12 text-end">
+<button type="submit" class="btn btn-primary">Send Message</button>
+</div>
+</form>
+
+:::
 
 ## Core expertise
 
