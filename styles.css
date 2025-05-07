@@ -5,40 +5,16 @@ html, body {
 }
 pre code:not([class]) {
   background-color: #666666;
-  color: #bbbbaa;
+  color: #cfcfaf;
   font-family: Fira Mono;
-}
-
-/* Add a subtle glow to headings */
-h1, h2, h3 {
-  text-shadow: 0 0 6px rgba(0, 255, 255, 0.3);
-  color: #111;
 }
 
 /* Slight gradient background for spice */
 body {
   background: linear-gradient(to bottom, #ffffff, #f2f2ff);
-}
-
-/* Optional: Give links some vapor pop */
-a {
-  color: #0077ff;
-  text-decoration: none;
-  transition: color 0.2s ease-in-out;
-}
-a:hover {
-  color: #00ccff;
-}
-
-/* Spice up callout blocks (optional) */
-.callout {
-  border-left: 5px solid #00ccff;
-  background-color: rgba(0, 255, 255, 0.05);
-}
-
-/* Add a touch of monospaced retro to code */
-code, pre {
-  font-family: "Fira Mono", monospace;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* Custom vapor-style badge (optional) */
@@ -48,4 +24,11 @@ code, pre {
   font-weight: bold;
   border-radius: 0.3rem;
   padding: 0.2em 0.6em;
+}
+
+/* Fancy title font */
+.navbar-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
 }

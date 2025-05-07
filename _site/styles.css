@@ -4,7 +4,31 @@ html, body {
     background-attachment: fixed;
 }
 pre code:not([class]) {
-  background-color: #111111;
-  color: #bbbbaa;
+  background-color: #666666;
+  color: #cfcfaf;
   font-family: Fira Mono;
+}
+
+/* Slight gradient background for spice */
+body {
+  background: linear-gradient(to bottom, #ffffff, #f2f2ff);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Custom vapor-style badge (optional) */
+.badge-vapor {
+  background-color: #00ccff;
+  color: #000;
+  font-weight: bold;
+  border-radius: 0.3rem;
+  padding: 0.2em 0.6em;
+}
+
+/* Fancy title font */
+.navbar-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
 }
