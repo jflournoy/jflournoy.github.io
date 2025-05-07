@@ -1,22 +1,43 @@
 ---
-title: "Consulting"
-format:
-  html:
-    theme: cosmo
+title: "Consulting Services"
 ---
 
 
 :::{.container .mt-5 .p-5 .bg-light .bg-opacity-75 .rounded .text-dark}
-# Consulting Services
+I partner with teams to design and execute rigorous, reproducible research—combining advanced statistical methods with robust study design to inform decision-making. After earning a PhD in Psychology completing post-doctoral work at Harvard, and most recently leading technologist-focused science as Principal Research Scientist at the Developer Success Lab. I'm available to bring that same rigor directly to your projects. <span class=badge-vapor>📬 [Contact me](mailto:consulting@johnflournoy.science)</span>
 
-I offer strategic research consulting at the intersection of behavioral science and software development. Whether you need help with experimental design, survey strategy, or data analysis, I bring academic rigor and industry know-how.
+## Core expertise
 
-**Let's work together on:**
+- **Statistical Methods & Modeling**
+  - Hierarchical Bayesian models, multilevel & SEM frameworks
+  - Simulation studies, causal inference, power analyses
+  - Reproducible pipelines in R, Stan, Python, SQL
 
-- Developer research strategy  
-- Mixed-methods study design  
-- Bayesian analysis & modeling  
-- Technical writing & reports  
+- **Research & Study Design**
+  - Experimental, observational, quasi-experimental, and mixed-methods approaches
+  - Pre-registration, sampling frameworks, measurement validation
+  - Integrated qualitative insights
+  - Survey-embedded experiments
 
-📬 [Contact me](mailto:your@email.com)
+- **Surveys & Instrument Development**
+  - Question wording, scale construction, psychometric evaluation
+  - Sampling strategies and weighting for representativeness
+  - Missing-data handling, data cleaning
+
+- **Applied Qualitative Integration**
+  - Qualitative interviewing
+  - Thematic transcript coding
+  - Quantitative natural language processing
+
+## Engagement Model
+
+All work is package-based—we collaborate on a plan that includes a block of hours each month for live collaboration (video calls, async chat) and all deliverables (analysis scripts, study plans, slide decks). Packages scale from a quick sanity check to an accelerated, end-to-end research sprint.
+
+## What I bring to your team
+
+- *Broad research experience:* 15+ years across multiple methods and domains of inquiry
+- *Transparent workflows:* Code and analyses shared via version control with clear documentation and we work together to make sure everything is reproducible.
+- *Crafted for your audience:* Reports, slide decks, and visuals are created to be understood by stakeholders with a variety of expertise.
+- *Collaborative, communicative:* Regular check-ins and draft reviews keep us aligned.
+
 :::
