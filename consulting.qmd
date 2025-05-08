@@ -5,8 +5,12 @@ title: "Consulting Services"
 
 :::{.container .mt-5 .p-5 .bg-light .bg-opacity-75 .rounded .text-dark}
 
+### Strategic Research, Scalable Data Science, Trustworthy Results
+
 :::{.lead}
-I partner with teams to design and execute rigorous, reproducible research—combining advanced statistical methods with robust study design to inform decision-making. After earning a PhD in Psychology completing post-doctoral work at Harvard, and most recently leading technologist-focused science as Principal Research Scientist at the Developer Success Lab. I'm available to bring that same rigor directly to your projects. 
+I partner with teams to design and execute rigorous, reproducible research---combining *advanced statistical methods*, *applied data science*, and *robust study design* to inform decision-making. 
+
+I earned my PhD in Psychology at the University of Oregon, completed post-doctoral work at Harvard where I was hired on as a Research Associate, and most recently led technologist-focused science as Principal Research Scientist at the Developer Success Lab. I'm available to bring that same rigor directly to your projects. 
 :::
 
 ::: {.card .shadow-sm .p-3 .mx-auto style="max-width:390px;"}
