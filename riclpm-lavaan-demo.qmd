@@ -11,7 +11,7 @@ format:
 
 :::{.callout-note .badge-vapor .lead}
 
-Hey! While you're here, you should know that I'm looking for new consulting contracts and employment opportunities. Feel free to reach out if you'd like to chat about how I can help your team!
+Hey! While you're here, you should know that I'm looking for new consulting contracts and employment opportunities. Feel free to [reach out](/consulting.html) if you'd like to chat about how I can help your team!
 
 :::
 
