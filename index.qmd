@@ -8,11 +8,15 @@ fontsize: 12pt
 
 ![](profile_drawing.png){fig-alt='A picture of my face, smiling' style="border-radius: 50%; width: 250px; height: 250px; object-fit: cover" fig-align='center' }
 
+:::{.callout-note .column-margin .text-center}
+
+Currently open to [consulting](/consulting.html) and [full-time work](https://www.linkedin.com/in/johnflournoy/)
+
+:::
+
 :::{.lead}
 
 I am a research scientist with a focus on statistical methodology, psychometrics, and research computing infrastructure. I have published on adolescent health and development, and driven business strategy with insights about software developers and other technologists. My unique perspective and skillset comes from:
-
-
 
 
 :::{.column-margin style="font-size: 80%; text-align: center"}
