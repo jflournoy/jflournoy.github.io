@@ -1,19 +1,23 @@
 ---
 title: "Consulting Services"
+toc: false
 ---
 
+# You have data. I have answers that drive outcomes.
 
-:::{.container .mt-5 .p-5 .bg-light .bg-opacity-75 .rounded .text-dark}
+And if you don't have the data _yet_, I'll help you gather it. Whether you're navigating uncertainty, testing a new direction, or refining what already works, I help turn raw data into strategic advantage. My work establishes insights that enables progress you can measure.
 
-### Strategic Research, Scalable Data Science, Trustworthy Results
+:::{.container .mt-5 .p-5 .bg-light .bg-opacity-75 .rounded .text-dark .shadow-sm}
+
+## Strategic Research, Scalable Data Science, Trustworthy Results
 
 :::{.lead}
+
 I partner with teams to design and execute rigorous, reproducible research---combining *advanced statistical methods*, *applied data science*, and *robust study design* to inform decision-making. 
 
-I earned my PhD in Psychology at the University of Oregon, completed post-doctoral work at Harvard where I was hired on as a Research Associate, and most recently led technologist-focused science as Principal Research Scientist at the Developer Success Lab. I'm available to bring that same rigor directly to your projects. 
 :::
 
-::: {.card .shadow-sm .p-3 .mx-auto style="max-width:390px;"}
+::: {.card .p-3 .mx-auto style="max-width:390px;"}
 
 <h3><span class="me-2 text-primary">{{< fa regular paper-plane >}}</span>Request a chat</h3>
 
@@ -49,7 +53,34 @@ Or email me directly at <a href="mailto:consulting@johnflournoy.science">consult
 
 :::
 
+:::
+
+### Not sure where to start? Figuring that out is part of what I do.
+
+:::{.column-margin}
+
+***🧭 Just need a plan or a second set of eyes?*** Packages start at **$500** for things like **analysis** or **research design review**, or **broad research planning advice**. If you need something more involved, we can scope that together.
+
+:::
+
+
+***Can you help us decide what questions are worth answering?***
+
+Yes. I’ll work with you to clarify your goals and refine your questions—so we focus on what matters and design the right strategy to answer it.
+
+***We don’t have clean data—can you still help us?***
+
+Absolutely. Data cleaning is half the work, and I consider it a core competency. I can work with messy, incomplete, or scattered data and help you turn it into something useful.
+
+***Will this work lead to tangible improvements we can present to leadership?***
+
+That’s the goal. From the start, we’ll align on questions that map directly to decisions, priorities, and key indicators. What goes into the slide deck will also move things forward.
+
+
 ## Core expertise
+
+I earned my PhD in Psychology at the University of Oregon, completed post-doctoral work at Harvard where I was hired on as a Research Associate, and most recently led technologist-focused science as Principal Research Scientist at the Developer Success Lab. I'm available to bring that same rigor directly to your projects. 
+
 
 - **Statistical Methods & Modeling**
   - Hierarchical Bayesian models, multilevel & SEM frameworks
@@ -82,5 +113,3 @@ All work is package-based—we collaborate on a plan that includes a block of ho
 - *Transparent workflows:* Code and analyses shared via version control with clear documentation and we work together to make sure everything is reproducible.
 - *Crafted for your audience:* Reports, slide decks, and visuals are created to be understood by stakeholders with a variety of expertise.
 - *Collaborative, communicative:* Regular check-ins and draft reviews keep us aligned.
-
-:::
