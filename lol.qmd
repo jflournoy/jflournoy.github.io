@@ -11,4 +11,8 @@ Before (good) search engines, we relied on lists of links on web pages we alread
   - Thanks to [Finn Brunton](https://sts.ucdavis.edu/people/finn-brunton) for my first introduction, in one of his undergraduate essays, to the delight of footnotes.
 - [The website of Gene Keyes, author of the Cahill-Keyes map](https://www.genekeyes.com/index.html)
   - This is a paragon exemplar of early internet website design, and hosts a wealth of thinking on map making, such as [this scathing review of the Fuller Dymaxion map](https://genekeyes.com/FULLER/BF-1-intro.html)
+- [local]{.badge-vapor} [Random Intercept Cross-Lagged Panel Model Tutorial](./riclpm-lavaan-demo.html)
+  - This is a tutorial I made a very, very, very long time ago that folks are still finding really helpful.
+- [local]{.badge-vapor} [How to plan and preregister a multiverse analysis](./multiverse-preregistration/)
+  - I and some good friends worked on a bunch of multiverse (aka specification-curve) analyses together and gathered our experiences and thoughts into this brief guide. It even has an awesome shiny app that [Dani Cosme, PhD](https://dcosme.github.io/), made.
 - More coming soon!
