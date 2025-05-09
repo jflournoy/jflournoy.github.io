@@ -3,7 +3,7 @@ title: "Consulting Services"
 toc: false
 ---
 
-# You have data. I have answers that drive outcomes.
+# You have data. Let's find answers to drive outcomes.
 
 And if you don't have the data _yet_, I'll help you gather it. Whether you're navigating uncertainty, testing a new direction, or refining what already works, I help turn raw data into strategic advantage. My work establishes insights that enables progress you can measure.
 
@@ -57,12 +57,6 @@ Or email me directly at <a href="mailto:consulting@johnflournoy.science">consult
 
 ### Not sure where to start? Figuring that out is part of what I do.
 
-:::{.column-margin}
-
-***🧭 Just need a plan or a second set of eyes?*** Packages start at **$500** for things like **analysis** or **research design review**, or **broad research planning advice**. If you need something more involved, we can scope that together.
-
-:::
-
 
 ***Can you help us decide what questions are worth answering?***
 
@@ -75,6 +69,10 @@ Absolutely. Data cleaning is half the work, and I consider it a core competency.
 ***Will this work lead to tangible improvements we can present to leadership?***
 
 That’s the goal. From the start, we’ll align on questions that map directly to decisions, priorities, and key indicators. What goes into the slide deck will also move things forward.
+
+***Just need a plan or a second set of eyes?*** 
+
+Packages start at **$500** for things like **analysis** or **research design review**, or **broad research planning advice**. If you need something more involved, we can scope that together.
 
 
 ## Core expertise
