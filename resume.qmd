@@ -2,11 +2,11 @@
 title: Resume
 ---
 
-[<span class=badge-vapor>Download it</span>](jflournoy-resume-20250508.pdf)
+[<span class=badge-vapor>Download it</span>](jflournoy-resume-20250813.pdf)
 
 :::{.column-page}
 
-![](jflournoy-resume-20250508.pdf){width='100%' style="height: 60vh;"}
+![](jflournoy-resume-20250813.pdf){width='100%' style="height: 60vh;"}
 
 :::
 
