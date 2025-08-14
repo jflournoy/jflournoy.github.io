@@ -23,9 +23,6 @@ website:
       - resume.qmd
       # - href: cv_page.qmd
       #   text: CV
-      - href: https://dsl.pubpub.org
-        text: "Developer Science Review {{< fa solid square-up-right>}}"
-        target: _new
       - href: lol.qmd
         text: Links
   page-footer: 
