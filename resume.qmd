@@ -1,5 +1,6 @@
 ---
 title: Resume
+format: html
 ---
 
 [<span class=badge-vapor>Download it</span>](jflournoy-resume-20250930.pdf)

@@ -1,5 +1,6 @@
 ---
 title: "Thank You"
+format: html
 ---
 
 :::{.badge-vapour .lead}

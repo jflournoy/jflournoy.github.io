@@ -1,6 +1,7 @@
 ---
 title: "Consulting Services"
 toc: false
+format: html
 ---
 
 # You have data. Let's find answers to drive outcomes.

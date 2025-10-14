@@ -2,6 +2,7 @@
 title: "Publications"
 bibliography: Flournoy.bib
 csl: apa-cv.csl
+format: html
 nocite: |
   @*
 ---

@@ -97,7 +97,6 @@ format:
     cite-method: biblatex
     fontsize: 10pt
     keep-tex: true
-    latex-auto-install: false
 output-file: jcflournoy-cv.pdf
 nocite: |
   @*
