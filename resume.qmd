@@ -3,11 +3,11 @@ title: Resume
 format: html
 ---
 
-[<span class=badge-vapor>Download it</span>](jflournoy-resume-20250930.pdf)
+[<span class=badge-vapor>Download it</span>](jflournoy-resume-20260202.pdf)
 
 :::{.column-page}
 
-![](jflournoy-resume-20250930.pdf){width='100%' style="height: 60vh;"}
+![](jflournoy-resume-20260202.pdf){width='100%' style="height: 60vh;"}
 
 :::
 
