@@ -12,13 +12,13 @@ Over the past few years I've been playing a lot. Each project below represents a
 
 ## Statistical Modeling & Analysis
 
-### {{< fa solid chart-line >}} PhD Unemployment Model [{{< fa brands github >}}](https://github.com/jflournoy/phd-unemployment-model)
+### {{< fa solid chart-line >}} PhD Unemployment Model [{{< fa brands github size=sm >}}](https://github.com/jflournoy/phd-unemployment-model)
 
 Bayesian time series analysis of PhD unemployment rates relative to general unemployment and other graduate degree holders, using Current Population Survey microdata from [IPUMS USA](https://usa.ipums.org/usa/index.shtml).
 
 **Why and what:** At the top of the second Trump administration, there was a lot of economic upheaval. My research team at Pluralsight was a casualty of the increasing cost of money in tech and general uncertainty. Meanwhile, my colleagues at Harvard and other institutions of higher education were having their funding frozen or rescinded entirely. I wanted to see this play out in the unemployment numbers and understand if the anecdotes were plentiful enough to notice at a national scale. The project involves Bayesian time series decomposition (GAMs, Gaussian processes, autoregressive structures), handling massive survey datasets (40M+ rows with `data.table` and `fst` for fast I/O), and applying test-driven development to statistical modeling workflows. It uses Stan via `brms` and `cmdstanr` for principled uncertainty quantification across multiple seasonal components, trends, and economic cycles. I learned that for as flexible as GAMs are, they don't handle huge shifts in smoothness well, and I was reminded that they don't lend themselves to easy mechanistic explanations.
 
-### {{< fa solid heart-pulse >}} Garmin Health Data Analysis [{{< fa brands github >}}](https://github.com/jflournoy/garmin-analysis)
+### {{< fa solid heart-pulse >}} Garmin Health Data Analysis [{{< fa brands github size=sm >}}](https://github.com/jflournoy/garmin-analysis)
 
 Bayesian analysis of personal wearable health data from Garmin, with interactive D3.js visualizations for exploring trends and cross-metric relationships.
 
@@ -26,25 +26,25 @@ Bayesian analysis of personal wearable health data from Garmin, with interactive
 
 ## AI/ML & Generative Systems
 
-### {{< fa solid images >}} Image Generation Pipeline v2 [{{< fa brands github >}}](https://github.com/jflournoy/image-gen-pipe-v2)
+### {{< fa solid images >}} Image Generation Pipeline v2 [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-gen-pipe-v2)
 
 A Node.js automated prompt refinement system for image generation, implementing **beam search**---a standard ML algorithm for exploring multiple promising paths simultaneously---applied to iterative prompt refinement for AI image generation.
 
 **Why and what:** If you've ever played with image generation in the Midjourney or OpenAI ecosystem, you've probably had the experience of iteratively refining your prompts. I wanted to see if I could get next-token prediction models to do some of this work for me. So I built a beam search to take a simple input prompt, expand it into a "what" description and a "how"-it-should-look description and then recombined it. Each generation of images (say, 4 at a time) are fed into a tournament ranking system to choose the top N images. Those prompts are then refined based on a vision-language model's feedback and generate the new generation. Fun and easy! I got to think about token security for a public-facing web app, session persistence, and UI design in addition to the above.
 
-### {{< fa solid book-open >}} Story Time [{{< fa brands github >}}](https://github.com/jflournoy/story-time)
+### {{< fa solid book-open >}} Story Time [{{< fa brands github size=sm >}}](https://github.com/jflournoy/story-time)
 
 A web-based tool for writers to expand, refine, revise, and restructure narratives using locally-hosted language models. 
 
 **Why and what:** I used to write terrible poetry and marginally better short stories. As a reader, I'm intrigued by writers' processes of developing a narrative. Playing around with online and local LLMs, I noticed that a single prompt and response, even when chained (e.g., pick up this story from where we left off) usually loses the narrative. So I started playing around with "outside-in" outline expansion. That is, start with the top level narrative points, then have an LLM expand each of those into an inner set of bullets---for each of those, expand into a more detailed set (keeping track of the next major point), and so on  That seemed to work a bit better. Not satisfied, and inspired by a conversation with a friend about agent swarms, I realized it might be fun to have agents play characters with an orchestrator who has knowledge of the overall narrative mission and where agents have access to limited context of the world they can access stored in something like a ChromaDB. This is very much a WIP.
 
-### {{< fa solid brain >}} Understanding LLMs [{{< fa brands github >}}](https://github.com/jflournoy/understanding-llms)
+### {{< fa solid brain >}} Understanding LLMs [{{< fa brands github size=sm >}}](https://github.com/jflournoy/understanding-llms)
 
 A hands-on exploration of how language models actually work---not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up.
 
 **Why and what:** Using LLMs to do work for you is old hat. Learning something new by making them make you do work for them is the new frontier. I wanted a Claude Code set up that would force me to learn. And I wanted to learn exactly how these fancy new next-token models work. So far I've re-learned everything I should have remembered from my UC Berkeley AI class back when neural networks were basically toy examples of a sort-of-abandoned method. The experience of being tutored by an LLM has been really useful, though, and it was trivially easy to set up.
 
-### {{< fa solid camera >}} Image Organizer [{{< fa brands github >}}](https://github.com/jflournoy/image-organizer)
+### {{< fa solid camera >}} Image Organizer [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-organizer)
 
 AI-powered image organization system for large local photo collections (100k+ images), with automatic tagging via multiple ML models, RAW file support, face and theme clustering with visualizations, and semantic search.
 
@@ -52,7 +52,7 @@ AI-powered image organization system for large local photo collections (100k+ im
 
 ## Simulation & Computational Modeling
 
-### {{< fa solid people-arrows >}} Wealth Stratification Agent-Based Model [{{< fa solid globe >}}](http://johnflournoy.science/wealth-strat_abm/) [{{< fa brands github >}}](https://github.com/jflournoy/wealth-strat_abm)
+### {{< fa solid people-arrows >}} Wealth Stratification Agent-Based Model [{{< fa solid circle-play size=sm >}}](http://johnflournoy.science/wealth-strat_abm/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/wealth-strat_abm)
 
 An agent-based model demonstrating how wealth inequality emerges across generations through genetic potential, environmental factors, assortative mating, and stochastic events.
 
@@ -60,7 +60,7 @@ An agent-based model demonstrating how wealth inequality emerges across generati
 
 ## Data Visualization & Geospatial Tools
 
-### {{< fa solid mountain-sun >}} Terrain Maker v2 [{{< fa brands github >}}](https://github.com/jflournoy/terrain-maker_v2)
+### {{< fa solid mountain-sun >}} Terrain Maker v2 [{{< fa brands github size=sm >}}](https://github.com/jflournoy/terrain-maker_v2)
 
 A Python library for creating custom terrain visualizations from Digital Elevation Models with Blender 3D rendering, supporting arbitrary spatial data overlays and multi-view rendering from any cardinal direction.
 
@@ -68,7 +68,7 @@ A Python library for creating custom terrain visualizations from Digital Elevati
 
 ## Research Publications & Infrastructure
 
-### {{< fa solid file-lines >}} No Silver Bullets: Software Cycle Time [{{< fa solid globe >}}](http://johnflournoy.science/no-silver-bullets/) [{{< fa brands github >}}](https://github.com/jflournoy/no-silver-bullets)
+### {{< fa solid file-lines >}} No Silver Bullets: Software Cycle Time [{{< fa solid newspaper size=sm >}}](http://johnflournoy.science/no-silver-bullets/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/no-silver-bullets)
 
 Repository for the peer-reviewed paper "No Silver Bullets: Why Understanding Software Cycle Time is Messy, Not Magic" (Flournoy, Lee, Wu, & Hicks, 2025; [doi:10.1007/s10664-025-10735-w](https://doi.org/10.1007/s10664-025-10735-w)). Published in *Empirical Software Engineering*. Analyzes 55,000+ observations across 216 organizations using Bayesian hierarchical modeling to separate individual and organizational variation in software development velocity.
 
@@ -76,7 +76,7 @@ Repository for the peer-reviewed paper "No Silver Bullets: Why Understanding Sof
 
 **Key finding:** Common workplace factors have precise but modest effects on cycle time, set against considerable unexplained variation---suggesting systems-level thinking rather than individual-focused interventions.
 
-### {{< fa brands docker >}} verse-cmdstan [{{< fa brands github >}}](https://github.com/jflournoy/verse-cmdstan)
+### {{< fa brands docker >}} verse-cmdstan [{{< fa brands github size=sm >}}](https://github.com/jflournoy/verse-cmdstan)
 
 Docker container extending [rocker/verse](https://hub.docker.com/r/rocker/verse) with pre-compiled CmdStan for reproducible Bayesian computing environments.
 
