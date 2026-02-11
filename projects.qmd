@@ -1,12 +1,14 @@
 ---
-title: "Projects & Experiments"
-subtitle: "Self-directed learning and experimental work across statistical, computational, and visualization domains"
+title: "Project Playground"
+subtitle: "Things I've built because they seemed fun and possibly useful"
 page-layout: article
 fontsize: 12pt
 format: html
 ---
 
-Throughout my entire educational and professional career, I have built skills and expertise through play, and I've built tools because they are enjoyable to build. I would say this is a core value, but it's also an indelible imperative for me. Over the past few years I've been playing a lot. These projects below reflect this play and continuous skill development across statistical modeling, computational tools, data visualization, and AI/ML applications. Each one represents a joyful exploration of topics and techniques that seemed cool and useful.
+Throughout my entire educational and professional career, I have built skills and expertise through play, and I've built tools because they are enjoyable to build. I would say this is a core value, but it's also an indelible imperative for me.
+
+Over the past few years I've been playing a lot. Each project below represents a joyful exploration of topics and techniques that caught my attention.
 
 ## Statistical Modeling & Analysis
 
@@ -14,13 +16,13 @@ Throughout my entire educational and professional career, I have built skills an
 
 Bayesian time series analysis of PhD unemployment rates relative to general unemployment and other graduate degree holders, using Current Population Survey microdata from [IPUMS USA](https://usa.ipums.org/usa/index.shtml).
 
-**Why and what:** At the top of the second Trump administration, there was a lot of economic upheaval. My research team at Pluralsight was a casualty of the increasing cost of money in tech and general uncertainty. Meanwhile, my colleagues at Harvard and other institutions of higher education were having their funding frozen or rescinded entirely. I wanted to see this play out in the unemployment numbers and understand if the anecdotes were plentiful enough to notice at a national scale. Here I use Bayesian time series decomposition (GAMs, Gaussian processes, autoregressive structures), handling massive survey datasets (40M+ rows with `data.table` and `fst` for fast I/O), and applying test-driven development to statistical modeling workflows. The project uses Stan via `brms` and `cmdstanr` for principled uncertainty quantification across multiple seasonal components, trends, and economic cycles. Here, I learned that for as flexible as GAMs are, they do not handle well huge shifts in smoothness, and I was reminded that they don't lend themselves to easy mechanistic explanations.
+**Why and what:** At the top of the second Trump administration, there was a lot of economic upheaval. My research team at Pluralsight was a casualty of the increasing cost of money in tech and general uncertainty. Meanwhile, my colleagues at Harvard and other institutions of higher education were having their funding frozen or rescinded entirely. I wanted to see this play out in the unemployment numbers and understand if the anecdotes were plentiful enough to notice at a national scale. The project involves Bayesian time series decomposition (GAMs, Gaussian processes, autoregressive structures), handling massive survey datasets (40M+ rows with `data.table` and `fst` for fast I/O), and applying test-driven development to statistical modeling workflows. It uses Stan via `brms` and `cmdstanr` for principled uncertainty quantification across multiple seasonal components, trends, and economic cycles. I learned that for as flexible as GAMs are, they don't handle huge shifts in smoothness well, and I was reminded that they don't lend themselves to easy mechanistic explanations.
 
 ### [Garmin Health Data Analysis](https://github.com/jflournoy/garmin-analysis)
 
 Bayesian analysis of personal wearable health data from Garmin, with interactive D3.js visualizations for exploring trends and cross-metric relationships.
 
-**Why and what:** Thanks to inspiration from several friends who lift (many of them women in academia), I've been working out. Now that I had this nice state-space model for the unemployment data, I wanted to see if I could model my personal data using similar methods. Applying Gaussian process models to noisy personal health time series (weight, sleep, activity, heart rate), building interactive web visualizations with D3.js, and working with Python's scientific stack (`uv`, CmdStan). As a developmental psychologist, what stood out to me about these data is how much I had to think about the time-lags at which processes unfold. I was reminded that this is an underappreciated point for many observational designs in psychology.
+**Why and what:** Thanks to inspiration from several friends who lift (many of them women in academia), I've been working out. Now that I had this nice state-space model for the unemployment data, I wanted to see if I could model my personal data using similar methods. Applying Gaussian process models to noisy personal health time series (weight, sleep, activity, heart rate), building interactive web visualizations with D3.js, and working with Python tooling (`uv`, CmdStan). As a developmental psychologist, what stood out to me about these data is how much I had to think about the time-lags at which processes unfold. I was reminded that this is an underappreciated point for many observational designs in psychology.
 
 ## AI/ML & Generative Systems
 
@@ -38,7 +40,7 @@ A web-based tool for writers to expand, refine, revise, and restructure narrativ
 
 ### [Understanding LLMs](https://github.com/jflournoy/understanding-llms)
 
-A hands-on exploration of how language models actually work---not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up. Maybe an attention model. Am I getting the terminology right here? I'm still learning.
+A hands-on exploration of how language models actually work---not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up.
 
 **Why and what:** Using LLMs to do work for you is old hat. Learning something new by making them make you do work for them is the new frontier. I wanted a Claude Code set up that would force me to learn. And I wanted to learn exactly how these fancy new next-token models work. So far I've re-learned everything I should have remembered from my UC Berkeley AI class back when neural networks were basically toy examples of a sort-of-abandoned method. The experience of being tutored by an LLM has been really useful, though, and it was trivially easy to set up.
 
@@ -54,7 +56,7 @@ AI-powered image organization system for large local photo collections (100k+ im
 
 An agent-based model demonstrating how wealth inequality emerges across generations through genetic potential, environmental factors, assortative mating, and stochastic events. Features a [live interactive demo](http://johnflournoy.science/wealth-strat_abm/).
 
-**Why and what:** Economic inequality is a major problem in the USA and in the world. This may or may not be controversial to you (to me, it's a pretty mundane and obvious fact). At the same time, meritocracy is a fairly uncontroversial system of reward that many strive to perfect. How does our understanding of rewarding merit, and the sources of "merit", lead toward or away from economic inequality? This agent-based model as a tool for understanding emergent social phenomena, implementing intergenerational dynamics (allele inheritance, environmental endowment, wealth transmission), and building interactive browser-based simulations. The model uses log-normal + Pareto wealth distributions and tracks Gini coefficients across generations. The next major update will give it a more realistic underlying economic model.
+**Why and what:** Economic inequality is a major problem in the USA and in the world. At the same time, meritocracy is a fairly uncontroversial system of reward that many strive to perfect. How does our understanding of rewarding merit, and the sources of "merit", lead toward or away from economic inequality? This agent-based model as a tool for understanding emergent social phenomena, implementing intergenerational dynamics (allele inheritance, environmental endowment, wealth transmission), and building interactive browser-based simulations. The model uses log-normal + Pareto wealth distributions and tracks Gini coefficients across generations. The next major update will give it a more realistic underlying economic model.
 
 ## Data Visualization & Geospatial Tools
 
@@ -68,13 +70,17 @@ A Python library for creating custom terrain visualizations from Digital Elevati
 
 ### [No Silver Bullets: Software Cycle Time](https://github.com/jflournoy/no-silver-bullets)
 
-Repository for the peer-reviewed paper "No Silver Bullets: Why Understanding Software Cycle Time is Messy, Not Magic" ([arXiv:2503.05040](https://arxiv.org/abs/2503.05040)). Analyzes 55,000+ observations across 216 organizations using Bayesian hierarchical modeling to separate individual and organizational variation in software development velocity.
+Repository for the peer-reviewed paper "No Silver Bullets: Why Understanding Software Cycle Time is Messy, Not Magic" (Flournoy, Lee, Wu, & Hicks, 2025; [doi:10.1007/s10664-025-10735-w](https://doi.org/10.1007/s10664-025-10735-w)). Published in *Empirical Software Engineering*. Analyzes 55,000+ observations across 216 organizations using Bayesian hierarchical modeling to separate individual and organizational variation in software development velocity.
+
+**Why and what:** At Pluralsight, I had access to a large dataset of software development activity across hundreds of organizations. The conventional wisdom in developer productivity is full of confident claims---particular tools, practices, or team structures that supposedly unlock dramatic improvements. I wanted to see what the data actually said when you modeled it carefully, especially by using a legitimate distribution for outcome measures that have very non-gaussian forms. Using Bayesian hierarchical models, I could separate individual-level variation from organizational-level variation and estimate the effects of common workplace factors while properly accounting for the nested, noisy structure of the data.
 
 **Key finding:** Common workplace factors have precise but modest effects on cycle time, set against considerable unexplained variation---suggesting systems-level thinking rather than individual-focused interventions.
 
 ### [Docker: verse-cmdstan](https://github.com/jflournoy/verse-cmdstan)
 
 Docker container extending [rocker/verse](https://hub.docker.com/r/rocker/verse) with pre-compiled CmdStan for reproducible Bayesian computing environments.
+
+**Why and what:** Compiling CmdStan from source is slow and fragile---different compiler versions, library paths, and OS configurations can produce subtle, hard-to-diagnose failures. This is especially painful on shared academic computing infrastructure like SLURM clusters, where users often lack root access and the system toolchain may be outdated or inconsistent across nodes. A pre-built Docker (or Singularity/Apptainer) image sidesteps all of this: you get a known-good R + Stan environment that runs identically on a laptop, a CI server, or a university HPC cluster, making Bayesian analyses genuinely reproducible across collaborators and compute environments.
 
 ---
 
@@ -87,5 +93,5 @@ Across these projects, several themes emerge:
 - **Bayesian thinking as a unifying framework**: Whether modeling PhD unemployment, health trends, or software cycle time, Bayesian methods provide principled uncertainty quantification and hierarchical structure for complex data.
 - **Bridging domains**: Applying research methodology skills (measurement theory, causal inference, study design) to new domains like software engineering, architecture, and creative AI tools.
 - **Learning by building**: Each project is a vehicle for understanding something deeply---beam search, transformer internals, geospatial processing, agent-based dynamics---by implementing it from scratch.
-- **AI-augmented development**: Many projects use Claude Code with TDD workflows, exploring how AI coding assistants can enhance (not replace) rigorous software development practices.
+- **AI-augmented development**: Many projects use AI coding assistants with TDD workflows, exploring how they can enhance (not replace) rigorous software development practices.
 :::
