@@ -17,11 +17,12 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - text: "{{< fa solid dice >}} Playground"
+        href: projects.qmd
+      - resume.qmd
       - text: "{{< fa regular lightbulb >}} Consulting"
         href: consulting.qmd
       - pubs.qmd
-      - resume.qmd
-      - projects.qmd
       # - href: cv_page.qmd
       #   text: CV
       - href: lol.qmd
