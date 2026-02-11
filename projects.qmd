@@ -26,7 +26,7 @@ Bayesian analysis of personal wearable health data from Garmin, with interactive
 
 ## AI/ML & Generative Systems
 
-### {{< fa solid images >}} Image Generation Pipeline v2 [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-gen-pipe-v2)
+### {{< fa solid images >}} Image Generation Pipeline v2 [{{< fa solid wand-magic-sparkles size=sm >}}](https://imagegenpipe.johnflournoy.science/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-gen-pipe-v2)
 
 A Node.js automated prompt refinement system for image generation, implementing **beam search**---a standard ML algorithm for exploring multiple promising paths simultaneously---applied to iterative prompt refinement for AI image generation.
 
