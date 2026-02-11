@@ -26,7 +26,7 @@ This walk-through explains, briefly, why and how to run a RI-CLPM in R.
 
 _All code and data are available [in the github repository](https://github.com/jflournoy/misc-r-projects/tree/master/lavaan_ri-clpm)_
 
-# Critique of cross-lagged pannel models
+# Critique of cross-lagged panel models
 
 This post summarizes critiques of the traditional cross-lagged panel model (CLPM), and an improved model by Hamaker, Kuiper, and Grasman {% cite hamaker_critique_2015 -A %}.
 
@@ -52,7 +52,7 @@ More importantly, since $\kappa$ and $\omega$ separate out individual-level stab
 
 See the paper (Figure 2) for a demonstration of how terribly traditional CLPM performs when you have a data generating process that matches the RI-CLPM -- that is, when you have stable individual differences.
 
-# Implemmenting the RI-CLPM in R
+# Implementing the RI-CLPM in R
 
 First, make sure we can load the necessary packages. If you haven't installed them, I've included (and commented out) the lines that will allow you to do that. The corresponding git repository is [here](https://github.com/jflournoy/misc-r-projects/tree/master/lavaan_ri-clpm).
 
@@ -69,7 +69,7 @@ require(tidyverse)
 
 Now, we need some data. I'm using a data set presented on at a methods symposium at SRCD in 1997. Supporting documentation can be found ~~in this pdf~~. Data and code for importing it was helpfully provided by Sanjay Srivastava.
 
-The variables we're considering are a measure of antisocial behavior (`anti`) and reading recognition (`read`). See the docs for descriptions of the other variables. And for the purpose of the model fitting below, `x <- anit` and `y <- read`. Following are some descriptions of the raw data:
+The variables we're considering are a measure of antisocial behavior (`anti`) and reading recognition (`read`). See the docs for descriptions of the other variables. And for the purpose of the model fitting below, `x <- anti` and `y <- read`. Following are some descriptions of the raw data:
 
 
 ```r

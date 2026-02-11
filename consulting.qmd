@@ -6,7 +6,7 @@ format: html
 
 # You have data. Let's find answers to drive outcomes.
 
-And if you don't have the data _yet_, I'll help you gather it. Whether you're navigating uncertainty, testing a new direction, or refining what already works, I help turn raw data into strategic advantage. My work establishes insights that enables progress you can measure.
+And if you don't have the data _yet_, I'll help you gather it. Whether you're navigating uncertainty, testing a new direction, or refining what already works, I help turn raw data into strategic advantage. My work establishes insights that enable progress you can measure.
 
 :::{.container .mt-5 .p-5 .bg-light .bg-opacity-75 .rounded .text-dark .shadow-sm}
 
