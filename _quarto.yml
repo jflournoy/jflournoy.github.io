@@ -21,6 +21,7 @@ website:
         href: consulting.qmd
       - pubs.qmd
       - resume.qmd
+      - projects.qmd
       # - href: cv_page.qmd
       #   text: CV
       - href: lol.qmd
