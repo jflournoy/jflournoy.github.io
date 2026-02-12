@@ -249,13 +249,13 @@ Matta, T. H., Flournoy, J. C., & Byrne, M. L. (2018). Making an unknown unknown 
 
 # Education & Professional Training
 
-\entry{Ph.D., Psychology, University of Oregon}{2018}
+\noindent \textbf{Ph.D., Psychology, University of Oregon, 2018}
 
 Focus: Computational methods, Bayesian hierarchical modeling, developmental neuroscience
 
-\entry{M.S., Psychology, University of Oregon}{2014}
+\noindent \textbf{M.S., Psychology, University of Oregon, 2014}
 
-\entry{B.A., Cognitive Science, University of California, Berkeley}{2005}
+\noindent \textbf{B.A., Cognitive Science, University of California, Berkeley, 2005}
 
 **Specialized Training**
 
