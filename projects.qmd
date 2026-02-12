@@ -38,7 +38,7 @@ A web-based tool for writers to expand, refine, revise, and restructure narrativ
 
 **Why and what:** I used to write terrible poetry and marginally better short stories. As a reader, I'm intrigued by writers' processes of developing a narrative. Playing around with online and local LLMs, I noticed that a single prompt and response, even when chained (e.g., pick up this story from where we left off) usually loses the narrative. So I started playing around with "outside-in" outline expansion. That is, start with the top level narrative points, then have an LLM expand each of those into an inner set of bullets---for each of those, expand into a more detailed set (keeping track of the next major point), and so on  That seemed to work a bit better. Not satisfied, and inspired by a conversation with a friend about agent swarms, I realized it might be fun to have agents play characters with an orchestrator who has knowledge of the overall narrative mission and where agents have access to limited context of the world they can access stored in something like a ChromaDB. This is very much a WIP.
 
-### {{< fa solid brain >}} Understanding LLMs [{{< fa brands github size=sm >}}](https://github.com/jflournoy/understanding-llms)
+### {{< fa solid brain >}} Understanding LLMs [{{< fa solid graduation-cap size=sm >}}](https://johnflournoy.science/understanding-llms/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/understanding-llms)
 
 A hands-on exploration of how language models actually work---not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up.
 
