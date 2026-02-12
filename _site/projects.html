@@ -162,6 +162,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#simulation-computational-modeling" id="toc-simulation-computational-modeling" class="nav-link" data-scroll-target="#simulation-computational-modeling">Simulation &amp; Computational Modeling</a>
   <ul class="collapse">
   <li><a href="#wealth-stratification-agent-based-model" id="toc-wealth-stratification-agent-based-model" class="nav-link" data-scroll-target="#wealth-stratification-agent-based-model"><i class="fa-solid fa-people-arrows" aria-label="people-arrows"></i> Wealth Stratification Agent-Based Model <i class="fa-solid fa-circle-play fa-sm" aria-label="circle-play"></i> <i class="fa-brands fa-github fa-sm" aria-label="github"></i></a></li>
+  <li><a href="#understanding-llms" id="toc-understanding-llms" class="nav-link" data-scroll-target="#understanding-llms"><i class="fa-solid fa-brain" aria-label="brain"></i> Understanding LLMs <i class="fa-solid fa-graduation-cap fa-sm" aria-label="graduation-cap"></i> <i class="fa-brands fa-github fa-sm" aria-label="github"></i></a></li>
   </ul></li>
   <li><a href="#data-visualization-geospatial-tools" id="toc-data-visualization-geospatial-tools" class="nav-link" data-scroll-target="#data-visualization-geospatial-tools">Data Visualization &amp; Geospatial Tools</a>
   <ul class="collapse">
@@ -169,7 +170,6 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#aiml-generative-systems" id="toc-aiml-generative-systems" class="nav-link" data-scroll-target="#aiml-generative-systems">AI/ML &amp; Generative Systems</a>
   <ul class="collapse">
-  <li><a href="#understanding-llms" id="toc-understanding-llms" class="nav-link" data-scroll-target="#understanding-llms"><i class="fa-solid fa-brain" aria-label="brain"></i> Understanding LLMs <i class="fa-solid fa-graduation-cap fa-sm" aria-label="graduation-cap"></i> <i class="fa-brands fa-github fa-sm" aria-label="github"></i></a></li>
   <li><a href="#image-organizer" id="toc-image-organizer" class="nav-link" data-scroll-target="#image-organizer"><i class="fa-solid fa-camera" aria-label="camera"></i> Image Organizer <i class="fa-solid fa-folder-open fa-sm" aria-label="folder-open"></i> <i class="fa-brands fa-github fa-sm" aria-label="github"></i></a></li>
   <li><a href="#image-generation-pipeline-v2" id="toc-image-generation-pipeline-v2" class="nav-link" data-scroll-target="#image-generation-pipeline-v2"><i class="fa-solid fa-images" aria-label="images"></i> Image Generation Pipeline v2 <i class="fa-solid fa-wand-magic-sparkles fa-sm" aria-label="wand-magic-sparkles"></i> <i class="fa-brands fa-github fa-sm" aria-label="github"></i></a></li>
   <li><a href="#story-time" id="toc-story-time" class="nav-link" data-scroll-target="#story-time"><i class="fa-solid fa-book-open" aria-label="book-open"></i> Story Time <i class="fa-brands fa-github fa-sm" aria-label="github"></i></a></li>
@@ -256,6 +256,11 @@ Cross-Cutting Themes
 <p>An agent-based model demonstrating how wealth inequality emerges across generations through genetic potential, environmental factors, assortative mating, and stochastic events.</p>
 <p><strong>Why and what:</strong> Economic inequality is a major problem in the USA and in the world. At the same time, meritocracy is a fairly uncontroversial system of reward that many strive to perfect. How does our understanding of rewarding merit, and the sources of “merit”, lead toward or away from economic inequality? This agent-based model as a tool for understanding emergent social phenomena, implementing intergenerational dynamics (allele inheritance, environmental endowment, wealth transmission), and building interactive browser-based simulations. The model uses log-normal + Pareto wealth distributions and tracks Gini coefficients across generations. The next major update will give it a more realistic underlying economic model.</p>
 </section>
+<section id="understanding-llms" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-llms"><i class="fa-solid fa-brain" aria-label="brain"></i> Understanding LLMs <a href="https://johnflournoy.science/understanding-llms/"><i class="fa-solid fa-graduation-cap fa-sm" aria-label="graduation-cap"></i></a> <a href="https://github.com/jflournoy/understanding-llms"><i class="fa-brands fa-github fa-sm" aria-label="github"></i></a></h3>
+<p>A hands-on exploration of how language models actually work—not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up.</p>
+<p><strong>Why and what:</strong> Using LLMs to do work for you is old hat. Learning something new by making them make you do work for them is the new frontier. I wanted a Claude Code set up that would force me to learn. And I wanted to learn exactly how these fancy new next-token models work. So far I’ve re-learned everything I should have remembered from my UC Berkeley AI class back when neural networks were basically toy examples of a sort-of-abandoned method. The experience of being tutored by an LLM has been really useful, though, and it was trivially easy to set up.</p>
+</section>
 </section>
 <section id="data-visualization-geospatial-tools" class="level2">
 <h2 class="anchored" data-anchor-id="data-visualization-geospatial-tools">Data Visualization &amp; Geospatial Tools</h2>
@@ -267,11 +272,6 @@ Cross-Cutting Themes
 </section>
 <section id="aiml-generative-systems" class="level2">
 <h2 class="anchored" data-anchor-id="aiml-generative-systems">AI/ML &amp; Generative Systems</h2>
-<section id="understanding-llms" class="level3">
-<h3 class="anchored" data-anchor-id="understanding-llms"><i class="fa-solid fa-brain" aria-label="brain"></i> Understanding LLMs <a href="https://johnflournoy.science/understanding-llms/"><i class="fa-solid fa-graduation-cap fa-sm" aria-label="graduation-cap"></i></a> <a href="https://github.com/jflournoy/understanding-llms"><i class="fa-brands fa-github fa-sm" aria-label="github"></i></a></h3>
-<p>A hands-on exploration of how language models actually work—not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up.</p>
-<p><strong>Why and what:</strong> Using LLMs to do work for you is old hat. Learning something new by making them make you do work for them is the new frontier. I wanted a Claude Code set up that would force me to learn. And I wanted to learn exactly how these fancy new next-token models work. So far I’ve re-learned everything I should have remembered from my UC Berkeley AI class back when neural networks were basically toy examples of a sort-of-abandoned method. The experience of being tutored by an LLM has been really useful, though, and it was trivially easy to set up.</p>
-</section>
 <section id="image-organizer" class="level3">
 <h3 class="anchored" data-anchor-id="image-organizer"><i class="fa-solid fa-camera" aria-label="camera"></i> Image Organizer <a href="https://johnflournoy.science/image-organizer/"><i class="fa-solid fa-folder-open fa-sm" aria-label="folder-open"></i></a> <a href="https://github.com/jflournoy/image-organizer"><i class="fa-brands fa-github fa-sm" aria-label="github"></i></a></h3>
 <p>AI-powered image organization system for large local photo collections (100k+ images), with automatic tagging via multiple ML models, RAW file support, face and theme clustering with visualizations, and semantic search.</p>
