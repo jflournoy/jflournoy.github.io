@@ -60,6 +60,12 @@ An agent-based model demonstrating how wealth inequality emerges across generati
 
 **Why and what:** Economic inequality is a major problem in the USA and in the world. At the same time, meritocracy is a fairly uncontroversial system of reward that many strive to perfect. How does our understanding of rewarding merit, and the sources of "merit", lead toward or away from economic inequality? This agent-based model as a tool for understanding emergent social phenomena, implementing intergenerational dynamics (allele inheritance, environmental endowment, wealth transmission), and building interactive browser-based simulations. The model uses log-normal + Pareto wealth distributions and tracks Gini coefficients across generations. The next major update will give it a more realistic underlying economic model.
 
+### {{< fa solid brain >}} Understanding LLMs [{{< fa solid graduation-cap size=sm >}}](https://johnflournoy.science/understanding-llms/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/understanding-llms)
+
+A hands-on exploration of how language models actually work---not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up.
+
+**Why and what:** Using LLMs to do work for you is old hat. Learning something new by making them make you do work for them is the new frontier. I wanted a Claude Code set up that would force me to learn. And I wanted to learn exactly how these fancy new next-token models work. So far I've re-learned everything I should have remembered from my UC Berkeley AI class back when neural networks were basically toy examples of a sort-of-abandoned method. The experience of being tutored by an LLM has been really useful, though, and it was trivially easy to set up.
+
 ## Data Visualization & Geospatial Tools
 
 ### {{< fa solid mountain-sun >}} Terrain Maker v2 [{{< fa solid map size=sm >}}](https://johnflournoy.science/terrain-maker_v2/examples/san_diego_demo.html) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/terrain-maker_v2)
@@ -69,12 +75,6 @@ A Python library for creating custom terrain visualizations from Digital Elevati
 **Why and what:** What? Maps. What? Maps. Mmmmmm, maps. I love maps. This has been a long-time hobby. I started just playing with data in QGIS and then bringing it into blender. Then I realized I could make python do my manual labor. Now it's a python library. Geospatial data processing (SRTM tiles, GeoTIFF, reprojection, resampling), programmatic 3D rendering with Blender's Python API, and building reusable scientific visualization libraries with smart caching. The Detroit example generates 1.3M-vertex terrain meshes with color-mapped data overlays.
 
 ## AI/ML & Generative Systems
-
-### {{< fa solid brain >}} Understanding LLMs [{{< fa solid graduation-cap size=sm >}}](https://johnflournoy.science/understanding-llms/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/understanding-llms)
-
-A hands-on exploration of how language models actually work---not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up.
-
-**Why and what:** Using LLMs to do work for you is old hat. Learning something new by making them make you do work for them is the new frontier. I wanted a Claude Code set up that would force me to learn. And I wanted to learn exactly how these fancy new next-token models work. So far I've re-learned everything I should have remembered from my UC Berkeley AI class back when neural networks were basically toy examples of a sort-of-abandoned method. The experience of being tutored by an LLM has been really useful, though, and it was trivially easy to set up.
 
 ### {{< fa solid camera >}} Image Organizer [{{< fa solid folder-open size=sm >}}](https://johnflournoy.science/image-organizer/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-organizer)
 
