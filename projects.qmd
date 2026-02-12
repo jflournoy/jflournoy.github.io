@@ -12,13 +12,13 @@ Over the past few years I've been playing a lot. Each project below represents a
 
 ## Statistical Modeling & Analysis
 
-### {{< fa solid chart-line >}} PhD Unemployment Model [{{< fa brands github size=sm >}}](https://github.com/jflournoy/phd-unemployment-model)
+### {{< fa solid chart-line >}} PhD Unemployment Model [{{< fa solid chart-area size=sm >}}](https://johnflournoy.science/phd-unemployment-model/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/phd-unemployment-model)
 
 Bayesian time series analysis of PhD unemployment rates relative to general unemployment and other graduate degree holders, using Current Population Survey microdata from [IPUMS USA](https://usa.ipums.org/usa/index.shtml).
 
 **Why and what:** At the top of the second Trump administration, there was a lot of economic upheaval. My research team at Pluralsight was a casualty of the increasing cost of money in tech and general uncertainty. Meanwhile, my colleagues at Harvard and other institutions of higher education were having their funding frozen or rescinded entirely. I wanted to see this play out in the unemployment numbers and understand if the anecdotes were plentiful enough to notice at a national scale. The project involves Bayesian time series decomposition (GAMs, Gaussian processes, autoregressive structures), handling massive survey datasets (40M+ rows with `data.table` and `fst` for fast I/O), and applying test-driven development to statistical modeling workflows. It uses Stan via `brms` and `cmdstanr` for principled uncertainty quantification across multiple seasonal components, trends, and economic cycles. I learned that for as flexible as GAMs are, they don't handle huge shifts in smoothness well, and I was reminded that they don't lend themselves to easy mechanistic explanations.
 
-### {{< fa solid heart-pulse >}} Garmin Health Data Analysis [{{< fa brands github size=sm >}}](https://github.com/jflournoy/garmin-analysis)
+### {{< fa solid heart-pulse >}} Garmin Health Data Analysis [{{< fa solid dumbbell size=sm >}}](https://johnflournoy.science/garmin-analysis/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/garmin-analysis)
 
 Bayesian analysis of personal wearable health data from Garmin, with interactive D3.js visualizations for exploring trends and cross-metric relationships.
 
@@ -44,7 +44,7 @@ A hands-on exploration of how language models actually work---not just how to us
 
 **Why and what:** Using LLMs to do work for you is old hat. Learning something new by making them make you do work for them is the new frontier. I wanted a Claude Code set up that would force me to learn. And I wanted to learn exactly how these fancy new next-token models work. So far I've re-learned everything I should have remembered from my UC Berkeley AI class back when neural networks were basically toy examples of a sort-of-abandoned method. The experience of being tutored by an LLM has been really useful, though, and it was trivially easy to set up.
 
-### {{< fa solid camera >}} Image Organizer [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-organizer)
+### {{< fa solid camera >}} Image Organizer [{{< fa solid folder-open size=sm >}}](https://johnflournoy.science/image-organizer/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-organizer)
 
 AI-powered image organization system for large local photo collections (100k+ images), with automatic tagging via multiple ML models, RAW file support, face and theme clustering with visualizations, and semantic search.
 
@@ -60,7 +60,7 @@ An agent-based model demonstrating how wealth inequality emerges across generati
 
 ## Data Visualization & Geospatial Tools
 
-### {{< fa solid mountain-sun >}} Terrain Maker v2 [{{< fa brands github size=sm >}}](https://github.com/jflournoy/terrain-maker_v2)
+### {{< fa solid mountain-sun >}} Terrain Maker v2 [{{< fa solid map size=sm >}}](https://johnflournoy.science/terrain-maker_v2/examples/san_diego_demo.html) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/terrain-maker_v2)
 
 A Python library for creating custom terrain visualizations from Digital Elevation Models with Blender 3D rendering, supporting arbitrary spatial data overlays and multi-view rendering from any cardinal direction.
 
@@ -80,7 +80,7 @@ Repository for the peer-reviewed paper "No Silver Bullets: Why Understanding Sof
 
 Docker container extending [rocker/verse](https://hub.docker.com/r/rocker/verse) with pre-compiled CmdStan for reproducible Bayesian computing environments.
 
-**Why and what:** Compiling CmdStan from source is slow and fragile---different compiler versions, library paths, and OS configurations can produce subtle, hard-to-diagnose failures. This is especially painful on shared academic computing infrastructure like SLURM clusters, where users often lack root access and the system toolchain may be outdated or inconsistent across nodes. A pre-built Docker (or Singularity/Apptainer) image sidesteps all of this: you get a known-good R + Stan environment that runs identically on a laptop, a CI server, or a university HPC cluster, making Bayesian analyses genuinely reproducible across collaborators and compute environments.
+**Why and what:** Getting the full R + Stan ecosystem working---the right compiler toolchain, C++ libraries, R packages, and CmdStan all playing nicely together---requires a lot of careful configuration or coordination with IT, especially on shared academic infrastructure like SLURM clusters where users often lack root access. A pre-built Docker (or Singularity/Apptainer) image sidesteps all of this: you get a known-good environment that runs identically on a laptop, a CI server, or a university HPC cluster, making Bayesian analyses genuinely reproducible across collaborators and compute environments.
 
 ---
 
