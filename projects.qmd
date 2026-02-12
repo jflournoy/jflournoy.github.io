@@ -10,6 +10,18 @@ Throughout my entire educational and professional career, I have built skills an
 
 Over the past few years I've been playing a lot. Each project below represents a joyful exploration of topics and techniques that caught my attention.
 
+:::{.callout-note}
+### Cross-Cutting Themes
+
+Across these projects, several themes emerge:
+
+- **Test-driven development everywhere**: From statistical models to architectural designs to ML pipelines---TDD isn't just for web apps. Writing tests first clarifies requirements, validates assumptions, and enables safe iteration.
+- **Bayesian thinking as a unifying framework**: Whether modeling PhD unemployment, health trends, or software cycle time, Bayesian methods provide principled uncertainty quantification and hierarchical structure for complex data.
+- **Bridging domains**: Applying research methodology skills (measurement theory, causal inference, study design) to new domains like software engineering, architecture, and creative AI tools.
+- **Learning by building**: Each project is a vehicle for understanding something deeply---beam search, transformer internals, geospatial processing, agent-based dynamics---by implementing it from scratch.
+- **AI-augmented development**: Many projects use AI coding assistants with TDD workflows, exploring how they can enhance (not replace) rigorous software development practices.
+:::
+
 ## Statistical Modeling & Analysis
 
 ### {{< fa solid chart-line >}} PhD Unemployment Model [{{< fa solid chart-area size=sm >}}](https://johnflournoy.science/phd-unemployment-model/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/phd-unemployment-model)
@@ -23,48 +35,6 @@ Bayesian time series analysis of PhD unemployment rates relative to general unem
 Bayesian analysis of personal wearable health data from Garmin, with interactive D3.js visualizations for exploring trends and cross-metric relationships.
 
 **Why and what:** Thanks to inspiration from several friends who lift (many of them women in academia), I've been working out. Now that I had this nice state-space model for the unemployment data, I wanted to see if I could model my personal data using similar methods. Applying Gaussian process models to noisy personal health time series (weight, sleep, activity, heart rate), building interactive web visualizations with D3.js, and working with Python tooling (`uv`, CmdStan). As a developmental psychologist, what stood out to me about these data is how much I had to think about the time-lags at which processes unfold. I was reminded that this is an underappreciated point for many observational designs in psychology.
-
-## AI/ML & Generative Systems
-
-### {{< fa solid images >}} Image Generation Pipeline v2 [{{< fa solid wand-magic-sparkles size=sm >}}](https://imagegenpipe.johnflournoy.science/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-gen-pipe-v2)
-
-A Node.js automated prompt refinement system for image generation, implementing **beam search**---a standard ML algorithm for exploring multiple promising paths simultaneously---applied to iterative prompt refinement for AI image generation.
-
-**Why and what:** If you've ever played with image generation in the Midjourney or OpenAI ecosystem, you've probably had the experience of iteratively refining your prompts. I wanted to see if I could get next-token prediction models to do some of this work for me. So I built a beam search to take a simple input prompt, expand it into a "what" description and a "how"-it-should-look description and then recombined it. Each generation of images (say, 4 at a time) are fed into a tournament ranking system to choose the top N images. Those prompts are then refined based on a vision-language model's feedback and generate the new generation. Fun and easy! I got to think about token security for a public-facing web app, session persistence, and UI design in addition to the above.
-
-### {{< fa solid book-open >}} Story Time [{{< fa brands github size=sm >}}](https://github.com/jflournoy/story-time)
-
-A web-based tool for writers to expand, refine, revise, and restructure narratives using locally-hosted language models. 
-
-**Why and what:** I used to write terrible poetry and marginally better short stories. As a reader, I'm intrigued by writers' processes of developing a narrative. Playing around with online and local LLMs, I noticed that a single prompt and response, even when chained (e.g., pick up this story from where we left off) usually loses the narrative. So I started playing around with "outside-in" outline expansion. That is, start with the top level narrative points, then have an LLM expand each of those into an inner set of bullets---for each of those, expand into a more detailed set (keeping track of the next major point), and so on  That seemed to work a bit better. Not satisfied, and inspired by a conversation with a friend about agent swarms, I realized it might be fun to have agents play characters with an orchestrator who has knowledge of the overall narrative mission and where agents have access to limited context of the world they can access stored in something like a ChromaDB. This is very much a WIP.
-
-### {{< fa solid brain >}} Understanding LLMs [{{< fa solid graduation-cap size=sm >}}](https://johnflournoy.science/understanding-llms/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/understanding-llms)
-
-A hands-on exploration of how language models actually work---not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up.
-
-**Why and what:** Using LLMs to do work for you is old hat. Learning something new by making them make you do work for them is the new frontier. I wanted a Claude Code set up that would force me to learn. And I wanted to learn exactly how these fancy new next-token models work. So far I've re-learned everything I should have remembered from my UC Berkeley AI class back when neural networks were basically toy examples of a sort-of-abandoned method. The experience of being tutored by an LLM has been really useful, though, and it was trivially easy to set up.
-
-### {{< fa solid camera >}} Image Organizer [{{< fa solid folder-open size=sm >}}](https://johnflournoy.science/image-organizer/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-organizer)
-
-AI-powered image organization system for large local photo collections (100k+ images), with automatic tagging via multiple ML models, RAW file support, face and theme clustering with visualizations, and semantic search.
-
-**Why and what:** I've been taking photographs, in a serious way, since I picked up my dad's old SLR in high school. I was even _paid_ to take pictures at some point. I have a lot of them and I have enough knowledge of various ML models to make the computer organize them for me. Existing tools were fine but didn't lean into the unsupervised learning opportunities enough. So I started working on this.
-
-## Simulation & Computational Modeling
-
-### {{< fa solid people-arrows >}} Wealth Stratification Agent-Based Model [{{< fa solid circle-play size=sm >}}](http://johnflournoy.science/wealth-strat_abm/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/wealth-strat_abm)
-
-An agent-based model demonstrating how wealth inequality emerges across generations through genetic potential, environmental factors, assortative mating, and stochastic events.
-
-**Why and what:** Economic inequality is a major problem in the USA and in the world. At the same time, meritocracy is a fairly uncontroversial system of reward that many strive to perfect. How does our understanding of rewarding merit, and the sources of "merit", lead toward or away from economic inequality? This agent-based model as a tool for understanding emergent social phenomena, implementing intergenerational dynamics (allele inheritance, environmental endowment, wealth transmission), and building interactive browser-based simulations. The model uses log-normal + Pareto wealth distributions and tracks Gini coefficients across generations. The next major update will give it a more realistic underlying economic model.
-
-## Data Visualization & Geospatial Tools
-
-### {{< fa solid mountain-sun >}} Terrain Maker v2 [{{< fa solid map size=sm >}}](https://johnflournoy.science/terrain-maker_v2/examples/san_diego_demo.html) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/terrain-maker_v2)
-
-A Python library for creating custom terrain visualizations from Digital Elevation Models with Blender 3D rendering, supporting arbitrary spatial data overlays and multi-view rendering from any cardinal direction.
-
-**Why and what:** What? Maps. What? Maps. Mmmmmm, maps. I love maps. This has been a long-time hobby. I started just playing with data in QGIS and then bringing it into blender. Then I realized I could make python do my manual labor. Now it's a python library. Geospatial data processing (SRTM tiles, GeoTIFF, reprojection, resampling), programmatic 3D rendering with Blender's Python API, and building reusable scientific visualization libraries with smart caching. The Detroit example generates 1.3M-vertex terrain meshes with color-mapped data overlays.
 
 ## Research Publications & Infrastructure
 
@@ -82,16 +52,44 @@ Docker container extending [rocker/verse](https://hub.docker.com/r/rocker/verse)
 
 **Why and what:** Getting the full R + Stan ecosystem working---the right compiler toolchain, C++ libraries, R packages, and CmdStan all playing nicely together---requires a lot of careful configuration or coordination with IT, especially on shared academic infrastructure like SLURM clusters where users often lack root access. A pre-built Docker (or Singularity/Apptainer) image sidesteps all of this: you get a known-good environment that runs identically on a laptop, a CI server, or a university HPC cluster, making Bayesian analyses genuinely reproducible across collaborators and compute environments.
 
----
+## Simulation & Computational Modeling
 
-:::{.callout-note}
-### Cross-Cutting Themes
+### {{< fa solid people-arrows >}} Wealth Stratification Agent-Based Model [{{< fa solid circle-play size=sm >}}](http://johnflournoy.science/wealth-strat_abm/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/wealth-strat_abm)
 
-Across these projects, several themes emerge:
+An agent-based model demonstrating how wealth inequality emerges across generations through genetic potential, environmental factors, assortative mating, and stochastic events.
 
-- **Test-driven development everywhere**: From statistical models to architectural designs to ML pipelines---TDD isn't just for web apps. Writing tests first clarifies requirements, validates assumptions, and enables safe iteration.
-- **Bayesian thinking as a unifying framework**: Whether modeling PhD unemployment, health trends, or software cycle time, Bayesian methods provide principled uncertainty quantification and hierarchical structure for complex data.
-- **Bridging domains**: Applying research methodology skills (measurement theory, causal inference, study design) to new domains like software engineering, architecture, and creative AI tools.
-- **Learning by building**: Each project is a vehicle for understanding something deeply---beam search, transformer internals, geospatial processing, agent-based dynamics---by implementing it from scratch.
-- **AI-augmented development**: Many projects use AI coding assistants with TDD workflows, exploring how they can enhance (not replace) rigorous software development practices.
-:::
+**Why and what:** Economic inequality is a major problem in the USA and in the world. At the same time, meritocracy is a fairly uncontroversial system of reward that many strive to perfect. How does our understanding of rewarding merit, and the sources of "merit", lead toward or away from economic inequality? This agent-based model as a tool for understanding emergent social phenomena, implementing intergenerational dynamics (allele inheritance, environmental endowment, wealth transmission), and building interactive browser-based simulations. The model uses log-normal + Pareto wealth distributions and tracks Gini coefficients across generations. The next major update will give it a more realistic underlying economic model.
+
+## Data Visualization & Geospatial Tools
+
+### {{< fa solid mountain-sun >}} Terrain Maker v2 [{{< fa solid map size=sm >}}](https://johnflournoy.science/terrain-maker_v2/examples/san_diego_demo.html) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/terrain-maker_v2)
+
+A Python library for creating custom terrain visualizations from Digital Elevation Models with Blender 3D rendering, supporting arbitrary spatial data overlays and multi-view rendering from any cardinal direction.
+
+**Why and what:** What? Maps. What? Maps. Mmmmmm, maps. I love maps. This has been a long-time hobby. I started just playing with data in QGIS and then bringing it into blender. Then I realized I could make python do my manual labor. Now it's a python library. Geospatial data processing (SRTM tiles, GeoTIFF, reprojection, resampling), programmatic 3D rendering with Blender's Python API, and building reusable scientific visualization libraries with smart caching. The Detroit example generates 1.3M-vertex terrain meshes with color-mapped data overlays.
+
+## AI/ML & Generative Systems
+
+### {{< fa solid brain >}} Understanding LLMs [{{< fa solid graduation-cap size=sm >}}](https://johnflournoy.science/understanding-llms/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/understanding-llms)
+
+A hands-on exploration of how language models actually work---not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up.
+
+**Why and what:** Using LLMs to do work for you is old hat. Learning something new by making them make you do work for them is the new frontier. I wanted a Claude Code set up that would force me to learn. And I wanted to learn exactly how these fancy new next-token models work. So far I've re-learned everything I should have remembered from my UC Berkeley AI class back when neural networks were basically toy examples of a sort-of-abandoned method. The experience of being tutored by an LLM has been really useful, though, and it was trivially easy to set up.
+
+### {{< fa solid camera >}} Image Organizer [{{< fa solid folder-open size=sm >}}](https://johnflournoy.science/image-organizer/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-organizer)
+
+AI-powered image organization system for large local photo collections (100k+ images), with automatic tagging via multiple ML models, RAW file support, face and theme clustering with visualizations, and semantic search.
+
+**Why and what:** I've been taking photographs, in a serious way, since I picked up my dad's old SLR in high school. I was even _paid_ to take pictures at some point. I have a lot of them and I have enough knowledge of various ML models to make the computer organize them for me. Existing tools were fine but didn't lean into the unsupervised learning opportunities enough. So I started working on this.
+
+### {{< fa solid images >}} Image Generation Pipeline v2 [{{< fa solid wand-magic-sparkles size=sm >}}](https://imagegenpipe.johnflournoy.science/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/image-gen-pipe-v2)
+
+A Node.js automated prompt refinement system for image generation, implementing **beam search**---a standard ML algorithm for exploring multiple promising paths simultaneously---applied to iterative prompt refinement for AI image generation.
+
+**Why and what:** If you've ever played with image generation in the Midjourney or OpenAI ecosystem, you've probably had the experience of iteratively refining your prompts. I wanted to see if I could get next-token prediction models to do some of this work for me. So I built a beam search to take a simple input prompt, expand it into a "what" description and a "how"-it-should-look description and then recombined it. Each generation of images (say, 4 at a time) are fed into a tournament ranking system to choose the top N images. Those prompts are then refined based on a vision-language model's feedback and generate the new generation. Fun and easy! I got to think about token security for a public-facing web app, session persistence, and UI design in addition to the above.
+
+### {{< fa solid book-open >}} Story Time [{{< fa brands github size=sm >}}](https://github.com/jflournoy/story-time)
+
+A web-based tool for writers to expand, refine, revise, and restructure narratives using locally-hosted language models.
+
+**Why and what:** I used to write terrible poetry and marginally better short stories. As a reader, I'm intrigued by writers' processes of developing a narrative. Playing around with online and local LLMs, I noticed that a single prompt and response, even when chained (e.g., pick up this story from where we left off) usually loses the narrative. So I started playing around with "outside-in" outline expansion. That is, start with the top level narrative points, then have an LLM expand each of those into an inner set of bullets---for each of those, expand into a more detailed set (keeping track of the next major point), and so on  That seemed to work a bit better. Not satisfied, and inspired by a conversation with a friend about agent swarms, I realized it might be fun to have agents play characters with an orchestrator who has knowledge of the overall narrative mission and where agents have access to limited context of the world they can access stored in something like a ChromaDB. This is very much a WIP.
