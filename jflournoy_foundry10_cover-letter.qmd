@@ -1,0 +1,94 @@
+---
+author-meta: 'John C. Flournoy, PhD'
+title-block-banner: false
+title-block: false
+format:
+  pdf:
+    pdf-engine: xelatex
+    include-in-header:
+      text: |
+        \usepackage{fontspec}
+        \usepackage{geometry}
+        \usepackage{fontawesome5}
+        \usepackage{hyperref}
+        \usepackage{parskip}
+        \defaultfontfeatures{Ligatures=TeX, Contextuals=Alternate}
+
+        % Adjust page margins
+        \geometry{margin=1in}
+
+        % MAIN (SERIF) FONT: Cormorant
+        \setmainfont[
+          Path = fonts/,
+          UprightFont    = {Cormorant-Regular.ttf},
+          ItalicFont     = {Cormorant-Italic.ttf},
+          BoldFont       = {Cormorant-Bold.ttf},
+          BoldItalicFont = {Cormorant-BoldItalic.ttf}
+        ]{Cormorant}
+
+        % SANS FONT: Montserrat
+        \setsansfont[
+          Path = fonts/,
+          UprightFont    = {Montserrat-Regular.ttf},
+          ItalicFont     = {Montserrat-Italic.ttf},
+          BoldFont       = {Montserrat-Bold.ttf},
+          BoldItalicFont = {Montserrat-BoldItalic.ttf}
+        ]{Montserrat}
+
+        % MONO FONT: FiraCode
+        \setmonofont[
+          Path = fonts/,
+          UprightFont = {FiraCode-Regular.ttf},
+          BoldFont    = {FiraCode-Bold.ttf},
+          Ligatures   = TeX,
+          Contextuals = Alternate
+        ]{Fira Code}
+
+        % Headings in sans
+        \usepackage{sectsty}
+        \allsectionsfont{\sffamily}
+
+        % Setup hyperlinks in blue
+        \hypersetup{colorlinks=true, urlcolor=blue}
+
+    include-before-body:
+      text: |
+        % Header matching resume style
+        \begin{center}
+        {\LARGE\sffamily\textbf{John C. Flournoy, PhD}\par}
+        \vspace{0.2em}
+        {\large\sffamily Quantitative Research Scientist \& Methodological Consultant\par}
+        \vspace{0.3em}
+
+        % Contact information with Font Awesome icons
+        \sffamily\small
+        \faPhone\ (415) 260-2744 \quad
+        \faEnvelope\ \href{mailto:jcflournoyphd@pm.me}{jcflournoyphd@pm.me} \quad
+        \faGlobe\ \href{https://johnflournoy.science}{johnflournoy.science} \quad
+        \faGraduationCap\ \href{https://scholar.google.com/citations?user=ZzQlngkAAAAJ&hl=en}{Google Scholar}
+        \end{center}
+        \vspace{0.5em}
+        \noindent\rule{\textwidth}{0.4pt}
+        \vspace{1em}
+    fontsize: 11pt
+    keep-tex: true
+output-file: jflournoy_foundry10_cover-letter.pdf
+---
+
+Dear foundry10 Hiring Team,
+
+Three collaborators sent me this posting independently, each with some version of "this is you." After reading the role description, I agree---and I'm writing because I want to be part of foundry10's mission.
+
+What draws me is the long view: foundry10 is building a sustained research program around how to better support young people's learning, and that resonates deeply. My career has been shaped by the conviction that rigorous research---the kind that cares about measurement, holds itself accountable, and can be communicated to people at all skill levels---is how we make lasting progress on questions that matter. I want to do that work inside an organization where the mission is durable and the orientation is toward building something.
+
+My view of learning is broad. At Pluralsight, I designed studies testing pedagogical interventions---framing assessment as learning to improve engagement, connecting to communities of practice to support persistence. But most of my research speaks to something schools too rarely have support for: social-emotional development. My dissertation examined adolescent social motives and health-risking behavior. At Harvard, I spent six years studying how stress and coping unfold in adolescents over time, and analyzed cognitive control and reward sensitivity across pubertal development in the multi-site Human Connectome Project---Development study. That work included foster-care-involved youth, requiring enhanced ethical protections and genuine care in how we approached them.
+
+foundry10 supports youth "both inside and outside the classroom." The outside-the-classroom part---social-emotional growth, learning how to be a person among other people---is where I've spent much of my career. We need more social-emotional education research, and I want to help build it.
+
+What I bring as a methodological consultant goes beyond running analyses. I help researchers think more clearly about their questions---what they're actually measuring, why it matters, and what their data can realistically tell them. I care about construct validity as a philosophical commitment: if we're going to study well-being, or learning, or development, we owe it to the people we study to be precise about what those concepts mean (and we should usually involve them in answering that question). This is the "thought partner" role your posting describes---enhancing project conceptualization and validity, not just statistical execution. And I build the capacity for teams to sustain rigor independently: through workshops, one-on-one consultation, reusable tools, and documented workflows that outlast any single project.
+
+I'd love to talk about how I can contribute to foundry10's work.
+
+\vspace{1.5em}
+\noindent John C. Flournoy, PhD\
+\noindent \href{mailto:jcflournoyphd@pm.me}{jcflournoyphd@pm.me} | (415) 260-2744 | \href{https://johnflournoy.science}{johnflournoy.science}

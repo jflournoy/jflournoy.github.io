@@ -1,0 +1,274 @@
+---
+author-meta: 'John C. Flournoy, PhD'
+description: 'Quantitative Research Scientist & Methodological Consultant'
+title-block-banner: false 
+title-block: false
+format: 
+  pdf:
+    pdf-engine: xelatex
+    include-in-header: 
+      text: |
+        \usepackage{fontspec}
+        \usepackage{geometry}
+        \usepackage{fontawesome5}
+        \usepackage{enumitem}
+        \usepackage{etoolbox}
+        \usepackage{changepage}
+        \usepackage{hyperref}
+        \defaultfontfeatures{Ligatures=TeX, Contextuals=Alternate}
+        
+        % Adjust page margins to be more compact
+        \geometry{margin=0.75in}
+        
+        % MAIN (SERIF) FONT: Cormorant
+        \setmainfont[
+          Path = fonts/,
+          UprightFont    = {Cormorant-Regular.ttf},
+          ItalicFont     = {Cormorant-Italic.ttf},
+          BoldFont       = {Cormorant-Bold.ttf},
+          BoldItalicFont = {Cormorant-BoldItalic.ttf}
+        ]{Cormorant}
+
+        % SANS FONT: Montserrat
+        \setsansfont[
+          Path = fonts/,
+          UprightFont    = {Montserrat-Regular.ttf},
+          ItalicFont     = {Montserrat-Italic.ttf},
+          BoldFont       = {Montserrat-Bold.ttf},
+          BoldItalicFont = {Montserrat-BoldItalic.ttf}
+        ]{Montserrat}
+
+        % MONO FONT: FiraCode
+        \setmonofont[
+          Path = fonts/,
+          UprightFont = {FiraCode-Regular.ttf},
+          BoldFont    = {FiraCode-Bold.ttf},
+          Ligatures   = TeX,
+          Contextuals = Alternate
+        ]{Fira Code}
+
+        % Headings in sans
+        \usepackage{sectsty}
+        \allsectionsfont{\sffamily}
+        
+        % Custom entry command for job titles with dates aligned right
+        \newcommand{\entry}[2]{%
+          \noindent \textbf{#1} \hfill {\small #2}
+        }
+        
+        % Customize all itemize environments globally
+        \setlist[itemize]{
+          leftmargin=1em,
+          itemsep=0.2em,
+          parsep=0em,
+          topsep=0.3em,
+          rightmargin=10em
+        }
+        
+        % Additional customization for itemize in work experience sections
+        \BeforeBeginEnvironment{itemize}{\vspace{0.1em}\setlength{\parindent}{0pt}}
+        \AfterEndEnvironment{itemize}{\vspace{0.4em}}
+
+        % Custom fancy bullet styling for fit summary section
+        \usepackage{xcolor}
+        \definecolor{accentcolor}{RGB}{70, 130, 180}
+
+        % Define a custom bullet bullet style for the fit summary section
+        \newcommand{\fancybullet}{\textcolor{accentcolor}{\faCheckCircle}\ }
+
+        % Create a local group for fancy bullets to avoid affecting other sections
+        \newcommand{\fancybulletsstart}{%
+          \bgroup%
+          \setlist[itemize]{%
+            label=\textcolor{accentcolor}{\faCheckCircle},
+            leftmargin=1.3em,
+            itemsep=0.4em,
+            parsep=0em,
+            topsep=0.3em,
+            labelsep=0.5em
+          }%
+        }
+        \newcommand{\fancybulletsend}{\egroup}
+
+        % Setup hyperlinks in blue
+        \hypersetup{colorlinks=true, urlcolor=blue}
+        
+    include-before-body:
+      text: |
+        % Custom title with less spacing
+        \begin{center}
+        {\LARGE\sffamily\textbf{John C. Flournoy, PhD}\par}
+        \vspace{0.2em}
+        {\large\sffamily Quantitative Research Scientist \& Methodological Consultant\par}
+        \vspace{0.3em}
+        
+        % Contact information with Font Awesome icons
+        \sffamily\small
+        \faPhone\ (415) 260-2744 \quad
+        \faEnvelope\ \href{mailto:jcflournoyphd@pm.me}{jcflournoyphd@pm.me} \quad
+        \faGlobe\ \href{https://johnflournoy.science}{johnflournoy.science} \quad
+        \faGraduationCap\ \href{https://scholar.google.com/citations?user=ZzQlngkAAAAJ&hl=en}{Google Scholar}
+        \end{center}
+        \vspace{0.3em}
+    fontsize: 10pt
+    keep-tex: true
+output-file: jflournoy_foundry10_resume.pdf
+---
+
+# Professional Summary
+
+Quantitative methodologist and research scientist with 12+ years translating complex statistical problems into practical guidance for multidisciplinary teams. I combine deep technical expertise with substantive research experience in developmental science, education, and learning—and I build the tools, workflows, and capacity that help teams do rigorous work independently.
+
+# Why This Role: Fit Summary
+
+\fancybulletsstart
+
+- Deep expertise in causal inference, Bayesian methods, longitudinal analysis, measurement theory, and study design—the quantitative methods central to rigorous education research and impact evaluation
+
+- Proven mentoring and capacity building: 12+ years building quantitative skills within multidisciplinary teams through workshops, one-on-one consultation, and reusable tools and templates; demonstrated ability to teach rigorous methods to collaborators across varying statistical backgrounds
+
+- Youth-centered research background: Extensive experience designing and conducting research with adolescents, including vulnerable populations (foster-care-involved youth) requiring enhanced ethical protections; deep knowledge of measurement validity and implementation considerations specific to youth
+
+- Direct education and learning research: Designed and evaluated pedagogical interventions at a learning technology company—testing whether framing assessment as learning improved engagement, and whether communities of practice supported persistence
+
+- Substantive breadth rooted in cognitive and developmental science: Core expertise in cognition, development, and psychometrics extends naturally into mental health, education technology, and learning research—enabling methodological support across foundry10's diverse labs and interest areas
+
+- Committed advocate and practitioner of open science: Published on improving scientific practices in developmental research; proponent of multiverse analysis, pre-registration, and transparent reporting; build and share reusable research tools (R packages, Docker environments, survey scoring pipelines) and apply test-driven development to analytic workflows
+
+\fancybulletsend
+
+# Core Technical Expertise
+
+**Advanced Statistical & Causal Methods**
+
+Multilevel/hierarchical linear modeling · Longitudinal data analysis (mixed effects, latent growth curves, intensive designs) · Bayesian inference & modeling (Stan, brms, hierarchical models, prior specification, posterior diagnostics) · Causal inference (DAGs, confounding adjustment, sensitivity analysis, instrumental variables) · Structural equation modeling · Network modeling · Measurement theory & psychometrics (IRT, factor analysis, measurement invariance, reliability)
+
+**Study Design & Methodology**
+
+Experimental design & power analysis · Observational study design (matching, weighting, stratification) · Survey sampling & weighted data analysis · Mixed-methods integration · Research protocols & pre-registration · Human subjects research with youth and vulnerable populations · Missing data methods (maximum likelihood, multiple imputation)
+
+**Computational & Reproducibility Skills**
+
+R (data.table, ggplot2, brms, Stan) · Python · SQL · Git/GitHub · R Markdown & Quarto · Open science practices (OSF, pre-registration, transparent reporting, multiverse analysis)
+
+# Professional Experience
+
+\entry{Research and Data Science Consultant, Independent}{2018--Present}
+
+- Provide expert statistical consultation to academic research teams and organizations on study design, causal inference approaches, measurement validation, and Bayesian modeling
+- Clients include Harvard neuroimaging labs, digital mental health platforms (Meru Health), and academic teams across psychology and education
+- Design observational longitudinal studies with attention to data collection strategies, missing data approaches, and hierarchical model specification
+- Validate and develop measurement instruments through item analysis, internal consistency evaluation, and structural validity testing (SEM, IRT)
+- Maintain active self-directed learning and experimental projects (i.e., play) across statistical, computational, and visualization domains: Bayesian modeling, ML pipelines, visualization tools, and generative AI experiments (see [johnflournoy.science/projects](https://johnflournoy.science/projects))
+
+\entry{Principal Research Scientist, Developer Success Lab, Pluralsight}{2024--2025}
+
+- Led research spanning learning science and developer productivity at a company with two products: Skills (a learning platform) and Flow (productivity analytics)
+- Designed and analyzed microstudies evaluating pedagogical interventions: whether framing testing as learning (vs. evaluation) improved learner engagement, and whether communities of practice supported persistence in learning
+- Led statistical analysis of longitudinal productivity data from 11,000+ developers across 216 organizations (55,000+ observations); specified multilevel Bayesian models separating individual from organizational variation
+- Published peer-reviewed evaluation demonstrating that individual-focused interventions have limited system-level impact, informing strategic shift toward organizational approaches
+
+\entry{Research Associate \& Postdoctoral Fellow, Harvard University}{2018--2024}
+
+- \textbf{Longitudinal Neuroimaging \& Reliability}: Lead analyst on intensive longitudinal fMRI study (50+ adolescents, 200+ sessions) examining stress and psychopathology mechanisms; developed and evaluated multilevel models of neural activation reliability
+- \textbf{Intensive Longitudinal Data \& Measurement Development}: Designed digital phenotyping protocol (stress, sleep, digital communication, physical activity over 3+ years); validated new self-report and behavioral task measures for adolescent populations, leading to 3 publications (NIMH R37-MH119194, \$9M)
+- \textbf{Multi-Site Longitudinal Analyses}: Analyzed fMRI and extensive survey data from 500+ adolescents across 4 sites on cognitive control and reward (NIMH U01-MH109589, \$17.1M); conducted systematic, pre-registered measurement invariance testing
+- \textbf{Methodological Mentoring}: Provided research design consultation and statistical guidance to 8 graduate students, 15 postbaccalaureate RAs, and 9 postdoctoral fellows across 2 lab groups
+
+\entry{Graduate Research Fellow, University of Oregon}{2012--2018}
+
+- Developed hierarchical Bayesian reinforcement learning model examining adolescent social motives as causes of health-risking behavior
+- Collected and analyzed data from 300+ participants, including foster-care-involved adolescents requiring enhanced IRB protections, parental consent/youth assent procedures, and mandated reporting protocols
+- Conducted multilevel modeling and SEM of longitudinal personality and fMRI task data
+- Validated new behavioral task and self-report measures
+
+\entry{Research Coordinator, Stanford University}{2009--2012}
+
+- Coordinated Simons Foundation-funded study examining sleep problems and autism spectrum disorder symptoms
+- Site coordinator for registered clinical trial evaluating novel PET biomarker of cerebral amyloid in dementia patients
+
+# Publications & Scientific Dissemination
+
+*See [Google Scholar](https://scholar.google.com/citations?user=ZzQlngkAAAAJ&hl=en) for full list of 25+ peer-reviewed articles*
+
+**First/Lead Author**
+
+Flournoy, J. C., Lee, C. S., Wu, M., & Hicks, C. M. (2025). No Silver Bullets: Why Understanding Software Cycle Time is Messy, Not Magic. *Empirical Software Engineering*, 30, 103. doi:10.1007/s10664-025-10735-w
+
+Flournoy, J. C., Bryce, N. V., Dennison, M. J., et al. (2024). A precision neuroscience approach to estimating reliability of neural responses during emotion processing: Implications for task-fMRI. *NeuroImage*, 285, 120503.
+
+Flournoy, J. C., Vijayakumar, N., Cheng, T. W., et al. (2020). Improving practices and inferences in developmental cognitive neuroscience. *Developmental Cognitive Neuroscience*, 100807.
+
+**Collaborative Publications**
+
+Bryce, N., Flournoy, J.C., Moreira, J.F.G., et al. (2021). Brain parcellation selection: An overlooked decision point with meaningful effects on individual differences in resting-state functional connectivity. *NeuroImage*, 118487.
+
+Ludwig, R. M., Flournoy, J. C., & Berkman, E. T. (2019). Inequality in personality and temporal discounting across socioeconomic status? Assessing the evidence. *Journal of Research in Personality*, 81, 79--87.
+
+Matta, T. H., Flournoy, J. C., & Byrne, M. L. (2018). Making an unknown unknown a known unknown: Missing data in longitudinal neuroimaging studies. *Developmental Cognitive Neuroscience*, 33, 83--98.
+
+# Teaching, Mentoring & Capacity Building
+
+**Workshops & Training**
+
+- ABDC Workshop Instructor (2021): *Modeling Developmental Change*—Data science tools, SEM theory and hands-on tutorial
+- UC Adolescence Consortium Presenter (2021): *Why and How to Care About Covariates in Longitudinal Data*
+- Lifespan Informatics & Neuroimaging Center, UPenn Seminar (2021): *Scientific Practice in Developmental Cognitive Neuroscience*
+- Institute for Technology in Psychiatry, McLean Hospital (2019): *Machine Learning as a Tool for Diagnosis and Theory Testing*
+- Graduate Statistics Teaching Assistant, University of Oregon Department of Psychology (2014--2015)
+- Co-lead, UO R Club: Led tutorials and consultations on R programming, data manipulation, simulation, and multilevel modeling (2014--2016)
+- Contributor, UO Bayes Club: Bayesian inference workshops using R and JAGS (2014--2016)
+
+**Mentorship & Multi-Project Management**
+
+- Provided methodological consultation, study design guidance, and statistical training to 32+ researchers (graduate students, postbac RAs, postdocs) across 2 major research groups
+- Managed concurrent analytic workflows across multiple funded projects (NIMH R37 and U01 grants at Harvard; multiple consulting clients simultaneously)
+- Mentored development of research proposals, analysis plans, and manuscript preparation
+- Trained research staff in human subjects ethics, IRB protocols, data quality assurance, and open science practices
+
+**Dissemination for Technical \& Non-Technical Audiences**
+
+- Guest, The Stack Overflow Podcast (2025): Communicated statistical methodology concepts for a broad developer audience
+- Synthesized research findings into accessible reports and presentations for stakeholders across varying levels of quantitative training
+- Production Assistant, American Masters (PBS, 2005)
+
+# Open Science & Methodological Infrastructure
+
+**Reusable Tools & Templates for Research Teams (R Packages, CRAN & GitHub)**
+
+- \textbf{riclpmr}: Generate syntax for random intercept cross-lagged panel models—enables collaborators to implement complex longitudinal designs without writing model code from scratch
+- \textbf{curvish} (alpha): Bayesian analysis and visualization of GAM smooths using 1st and 2nd derivatives—supports flexible nonparametric estimation with Bayesian uncertainty quantification
+- \textbf{scorequaltrics}: Retrieve and score survey data from Qualtrics using CSV templates—standardizes survey data processing workflows across research teams
+- \textbf{verse-cmdstan}: Docker container providing reproducible Bayesian computing environments (R + Stan)—eliminates setup barriers for collaborators and ensures identical environments across laptops, CI, and HPC clusters
+
+**Open Data, Reproducibility & Quality Assurance**
+
+- Apply test-driven development (TDD) to all research workflows: writing tests for data processing pipelines, model specifications, and analytic code before implementation—ensuring analytic quality assurance and verification
+- Contributor to Open Science Framework; publicly shared data and analysis code for multiple studies
+- Active practitioner of pre-registration, open science practices, and transparent statistical reporting
+
+# Education & Professional Training
+
+\entry{Ph.D., Psychology, University of Oregon}{2018}
+
+Focus: Computational methods, Bayesian hierarchical modeling, developmental neuroscience
+
+\entry{M.S., Psychology, University of Oregon}{2014}
+
+\entry{B.A., Cognitive Science, University of California, Berkeley}{2005}
+
+**Specialized Training**
+
+- Advanced Bayesian Models for the Social Sciences | ICPSR Summer Program in Quantitative Methods, 2015
+- Causal Inference for the Social Sciences | ICPSR Summer Program in Quantitative Methods, 2015
+- Python Programming and Neuroinformatics | Neurohackweek, 2016
+
+# Academic Appointments
+
+Associate of the Department of Psychology (Courtesy Appointment) | Harvard University, 2024--Present
+
+# Awards & Recognition
+
+- The Sackler Scholar Programme in Psychobiology Research Grant, 2019
+- Gary E. Smith Summer Professional Development Award, 2015
+- Clarence and Lucille Dunbar Scholarship, 2014

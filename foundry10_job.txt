@@ -1,0 +1,131 @@
+ Statistician / Quantitative Methodologist
+Description
+
+
+foundry10 is an education research organization with a philanthropic focus on expanding ideas about learning and creating direct value for youth. In collaboration with a wide range of partners, we surface, evaluate, and share opportunities to better support youth learning both inside and outside the classroom. Building on more than a decade of impactful work, our unique approach blends applied and basic research, philanthropy, and education programs rooted in evidence-based best practices.
+
+
+Summary of Role 
+
+
+We are seeking a highly skilled Statistician/Quantitative Methodologist to serve as a central methodological resource for our research team while also contributing meaningfully to research conducted across the organization. The individual in this role will consult and collaborate with fellow researchers on a diverse array of projects related to education. In addition to providing expert guidance on research design, quantitative analysis, and statistical modeling, this role involves participating as a researcher in a multidisciplinary environment, contributing to organizational learning, leading and contributing to reports, manuscripts, and presentations, and advancing the rigor and quality of our scientific work.
+
+
+The ideal candidate is both a technical expert and an effective communicator—able to translate complex statistical concepts into practical guidance for collaborators with diverse methodological backgrounds. This position enhances analytic quality, supports innovation in research methods, strengthens open science practices, and contributes to the development and dissemination of rigorous education research. 
+
+
+This is a full-time, exempt position with an annual salary range of $160,800 to $268,000 and reports to the Senior Research Manager. We are not able to sponsor visa applications, and to be considered for this position, you must be eligible to work in the United States. 
+
+
+Responsibilities
+
+    Methodological Consultation & Collaboration
+        Provide expert guidance on study design, sampling strategies, measurement, and analysis planning across a portfolio of research projects.
+        Support fellow researchers in defining research questions, identifying appropriate analytic methods, and determining suitable data sources and study designs.
+        Develop, review, and refine statistical analysis plans, including data processing pipelines, modeling approaches, confirmatory hypothesis testing, and exploratory analysis techniques.
+        Serve as a thought partner to our research labs and interest areas, offering methodological expertise that enhances project conceptualization, feasibility, and validity.
+    Research Design, Quality Assurance, & Ethical Practice
+        Support the design of rigorous experiments, observational studies, surveys, and program evaluations.
+        Review and provide methodological feedback on research proposals, protocols, analyses, and manuscripts to ensure statistical accuracy and conceptual coherence.
+        Provide analytic quality assurance and verification of colleagues’ analyses (e.g., through “auditing” or other open science practices).
+        Contribute to developing internal methodological standards, guidelines, templates, and best practices.
+        Uphold and promote strong research ethics, including deep familiarity with working with human subjects (and particularly children and adolescents) and the associated methodological considerations.
+    Research Participation, Writing, & Dissemination
+        Contribute as a researcher to projects aligned with organizational goals, participating in independent and collaborative research efforts.
+        Lead or co-author peer-reviewed publications, technical reports, and research briefs.
+        Represent the organization at conferences, workshops, and meetings with external partners.
+        Support connections with internal program teams, external researchers, and community partners to disseminate findings in accessible formats for technical and non-technical audiences.
+    Data Analysis & Advanced Modeling
+        Analyze administrative datasets, large-scale survey data, and observational or experimental data emerging from ongoing and future research projects led by fellow researchers in the organization.
+        Conduct (either independently or collaboratively with fellow foundry10 researchers) advanced statistical analyses, such as multivariate models, longitudinal analyses, causal inference techniques, Bayesian methods, structural equation modeling, multilevel/hierarchical models, weighted analyses, and network modeling.
+        Develop, validate, and document quantitative models and analytic workflows; ensure reproducibility, transparency, and alignment with open science practices.
+    Training, Capacity Building, & Team Development
+        Provide workshops, trainings, and one-on-one consultation to build quantitative capacity across the research team.
+        Contribute to the development and collection of templates and documentation (e.g., R syntax files) to support high-quality analytic work.
+        Mentor researchers, supporting colleagues in assessing methodological tradeoffs, identifying impactful research questions, and improving analytic judgment.
+        Engage actively with current literature and methodological developments; bring new knowledge into internal discussions and across team projects.
+    Operations & Partnership Support
+        Contribute to operational or partnership tasks as needed (e.g., coordinating external data collection services, liaising with partner organizations).
+        Collaborate across subject areas and quickly gain fluency in new content domains relevant to ongoing and future research projects in education and child development.
+
+Requirements
+
+
+Education
+
+    PhD strongly preferred, or Master’s, in Applied Statistics, Data Science, Psychology, Education, Public Health, or a related social science field required.
+    Strong background in statistical and quantitative methodology for the social sciences (e.g., psychology, sociology, economics, cognitive science)
+
+Experience
+
+    3–7+ years applying quantitative methods in academic, research, or applied settings.
+    Demonstrated experience consulting or collaborating with multidisciplinary teams.
+    Proven track record conducting complex statistical analyses and contributing to publications, reports, or equivalent technical outputs.
+    Experience mentoring students or junior researchers on statistical analysis and methods.
+    Experience working with educational, social science, or youth-focused research preferred, but not required.
+
+
+Technical Skills
+
+Candidates should bring strength in most of the following:
+
+    Experimental and observational study design.
+    Multilevel/hierarchical modeling.
+    Longitudinal data analysis.
+    Causal inference methods.
+    Survey sampling and weighted data analysis.
+    Measurement theory and psychometrics.
+    Bayesian analysis, structural equation modeling, or related advanced approaches.
+    Machine learning or predictive analytics.
+    Strong proficiency in R, and flexibility in assisting researchers who used other statistical tools (e.g., Python, Stata, SPSS, SAS).
+    Familiarity with data management best practices, reproducible workflows, and open science principles (e.g., pre-registration, OSF).
+
+Knowlege and Abilities
+
+    Strong analytic reasoning, problem-solving, and methodological judgment.
+    Outstanding communication skills; ability to translate complex quantitative concepts for diverse audiences.
+    Ability to manage multiple projects, timelines, and analytic workflows simultaneously.
+    Collaborative mindset with the ability to work productively with colleagues across varying levels of quantitative training.
+    Commitment to rigorous, transparent, and equitable research practices.
+    Ability to quickly learn new subject matter areas and apply methodological expertise across a variety of topics.
+    Ability to identify promising lines of inquiry and efficiently close off low-value analytic directions.
+
+To be considered for this role, please submit the following materials:
+
+    Cover letter detailing how your interest and qualifications align with this position
+    Resume or CV
+    Peer-reviewed publication
+
+Applications without a cover letter will not be reviewed. The application deadline is February 13, 2026. 
+
+
+The interview process will consist of the following steps:
+
+    Step 1: Zoom audio interview (1 hour)
+    Step 2: Zoom video interview with Research team members (1. 5 to 2 hours)
+    Step 3: If needed, Zoom video interview with the Director of Research or Org leadership (up to 1 hour)
+    Step 4: Background and professional reference checks
+
+foundry10 offers competitive salary and benefits that include:
+
+    A 4-day workweek
+    A flexible and hybrid work schedule
+    Full Medical, Dental, and Vision coverage for employees and 100% coverage for dependents
+    $1,500 yearly education stipend
+    $3,000 yearly wellness and hobby stipend, before taxes
+    Generous paid time off that includes:
+        4 weeks of vacation time annually and additional accrual with tenure
+        12 paid holidays
+        56 hours of paid sick and safe leave frontloaded annually
+        Week-long office closures twice a year - each summer and winter
+    401(k) retirement plan with employer match
+    Flexible Spending Account and Dependent Care Reimbursement Account
+    Employee Assistance Program at no cost to the employee
+    Short Term Disability, Long Term Disability, Life Insurance paid fully by foundry10
+
+Employment decisions are based on merit and business needs. foundry10 strives to provide a work environment free from discrimination and harassment because of a protected characteristic. foundry10 does not discriminate against employees or applicants based on race, color, creed, citizenship, status, national origin, ancestry, gender, genetic information, sexual orientation, gender expression or identity, age, religion, pregnancy or pregnancy-related condition, physical or mental disability, marital status, parental status, veteran status, political affiliation, or any other characteristic protected by law.
+
+
+We are committed to providing reasonable accommodations to assist individuals with disabilities with the application and interviewing process as well as essential job functions.
+Salary Description
+$160,800 to $268,000
