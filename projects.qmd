@@ -60,7 +60,7 @@ An agent-based model demonstrating how wealth inequality persists across generat
 
 **Why and what:** Economic inequality is a major problem in the USA and in the world. At the same time, meritocracy is a fairly uncontroversial system of reward that many strive to perfect. How does our understanding of rewards for merit, and the causal sources of "merit", lead toward or away from economic inequality? I built an interactive browser-based simulation to explore how these dynamics play out: agents inherit alleles, receive environmental endowments, accumulate wealth, and mate assortatively across generations. The model uses log-normal + Pareto wealth distributions and tracks Gini coefficients as you adjust the levers. The next major update will give it a more realistic underlying economic model.
 
-### {{< fa solid brain >}} Understanding LLMs [{{< fa solid graduation-cap size=sm >}}](https://johnflournoy.science/understanding-llms/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/understanding-llms)
+### {{< fa solid brain >}} Understanding LLMs [{{< fa solid graduation-cap size=sm >}}](https://johnflournoy.science/llm-workings/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/llm-workings)
 
 A hands-on exploration of how language models actually work---not just how to use them, but how they represent and process information internally. The goal is to build up a simple BERT-ish model from the ground up. As a side-effect, I have a demo of a Claude Code tutoring environment.
 
