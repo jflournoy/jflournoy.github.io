@@ -4,5 +4,5 @@ format: html
 ---
 
 
-[![trophy](https://github-profile-trophy.vercel.app/?username=jflournoy&no-frame=true&theme=dark_lover)](https://github.com/ryo-ma/github-profile-trophy)
+[![trophy](https://imagegenpipe.johnflournoy.science/trophy/?username=jflournoy&no-frame=true&theme=dark_lover)](https://github.com/ryo-ma/github-profile-trophy)
 
