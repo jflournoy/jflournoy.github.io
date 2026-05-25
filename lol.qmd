@@ -28,4 +28,6 @@ Before (good) search engines, we relied on lists of links on web pages we alread
   - Thanks to [Finn Brunton](https://sts.ucdavis.edu/people/finn-brunton) for my first introduction, in one of his undergraduate essays, to the delight of footnotes.
 - [The website of Gene Keyes, author of the Cahill-Keyes map](https://www.genekeyes.com/index.html)
   - This is a paragon exemplar of early internet website design, and hosts a wealth of thinking on map making, such as [this scathing review of the Fuller Dymaxion map](https://genekeyes.com/FULLER/BF-1-intro.html)
+- [I wish my website looked more like this](https://amybrown.xyz). It evokes nostalgia of a more DIY, and possibly (if you can believe it) weirder and more ~~sincere~~ _earnest_ internet. The aesthetic is just a signpost, though, and if you look hard you can still find this stuff.
+- [But also the future is always now](https://thehtml.review/).
 - More coming soon!
