@@ -200,25 +200,24 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Throughout my entire educational and professional career, I have built skills and expertise through play, and I’ve built tools because they are enjoyable to build. I would say this is a core value, but it’s also an indelible imperative for me.</p>
-<p>Over the past few years I’ve been playing a lot. Each project below represents a joyful exploration of topics and techniques that caught my attention.</p>
+<p>Throughout my entire educational and professional career, I have built skills and expertise through play, and I’ve built tools because they are enjoyable to build. I would say this is a core value, but it’s also an indelible imperative for me. Maybe that’s what a value is. But this isn’t a page about philosophy so I’ll leave that question unexplored for now.</p>
+<p>Over the past few years I’ve been playing a lot, maybe even more than during my PhD. Each project below represents a joyful exploration of topics and techniques that caught my attention in some way or another.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Cross-Cutting Themes
+Commonalities
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Across these projects, several themes emerge:</p>
 <ul>
-<li><strong>Curiosity as methodology</strong>: Every project starts from a real question—where can my sister go sledding near Detroit? What does inequality look like at scale? How do writers develop narrative?—and the approach is to build something that answers it.</li>
-<li><strong>Making complexity legible</strong>: Whether separating individual from organizational variation, decomposing time series into seasonal components, or building interactive visualizations of wealth dynamics—taking messy, complex phenomena and finding structure.</li>
-<li><strong>Rigorous methods in unexpected places</strong>: Hierarchical models for software teams, measurement theory for wearable data, beam search for image prompts, agent architectures for storytelling. Research methodology travels further than people expect.</li>
-<li><strong>From analysis to tool</strong>: Projects tend to evolve from one-off explorations into reusable systems: a Python library for terrain visualization, a Docker image for reproducible Bayesian computing, a pipeline for iterative image generation, an organization system for 100k+ photos.</li>
-<li><strong>Generative thinking that is serious about uncertainty</strong>: Bayesian models, agent-based simulations, stochastic processes, beam search, LLM internals—a comfort with uncertainty and a preference for generative models that can be interrogated rather than black-box predictions.</li>
+<li><strong>Curiosity is a method</strong>: Every project starts from a sincere question I have—How can I make a 3d map of an area I care about (and then my sister asking, could you make a map of where the best sledding spots are near me)? How can I visualize the actual scale of wealth inequality and government spending? Can I make LLMs build up a narrative in a way that is structured? I can program<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, and now I can also ask models to predict the code I would write to start to build up answers to these questions. Answering these questions leads me to learn about knowledge domains and tools.</li>
+<li><strong>Making complexity legible</strong>: Professionally and for fun I like to take messy, complex phenomena and visualize structure; this usually means modeling structure mathematically and making pretty pictures from the model. Sometimes it means building pure simulations. Almost always it means thinking in terms of a process unfolding in time. Separating individual from organizational variation, decomposing time series into seasonal components, or building interactive visualizations of wealth dynamics—these are just some examples.</li>
+<li><strong>Bringing rigorous methods to unexpected places</strong>: Hierarchical Bayesian models for software teams, measurement theory for wearables data, beam search for image prompts, agent architectures for storytelling, and I’m excited to release a tool for multi-village genetic algorithms for high-dimensional aesthetic parameter spaces soon.</li>
+<li><strong>From analysis to tool</strong>: Projects tend to evolve from one-off explorations into reusable systems: a Python library for terrain visualization, a Docker image for reproducible Bayesian computing, a pipeline for iterative image generation, an organization system for 100k+ photos. I’m always thinking about reproducibility and reusability.</li>
+<li><strong>Generative thinking that is serious about uncertainty</strong>: Bayesian models, agent-based simulations, stochastic processes, beam search, LLM internals—I embrace uncertainty like a giant carnival stuffy and I have a preference for generative models that can be interrogated, and that telegraph uncertainty appropriately.</li>
 </ul>
 </div>
 </div>
@@ -285,13 +284,19 @@ Cross-Cutting Themes
 <section id="story-time" class="level3">
 <h3 class="anchored" data-anchor-id="story-time"><i class="fa-solid fa-book-open" aria-label="book-open"></i> Story Time <a href="https://github.com/jflournoy/story-time"><i class="fa-brands fa-github fa-sm" aria-label="github"></i></a></h3>
 <p>A web-based tool for writers to expand, refine, revise, and restructure narratives using locally-hosted language models.</p>
-<p><strong>Why and what:</strong> This is my most nascent project. I used to write terrible poetry and marginally better short stories. As a reader, I’m intrigued by writers’ processes of developing a narrative. Playing around with online and local LLMs, I noticed that a single prompt and response, even when chained (e.g., pick up this story from where we left off) usually loses the narrative. So I started playing around with “outside-in” outline expansion. That is, start with the top level narrative points, then have an LLM expand each of those into an inner set of bullets—for each of those, expand into a more detailed set (keeping track of the next major point), and so on That seemed to work a bit better. Not satisfied, and inspired by a conversation with a friend about agent swarms, I realized it might be fun to have agents play characters with an orchestrator who has knowledge of the overall narrative mission and where agents have access to limited context of the world they can access stored in something like a ChromaDB. Very much a WIP.</p>
+<p><strong>Why and what:</strong> This is my most nascent project. I used to write terrible poetry and marginally better short stories. As a reader, I’m intrigued by writers’ processes of developing a narrative. Playing around with online and local LLMs, I noticed that a single prompt and response, even when chained (e.g., pick up this story from where we left off) usually loses the narrative. So I started playing around with “outside-in” outline expansion. That is, start with the top level narrative points, then have an LLM expand each of those into an inner set of bullets—for each of those, expand into a more detailed set (keeping track of the next major point), and so on. That seemed to work a bit better. Not satisfied, and inspired by a conversation with a friend about agent swarms, I realized it might be fun to have agents play characters with an orchestrator who has knowledge of the overall narrative mission and where agents have access to limited context of the world they can access stored in something like a ChromaDB. Very much a WIP.</p>
 
 
 </section>
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>When I was 13 I learned to use BASIC to make my mom’s laptop beep out a simple melody. After I read a book about hackers (<a href="https://www.harpercollins.com/products/the-masters-of-deception-michele-slatalla">Masters of Deception</a> by Michelle Slatalla and Joshua Quittner that my dad bought me ’cause he knew I liked computers), I would spend time hanging out at Borders reading the very pricy books on C and UNIX. Finally in high school, I was able to take a CS class taught in Pascal, and then the next year AP Computer Science in C++. For our final, my friends and I wrote a program called Voyrus that was supposed to read, change, and compile its own source code. I admit, it never ended up working, but it was fun as heck. During my BA in cognitive science, I took CS classes taught in Scheme and LISP. Begrudgingly, perhaps, I also learned PHP to build tools for my dorm’s shared music server, and then later, to do web design freelance. Then, during my PhD, I learned R and more R and finally a little bit of Python. Recently, I’ve learned a bit of TypeScript but to be totally transparent, Claude writes most of it.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
