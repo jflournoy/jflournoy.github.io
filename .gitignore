@@ -4,3 +4,7 @@
 .Ruserdata
 /.quarto/
 .httr-oauth
+
+# editor / local tool state
+.vscode/
+fonts/.uuid
