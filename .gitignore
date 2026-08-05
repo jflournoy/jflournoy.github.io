@@ -8,3 +8,6 @@
 # editor / local tool state
 .vscode/
 fonts/.uuid
+
+# generated from Flournoy.bib by make-public-bib.sh on every render
+flournoy-publications.bib
