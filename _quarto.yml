@@ -1,8 +1,10 @@
 project:
   type: website
   resources:
-    # Served as the "BibTeX" download on the publications page.
-    - Flournoy.bib
+    # BibTeX download for the publications page. This is the stripped copy
+    # produced by make-public-bib.sh — NOT Flournoy.bib, which contains local
+    # Zotero paths and publisher abstracts.
+    - flournoy-publications.bib
 
 website:
   title: "science is a verb"

@@ -23,9 +23,8 @@ filters:
 Peer-reviewed articles, preprints, conference presentations, and my
 dissertation, newest first. My name is **bolded** throughout.
 
-[{{< fa solid graduation-cap >}} Google Scholar](https://scholar.google.com/citations?user=ZzQlngkAAAAJ&hl=en) ·
 [{{< fa solid file-lines >}} CV (PDF)](jcflournoy-cv.pdf) ·
-[{{< fa solid quote-left >}} BibTeX](Flournoy.bib)
+[{{< fa solid quote-left >}} BibTeX](flournoy-publications.bib)
 
 ::: {#refs}
 :::
