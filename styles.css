@@ -46,3 +46,55 @@ body {
   border-color: #512b79;
   color: #fff;
 }
+
+/* Year headings on the publications page (added by group-years.lua) */
+h2.pub-year {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.06em;
+  color: #5a2d82;
+  border-bottom: 1px solid #d9d0e6;
+  padding-bottom: 0.2em;
+  margin-top: 2rem;
+  margin-bottom: 0.9rem;
+}
+
+/* Give each entry a little breathing room now that they are grouped. */
+.csl-bib-body div.csl-entry {
+  margin-bottom: 0.7em;
+  line-height: 1.45;
+}
+
+/* The author's own name, bolded by bold-it.lua. */
+.csl-entry strong {
+  color: #3f2059;
+}
+
+/* Year-jump nav emitted by group-years.lua (stands in for the TOC, which
+   cannot see filter-generated headings). */
+.pub-year-nav {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  line-height: 2.1;
+  margin: 0.5rem 0 2rem;
+}
+.pub-year-nav a {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  margin-right: 0.15em;
+  border: 1px solid #d9d0e6;
+  border-radius: 0.3rem;
+  color: #5a2d82;
+  text-decoration: none;
+}
+.pub-year-nav a:hover,
+.pub-year-nav a:focus {
+  background-color: #5a2d82;
+  border-color: #5a2d82;
+  color: #fff;
+}
+
+/* Offset anchor targets so the sticky navbar does not cover the heading. */
+h2.pub-year {
+  scroll-margin-top: 4.5rem;
+}

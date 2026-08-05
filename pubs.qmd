@@ -2,11 +2,30 @@
 title: "Publications"
 bibliography: Flournoy.bib
 csl: apa-cv.csl
-format: html
+format:
+  html:
+    # Quarto builds its TOC from the AST *before* filters run, so the year
+    # headings that group-years.lua injects can never appear in it. The filter
+    # emits its own year-jump nav instead.
+    toc: false
 nocite: |
   @*
+# Run citeproc ourselves (via citeproc.lua) so the two filters below operate on
+# the *rendered* bibliography. Quarto's built-in citeproc would otherwise run
+# last, after these filters had nothing to act on.
+citeproc: false
+filters:
+  - citeproc.lua
+  - bold-it.lua
+  - group-years.lua
 ---
+
+Peer-reviewed articles, preprints, conference presentations, and my
+dissertation, newest first. My name is **bolded** throughout.
+
+[{{< fa solid graduation-cap >}} Google Scholar](https://scholar.google.com/citations?user=ZzQlngkAAAAJ&hl=en) ·
+[{{< fa solid file-lines >}} CV (PDF)](jcflournoy-cv.pdf) ·
+[{{< fa solid quote-left >}} BibTeX](Flournoy.bib)
 
 ::: {#refs}
 :::
-

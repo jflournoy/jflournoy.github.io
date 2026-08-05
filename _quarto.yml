@@ -1,5 +1,8 @@
 project:
   type: website
+  resources:
+    # Served as the "BibTeX" download on the publications page.
+    - Flournoy.bib
 
 website:
   title: "science is a verb"
