@@ -17,11 +17,14 @@ citeproc: false
 filters:
   - citeproc.lua
   - bold-it.lua
+  # Before group-years.lua so it sees citeproc's own output shape.
+  - oa-links.lua
   - group-years.lua
 ---
 
-Peer-reviewed articles, preprints, conference presentations, and my
-dissertation, newest first. My name is **bolded** throughout.
+Peer-reviewed articles, preprints, and my dissertation, newest first. My name
+is **bolded** throughout. Where a free copy exists, it is linked at the end of
+the reference.
 
 [{{< fa solid file-lines >}} CV (PDF)](jcflournoy-cv.pdf) ·
 [{{< fa solid quote-left >}} BibTeX](flournoy-publications.bib)

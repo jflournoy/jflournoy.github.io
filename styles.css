@@ -98,3 +98,36 @@ h2.pub-year {
 h2.pub-year {
   scroll-margin-top: 4.5rem;
 }
+
+/* Journal name, tagged by oa-links.lua. APA already italicises it; this just
+   lifts it out of the run of text. */
+.csl-entry .pub-journal {
+  font-variant: small-caps;
+  letter-spacing: 0.02em;
+  color: #4a3a5c;
+}
+
+/* Open-access full-text link appended by oa-links.lua. */
+.csl-entry a.pub-oa {
+  display: inline-block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  padding: 0.05em 0.5em;
+  border: 1px solid #9fc7a6;
+  border-radius: 0.75rem;
+  background-color: #eef7ef;
+  color: #2f6b3a;
+  text-decoration: none;
+  white-space: nowrap;
+  vertical-align: 0.08em;
+}
+.csl-entry a.pub-oa:hover,
+.csl-entry a.pub-oa:focus {
+  background-color: #2f6b3a;
+  border-color: #2f6b3a;
+  color: #fff;
+}

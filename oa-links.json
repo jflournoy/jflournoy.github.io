@@ -1,0 +1,260 @@
+{
+ "andrewsExpectationsSocialConsequences2020": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1111/jora.12576",
+  "version": "publishedVersion"
+ },
+ "barendseMultimethodAssessmentPubertal2022": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1037/abn0000721",
+  "version": "publishedVersion"
+ },
+ "barendseNeuralCorrelatesSelfevaluation2020": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://www.sciencedirect.com/science/article/pii/S1878929320300475?via%3Dihub",
+  "version": "publishedVersion"
+ },
+ "barendseStudyProtocolTransitions2020": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://fjfsdata01prod.blob.core.windows.net/articles/files/493465/pubmed-zip/.versions/1/.package-entries/fpsyt-10-01018.pdf?sv=2018-03-28&sr=b&sig=vHdiwqmO4r%2B23DHRojLW9WJSmviieS%2BKVFVXGzknIT0%3D&se=2021-02-18T19%3A08%3A03Z&sp=r&rscd=attachment%3B%20filename%2A%3DUTF-8%27%27fpsyt-10-01018.pdf",
+  "version": "publishedVersion"
+ },
+ "baumGradedVariationT1w2022": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://www.jneurosci.org/content/jneuro/42/29/5681.full.pdf",
+  "version": "publishedVersion"
+ },
+ "bryceBrainParcellationSelection2021a": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://www.sciencedirect.com/science/article/pii/S1053811921007606/pdf",
+  "version": "publishedVersion"
+ },
+ "byrneAssociationsMultimethodLatent2023": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1016/j.dcn.2023.101228",
+  "version": "publishedVersion"
+ },
+ "chenSocialContextsRequiring2025": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://direct.mit.edu/opmi/article-pdf/doi/10.1162/opmi_a_00201/2521631/opmi_a_00201.pdf",
+  "version": "publishedVersion"
+ },
+ "chengFeelingLeftOut2020": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://link.springer.com/content/pdf/10.3758/s13415-020-00772-x.pdf",
+  "version": "publishedVersion"
+ },
+ "chengLongitudinalChangesT1w2026": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12983211/",
+  "version": "submittedVersion"
+ },
+ "cosmeTestingAdolescentSocial2022": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://www.sciencedirect.com/science/article/pii/S1878929322000330/pdf",
+  "version": "publishedVersion"
+ },
+ "curtisDisentanglingUniqueAssociations2026": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1162/imag.a.1270",
+  "version": "publishedVersion"
+ },
+ "curtisDisentanglingUniqueContributions2024": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1016/j.dcn.2024.101473",
+  "version": "publishedVersion"
+ },
+ "flanneryNeurodevelopmentalChangesAdolescence2017": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1016/j.dcn.2017.02.003",
+  "version": "publishedVersion"
+ },
+ "flournoyCommentEllwoodLowe20202021": {
+  "host": null,
+  "kind": "pdf",
+  "url": "https://psyarxiv.com/23qsw/download",
+  "version": "acceptedVersion"
+ },
+ "flournoyImprovingPracticesInferences2020": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://www.sciencedirect.com/science/article/pii/S1878929320300554/pdf",
+  "version": "publishedVersion"
+ },
+ "flournoyNeuralReactivityEmotional2016": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/5448462",
+  "version": "submittedVersion"
+ },
+ "flournoyNoSilverBullets2025": {
+  "host": "repository",
+  "kind": "pdf",
+  "url": "https://arxiv.org/pdf/2503.05040",
+  "version": "submittedVersion"
+ },
+ "flournoyPrecisionNeuroscienceApproach2024": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1016/j.neuroimage.2023.120503",
+  "version": "publishedVersion"
+ },
+ "gauBrainhackDevelopingCulture2021": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "http://www.cell.com/article/S0896627321002312/pdf",
+  "version": "publishedVersion"
+ },
+ "goodkindImpactExecutiveFunction2015": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/7063995",
+  "version": "submittedVersion"
+ },
+ "grisanzioShiftingQualitiesNegative2023": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1037/emo0001079",
+  "version": "publishedVersion"
+ },
+ "guazzelliwilliamsonLongitudinalNeuroimagingStudy2025": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1016/j.dcn.2025.101526",
+  "version": "publishedVersion"
+ },
+ "kingLongitudinalModelingDevelopmental2018": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1016/j.dcn.2017.11.009",
+  "version": "publishedVersion"
+ },
+ "leonardHowMuchMotion2017": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://riojournal.com/article/12569/download/pdf/",
+  "version": "publishedVersion"
+ },
+ "lopez-vicenteDevelopmentalChangesDynamic2021": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://www.frontiersin.org/articles/10.3389/fnsys.2021.724805/pdf",
+  "version": "publishedVersion"
+ },
+ "ludwigInequalityPersonalityTemporal2019": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://www.sciencedirect.com/science/article/pii/S0092656619300480/pdf",
+  "version": "publishedVersion"
+ },
+ "madhyasthaCurrentMethodsLimitations2018": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1016/j.dcn.2017.11.006",
+  "version": "publishedVersion"
+ },
+ "mattaMakingUnknownUnknown2018": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1016/j.dcn.2017.10.001",
+  "version": "publishedVersion"
+ },
+ "mccormickHitchhikersGuideLongitudinal2023": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1016/j.dcn.2023.101281",
+  "version": "publishedVersion"
+ },
+ "nookHighEmotionDifferentiation2021": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/8315101",
+  "version": "submittedVersion"
+ },
+ "ohara5HTTLPRShortAllele2012": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/3326186",
+  "version": "submittedVersion"
+ },
+ "rakeshAssociationsSocioeconomicStatus2025": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jcv2.70001",
+  "version": "publishedVersion"
+ },
+ "rodmanYearSocialLife2021": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/8547215",
+  "version": "submittedVersion"
+ },
+ "romeoLanguageDevelopmentMechanism2022": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/9250946",
+  "version": "submittedVersion"
+ },
+ "thalmayerEthicsRelevantValuesAntecedents2019": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "http://www.collabra.org/articles/10.1525/collabra.244/galley/321/download/",
+  "version": "publishedVersion"
+ },
+ "thalmayerEthicsrelevantValuesAdulthood2019": {
+  "host": "repository",
+  "kind": "pdf",
+  "url": "https://iris.unil.ch/bitstreams/98971aee-5096-49b2-a397-f07fa0cb0963/download",
+  "version": "submittedVersion"
+ },
+ "vidalbustamanteWithinpersonFluctuationsStressful2020": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/7494581",
+  "version": "submittedVersion"
+ },
+ "vijayakumarAffectiveReactivityAdolescence2019": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/7057923",
+  "version": "submittedVersion"
+ },
+ "vijayakumarDifferentialNeuralSensitivity2022": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://www.sciencedirect.com/science/article/pii/S2213158222000511/pdf",
+  "version": "publishedVersion"
+ },
+ "vijayakumarGettingKnowMe2020": {
+  "host": "publisher",
+  "kind": "landing",
+  "url": "https://doi.org/10.1037/pspa0000182",
+  "version": "publishedVersion"
+ },
+ "vijayakumarPubertalHormonesBrain2019": {
+  "host": null,
+  "kind": "landing",
+  "url": "https://doi.org/10.31234/osf.io/btf4y",
+  "version": "acceptedVersion"
+ },
+ "xuLimitedGeneralizabilityMultivariate2024": {
+  "host": "publisher",
+  "kind": "pdf",
+  "url": "https://www.nature.com/articles/s44271-024-00063-y.pdf",
+  "version": "publishedVersion"
+ }
+}
