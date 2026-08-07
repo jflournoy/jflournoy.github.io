@@ -40,11 +40,31 @@ body {
   clip: rect(0,0,0,0); white-space: nowrap; 
 }
 
-/* in your styles.css */
+/* Brand-coloured Bootstrap button. Pair with .btn, e.g.
+   [Download](file.pdf){.btn .btn-brand} */
 .btn-brand {
   background-color: #5a2d82;
   border-color: #512b79;
   color: #fff;
+}
+.btn-brand:hover,
+.btn-brand:focus,
+.btn-brand:active {
+  background-color: #45216a;
+  border-color: #3c1d5e;
+  color: #fff;
+}
+.btn-brand:focus-visible {
+  box-shadow: 0 0 0 0.25rem rgba(90, 45, 130, 0.35);
+  outline: none;
+}
+
+/* Space out rows of buttons. Quarto separates them with a text node rather
+   than making them adjacent siblings, so margin-right (not a sibling
+   selector) is what actually applies. */
+.btn {
+  margin-right: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 
 /* Year headings on the publications page (added by group-years.lua) */

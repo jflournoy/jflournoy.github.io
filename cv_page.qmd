@@ -9,6 +9,7 @@ format: html
 
 :::
 
-[{{< fa solid file-arrow-down >}} Download it](jcflournoy-cv.pdf) ·
-[{{< fa solid graduation-cap >}} Google Scholar](https://scholar.google.com/citations?user=ZzQlngkAAAAJ&hl=en) ·
-[{{< fa solid quote-left >}} Publications](pubs.qmd)
+[{{< fa solid file-arrow-down >}} Download CV](jcflournoy-cv.pdf){.btn .btn-brand}
+[{{< fa solid file-lines >}} Resume](resume.qmd){.btn .btn-outline-secondary}
+[{{< fa solid quote-left >}} Publications](pubs.qmd){.btn .btn-outline-secondary}
+[{{< fa solid graduation-cap >}} Google Scholar](https://scholar.google.com/citations?user=ZzQlngkAAAAJ&hl=en){.btn .btn-outline-secondary}

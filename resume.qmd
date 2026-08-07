@@ -3,7 +3,7 @@ title: Resume
 format: html
 ---
 
-[<span class=badge-vapor>Download it</span>](jflournoy-resume-20260202.pdf)
+[{{< fa solid file-arrow-down >}} Download resume](jflournoy-resume-20260202.pdf){.btn .btn-brand}
 
 :::{.column-page}
 
