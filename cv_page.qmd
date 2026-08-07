@@ -9,4 +9,6 @@ format: html
 
 :::
 
-[Download it](jcflournoy-cv.pdf)
+[{{< fa solid file-arrow-down >}} Download it](jcflournoy-cv.pdf) ·
+[{{< fa solid graduation-cap >}} Google Scholar](https://scholar.google.com/citations?user=ZzQlngkAAAAJ&hl=en) ·
+[{{< fa solid quote-left >}} Publications](pubs.qmd)
