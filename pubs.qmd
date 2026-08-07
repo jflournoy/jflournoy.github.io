@@ -5,8 +5,8 @@ csl: apa-cv.csl
 format:
   html:
     # Quarto builds its TOC from the AST *before* filters run, so the year
-    # headings that group-years.lua injects can never appear in it. The filter
-    # emits its own year-jump nav instead.
+    # headings that group-years.lua injects can never appear in it. Leaving
+    # the TOC on would render an empty sidebar.
     toc: false
 nocite: |
   @*

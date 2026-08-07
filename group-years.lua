@@ -40,7 +40,6 @@ function Div(div)
   local out = pandoc.List()
   local current_year = nil
   local unknown = pandoc.List()
-  local years_seen = {}
   local n_in, n_out = 0, 0
 
   -- Buffer the entries of one year inside their own bib-body div so the
@@ -65,7 +64,6 @@ function Div(div)
         if year ~= current_year then
           flush()
           current_year = year
-          years_seen[#years_seen + 1] = year
           out:insert(pandoc.Header(
             YEAR_HEADING_LEVEL,
             { pandoc.Str(year) },
@@ -101,20 +99,6 @@ function Div(div)
   if n_in ~= n_out then
     error(string.format(
       "group-years.lua: %d entries in, %d out — entries would be lost", n_in, n_out))
-  end
-
-  -- Build a year-jump nav. Quarto's own TOC is generated from the AST before
-  -- filters run, so these headings can never appear there; emit our own.
-  if #years_seen > 0 then
-    local links = pandoc.List()
-    for i, y in ipairs(years_seen) do
-      if i > 1 then links:insert(pandoc.Str(" ")) end
-      links:insert(pandoc.Link({ pandoc.Str(y) }, "#year-" .. y))
-    end
-    out:insert(1, pandoc.Div(
-      { pandoc.Plain(links) },
-      pandoc.Attr("", { "pub-year-nav" })
-    ))
   end
 
   return pandoc.Div(out, div.attr)

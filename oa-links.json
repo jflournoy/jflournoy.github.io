@@ -1,27 +1,27 @@
 {
  "andrewsExpectationsSocialConsequences2020": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.1111/jora.12576",
-  "version": "publishedVersion"
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/8494461",
+  "version": "submittedVersion"
  },
  "barendseMultimethodAssessmentPubertal2022": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.1037/abn0000721",
-  "version": "publishedVersion"
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/9439585",
+  "version": "submittedVersion"
  },
  "barendseNeuralCorrelatesSelfevaluation2020": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "pdf",
-  "url": "https://www.sciencedirect.com/science/article/pii/S1878929320300475?via%3Dihub",
-  "version": "publishedVersion"
+  "url": "http://hdl.handle.net/11343/247691",
+  "version": "submittedVersion"
  },
  "barendseStudyProtocolTransitions2020": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "pdf",
-  "url": "https://fjfsdata01prod.blob.core.windows.net/articles/files/493465/pubmed-zip/.versions/1/.package-entries/fpsyt-10-01018.pdf?sv=2018-03-28&sr=b&sig=vHdiwqmO4r%2B23DHRojLW9WJSmviieS%2BKVFVXGzknIT0%3D&se=2021-02-18T19%3A08%3A03Z&sp=r&rscd=attachment%3B%20filename%2A%3DUTF-8%27%27fpsyt-10-01018.pdf",
-  "version": "publishedVersion"
+  "url": "http://hdl.handle.net/11343/247700",
+  "version": "submittedVersion"
  },
  "baumGradedVariationT1w2022": {
   "host": "publisher",
@@ -36,10 +36,10 @@
   "version": "publishedVersion"
  },
  "byrneAssociationsMultimethodLatent2023": {
-  "host": "publisher",
-  "kind": "landing",
-  "url": "https://doi.org/10.1016/j.dcn.2023.101228",
-  "version": "publishedVersion"
+  "host": "repository",
+  "kind": "pdf",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10031110/pdf/main.pdf",
+  "version": "submittedVersion"
  },
  "chenSocialContextsRequiring2025": {
   "host": "publisher",
@@ -66,22 +66,22 @@
   "version": "publishedVersion"
  },
  "curtisDisentanglingUniqueAssociations2026": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.1162/imag.a.1270",
-  "version": "publishedVersion"
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13271154/",
+  "version": "submittedVersion"
  },
  "curtisDisentanglingUniqueContributions2024": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.1016/j.dcn.2024.101473",
-  "version": "publishedVersion"
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/11609316",
+  "version": "submittedVersion"
  },
  "flanneryNeurodevelopmentalChangesAdolescence2017": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.1016/j.dcn.2017.02.003",
-  "version": "publishedVersion"
+  "url": "https://doaj.org/article/1b8f64b3e62f45328f5ee2fc4f2432d6",
+  "version": "submittedVersion"
  },
  "flournoyCommentEllwoodLowe20202021": {
   "host": null,
@@ -108,10 +108,10 @@
   "version": "submittedVersion"
  },
  "flournoyPrecisionNeuroscienceApproach2024": {
-  "host": "publisher",
-  "kind": "landing",
-  "url": "https://doi.org/10.1016/j.neuroimage.2023.120503",
-  "version": "publishedVersion"
+  "host": "repository",
+  "kind": "pdf",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10872443/pdf/nihms-1958007.pdf",
+  "version": "submittedVersion"
  },
  "gauBrainhackDevelopingCulture2021": {
   "host": "publisher",
@@ -126,22 +126,22 @@
   "version": "submittedVersion"
  },
  "grisanzioShiftingQualitiesNegative2023": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.1037/emo0001079",
-  "version": "publishedVersion"
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/9756137",
+  "version": "submittedVersion"
  },
  "guazzelliwilliamsonLongitudinalNeuroimagingStudy2025": {
-  "host": "publisher",
-  "kind": "landing",
-  "url": "https://doi.org/10.1016/j.dcn.2025.101526",
-  "version": "publishedVersion"
+  "host": "repository",
+  "kind": "pdf",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11891602/pdf/main.pdf",
+  "version": "submittedVersion"
  },
  "kingLongitudinalModelingDevelopmental2018": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.1016/j.dcn.2017.11.009",
-  "version": "publishedVersion"
+  "url": "https://doaj.org/article/b7a61d02f9a441d384a1e33ebd3d7657",
+  "version": "submittedVersion"
  },
  "leonardHowMuchMotion2017": {
   "host": "publisher",
@@ -150,10 +150,10 @@
   "version": "publishedVersion"
  },
  "lopez-vicenteDevelopmentalChangesDynamic2021": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "pdf",
-  "url": "https://www.frontiersin.org/articles/10.3389/fnsys.2021.724805/pdf",
-  "version": "publishedVersion"
+  "url": "https://pure.eur.nl/ws/files/44502381/Developmental_Changes_in_Dynamic_Functional_Connectivity_From_Childhood_Into_Adolescence.pdf",
+  "version": "submittedVersion"
  },
  "ludwigInequalityPersonalityTemporal2019": {
   "host": "publisher",
@@ -162,22 +162,22 @@
   "version": "publishedVersion"
  },
  "madhyasthaCurrentMethodsLimitations2018": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.1016/j.dcn.2017.11.006",
-  "version": "publishedVersion"
+  "url": "https://doaj.org/article/e2e50d2609634af39bcdfc2b261bfdb9",
+  "version": "submittedVersion"
  },
  "mattaMakingUnknownUnknown2018": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.1016/j.dcn.2017.10.001",
-  "version": "publishedVersion"
+  "url": "https://doaj.org/article/d1e4960195494c1592e27ac5a6018479",
+  "version": "submittedVersion"
  },
  "mccormickHitchhikersGuideLongitudinal2023": {
-  "host": "publisher",
-  "kind": "landing",
-  "url": "https://doi.org/10.1016/j.dcn.2023.101281",
-  "version": "publishedVersion"
+  "host": "repository",
+  "kind": "pdf",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10412784/pdf/main.pdf",
+  "version": "submittedVersion"
  },
  "nookHighEmotionDifferentiation2021": {
   "host": "repository",
@@ -210,10 +210,10 @@
   "version": "submittedVersion"
  },
  "thalmayerEthicsRelevantValuesAntecedents2019": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "pdf",
-  "url": "http://www.collabra.org/articles/10.1525/collabra.244/galley/321/download/",
-  "version": "publishedVersion"
+  "url": "https://iris.unil.ch/bitstreams/16d0919d-5f83-4e86-9c8f-3663a7c9334f/download",
+  "version": "submittedVersion"
  },
  "thalmayerEthicsrelevantValuesAdulthood2019": {
   "host": "repository",
@@ -240,16 +240,16 @@
   "version": "publishedVersion"
  },
  "vijayakumarGettingKnowMe2020": {
-  "host": "publisher",
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.1037/pspa0000182",
-  "version": "publishedVersion"
+  "url": "https://figshare.com/articles/journal_contribution/Getting_to_know_me_better_an_fMRI_study_of_intimate_and_superficial_self-disclosure_to_friends_during_adolescence/20716126",
+  "version": "submittedVersion"
  },
  "vijayakumarPubertalHormonesBrain2019": {
-  "host": null,
+  "host": "repository",
   "kind": "landing",
-  "url": "https://doi.org/10.31234/osf.io/btf4y",
-  "version": "acceptedVersion"
+  "url": "https://osf.io/btf4y",
+  "version": "submittedVersion"
  },
  "xuLimitedGeneralizabilityMultivariate2024": {
   "host": "publisher",

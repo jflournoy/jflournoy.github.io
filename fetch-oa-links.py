@@ -45,6 +45,62 @@ def load_entries():
     return json.loads(proc.stdout)
 
 
+def durable(url):
+    """Drop URLs that are signed and time-limited.
+
+    Some publishers (Frontiers via Azure blob storage, notably) hand Unpaywall
+    a pre-signed download link carrying its own expiry in the query string.
+    Those 403 once the signature lapses -- one in this bibliography had expired
+    in 2021 -- so they must never be cached as a permanent link.
+    """
+    if not url:
+        return None
+    query = urllib.parse.parse_qs(urllib.parse.urlparse(url).query)
+    if "sig" in query or "Signature" in query or "se" in query:
+        return None
+    if "blob.core.windows.net" in url or "amazonaws.com" in url:
+        return None
+    return url
+
+
+def pick_location(data):
+    """Choose the OA copy most likely to actually be readable.
+
+    Unpaywall's own `best_oa_location` prefers the published version at the
+    publisher, which for hybrid-OA journals is often a page that still shows a
+    paywall (APA and Springer both do this). A repository copy -- PMC, PsyArXiv,
+    an institutional archive -- is the accepted manuscript rather than the
+    typeset version, but it is genuinely free to read, which is what the link
+    promises. So rank:
+
+      1. any direct PDF                      (best: it is the file itself)
+      2. a repository landing page           (free, even if not typeset)
+      3. a publisher landing page            (last resort; may be paywalled)
+    """
+    locations = data.get("oa_locations") or []
+    if not locations and data.get("best_oa_location"):
+        locations = [data["best_oa_location"]]
+
+    def rank(loc):
+        is_repo = loc.get("host_type") == "repository"
+        if loc.get("url_for_pdf"):
+            return 0 if is_repo else 1
+        return 2 if is_repo else 3
+
+    for loc in sorted(locations, key=rank):
+        pdf = durable(loc.get("url_for_pdf"))
+        landing = durable(loc.get("url_for_landing_page"))
+        if not (pdf or landing):
+            continue
+        return {
+            "url": pdf or landing,
+            "kind": "pdf" if pdf else "landing",
+            "host": loc.get("host_type"),
+            "version": loc.get("version"),
+        }
+    return None
+
+
 def query(doi):
     url = API + urllib.parse.quote(doi) + "?email=" + urllib.parse.quote(EMAIL)
     with urllib.request.urlopen(url, timeout=30) as resp:
@@ -83,16 +139,9 @@ def main():
             failures.append((key, str(exc)[:80]))
             continue
 
-        loc = data.get("best_oa_location") or {}
-        pdf = loc.get("url_for_pdf")
-        landing = loc.get("url_for_landing_page")
-        if pdf or landing:
-            links[key] = {
-                "url": pdf or landing,
-                "kind": "pdf" if pdf else "landing",
-                "host": loc.get("host_type"),
-                "version": loc.get("version"),
-            }
+        chosen = pick_location(data)
+        if chosen:
+            links[key] = chosen
         time.sleep(0.12)  # be polite to a free API
         if i % 15 == 0:
             print(f"  ...{i}/{len(todo)}", file=sys.stderr)

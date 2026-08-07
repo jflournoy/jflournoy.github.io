@@ -70,30 +70,6 @@ h2.pub-year {
   color: #3f2059;
 }
 
-/* Year-jump nav emitted by group-years.lua (stands in for the TOC, which
-   cannot see filter-generated headings). */
-.pub-year-nav {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.9rem;
-  line-height: 2.1;
-  margin: 0.5rem 0 2rem;
-}
-.pub-year-nav a {
-  display: inline-block;
-  padding: 0.1em 0.55em;
-  margin-right: 0.15em;
-  border: 1px solid #d9d0e6;
-  border-radius: 0.3rem;
-  color: #5a2d82;
-  text-decoration: none;
-}
-.pub-year-nav a:hover,
-.pub-year-nav a:focus {
-  background-color: #5a2d82;
-  border-color: #5a2d82;
-  color: #fff;
-}
-
 /* Offset anchor targets so the sticky navbar does not cover the heading. */
 h2.pub-year {
   scroll-margin-top: 4.5rem;
@@ -107,27 +83,18 @@ h2.pub-year {
   color: #4a3a5c;
 }
 
-/* Open-access full-text link appended by oa-links.lua. */
+/* Open-access full-text link appended by oa-links.lua. Plain inline text --
+   no box, so nothing can overflow the bibliography's line height. */
 .csl-entry a.pub-oa {
-  display: inline-block;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.72rem;
   font-style: normal;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  line-height: 1.5;
-  padding: 0.05em 0.5em;
-  border: 1px solid #9fc7a6;
-  border-radius: 0.75rem;
-  background-color: #eef7ef;
   color: #2f6b3a;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: #9fc7a6;
+  text-underline-offset: 0.15em;
   white-space: nowrap;
-  vertical-align: 0.08em;
 }
 .csl-entry a.pub-oa:hover,
 .csl-entry a.pub-oa:focus {
-  background-color: #2f6b3a;
-  border-color: #2f6b3a;
-  color: #fff;
+  color: #1e4726;
+  text-decoration-color: #1e4726;
 }

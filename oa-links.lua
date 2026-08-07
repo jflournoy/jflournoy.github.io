@@ -13,24 +13,30 @@
 --]]
 
 local json_path = "oa-links.json"
+local extra_path = "extra-links.json"
 
-local function read_links()
-  local fh = io.open(json_path, "r")
+local function read_json(path, required)
+  local fh = io.open(path, "r")
   if not fh then
-    io.stderr:write("oa-links.lua: " .. json_path .. " not found; no links added\n")
+    if required then
+      io.stderr:write("oa-links.lua: " .. path .. " not found; no links added\n")
+    end
     return {}
   end
   local raw = fh:read("a")
   fh:close()
   local ok, decoded = pcall(pandoc.json.decode, raw)
   if not ok or type(decoded) ~= "table" then
-    io.stderr:write("oa-links.lua: could not parse " .. json_path .. "\n")
+    io.stderr:write("oa-links.lua: could not parse " .. path .. "\n")
     return {}
   end
   return decoded
 end
 
-local links = read_links()
+local links = read_json(json_path, true)
+-- Hand-curated links (project pages, code, talks). Separate file so the
+-- Unpaywall fetch cannot overwrite them.
+local extras = read_json(extra_path, false)
 
 -- Journal names, read from the bibliography itself. APA italicises the
 -- container title -- but on entries with no container (a thesis, a preprint
@@ -67,7 +73,7 @@ local function tag_journal(blk, key)
   })
 end
 
-local n_entries, n_linked, n_pdf, n_journal = 0, 0, 0, 0
+local n_entries, n_linked, n_pdf, n_journal, n_extra = 0, 0, 0, 0, 0
 
 local function decorate(div)
   local key = div.identifier:match("^ref%-(.+)$")
@@ -77,28 +83,55 @@ local function decorate(div)
   div.content = div.content:map(function(b) return tag_journal(b, key) end)
   if containers[key] then n_journal = n_journal + 1 end
 
+  -- Collect every link for this entry: the OA copy first, then any
+  -- hand-curated extras.
+  local anchors = pandoc.List()
+
   local link = links[key]
-  if not link or not link.url then return div end
-  n_linked = n_linked + 1
-  local is_pdf = link.kind == "pdf"
-  if is_pdf then n_pdf = n_pdf + 1 end
+  if link and link.url then
+    n_linked = n_linked + 1
+    local is_pdf = link.kind == "pdf"
+    if is_pdf then n_pdf = n_pdf + 1 end
+    anchors:insert(pandoc.Link(
+      { pandoc.Str(is_pdf and "PDF" or "Free full text") },
+      link.url,
+      "",
+      pandoc.Attr("", { "pub-oa", is_pdf and "pub-oa-pdf" or "pub-oa-html" })
+    ))
+  end
 
-  local label = is_pdf and "PDF" or "Free full text"
-  local anchor = pandoc.Link(
-    { pandoc.Str(label) },
-    link.url,
-    "",
-    pandoc.Attr("", { "pub-oa", is_pdf and "pub-oa-pdf" or "pub-oa-html" })
-  )
+  for _, extra in ipairs(extras[key] or {}) do
+    if type(extra) == "table" and extra.url and extra.label then
+      n_extra = n_extra + 1
+      anchors:insert(pandoc.Link(
+        { pandoc.Str(extra.label) },
+        extra.url,
+        "",
+        pandoc.Attr("", { "pub-oa", "pub-oa-extra" })
+      ))
+    end
+  end
 
-  -- Append to the entry's last block so the badge sits inline at the end of
-  -- the reference rather than forming its own paragraph.
+  if #anchors == 0 then return div end
+
+  -- Append inline at the end of the reference, bracketed so it reads as an
+  -- addition to the citation rather than part of it.
+  local tail = pandoc.List({ pandoc.Space(), pandoc.Str("[") })
+  for i, a in ipairs(anchors) do
+    if i > 1 then
+      tail:insert(pandoc.Str(" ·"))
+      tail:insert(pandoc.Space())
+    end
+    tail:insert(a)
+  end
+  tail:insert(pandoc.Str("]"))
+
   local last = div.content[#div.content]
   if last and last.content then
-    last.content:insert(pandoc.Space())
-    last.content:insert(anchor)
+    for _, el in ipairs(tail) do last.content:insert(el) end
   else
-    div.content:insert(pandoc.Plain { anchor })
+    table.remove(tail, 1) -- leading Space is only needed when appending inline
+    div.content:insert(pandoc.Plain(tail))
   end
   return div
 end
@@ -117,8 +150,8 @@ function Div(div)
   -- has gone stale relative to the bibliography.
   io.stderr:write(string.format(
     "oa-links.lua: %d/%d entries linked (%d direct PDF, %d landing page); "
-      .. "%d journal names tagged\n",
-    n_linked, n_entries, n_pdf, n_linked - n_pdf, n_journal))
+      .. "%d journal names tagged; %d extra link(s)\n",
+    n_linked, n_entries, n_pdf, n_linked - n_pdf, n_journal, n_extra))
 
   return div
 end
