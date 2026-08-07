@@ -114,7 +114,7 @@ nocite: |
 
 \entry{Research and Data Science Consultant, Independent}{2018--present}
 
-- Clients have included Meru Health (digital mental health analyses), Harvard (HCPD neuroimaging), and academic teams seeking psychometric and causal inference expertise
+- Clients have included Meru Health (digital mental health analyses), Harvard (HCPD neuroimaging), and True Life Center psychiatry clinic, as well as other teams seeking data, psychometric, and causal inference expertise
 
 \entry{Principal Research Scientist, Developer Success Lab, Pluralsight}{2024--2025}
 
