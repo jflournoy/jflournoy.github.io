@@ -118,3 +118,39 @@ h2.pub-year {
   color: #1e4726;
   text-decoration-color: #1e4726;
 }
+/* Profile portrait, floated top-right of the intro text on the home page.
+   Quarto's .page-columns is a grid and floats do not affect sibling grid
+   items, so the portrait and the text it wraps share one grid cell:
+   .intro-wrap is a single grid item and establishes its own block context. */
+.intro-wrap {
+  display: flow-root;
+}
+.portrait-float {
+  float: right;
+  width: 200px;
+  margin: 0.2rem 0 0.75rem 1.75rem;
+}
+.portrait-float img {
+  display: block;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.portrait-float p {
+  margin-bottom: 0;
+}
+.portrait-float .portrait-credit {
+  text-align: center;
+  font-size: 0.62em;
+  line-height: 1.35;
+  margin-top: 0.5rem;
+}
+
+/* Stacked and centred once the column is too narrow to wrap text nicely. */
+@media (max-width: 767px) {
+  .portrait-float {
+    float: none;
+    margin: 0 auto 1.25rem;
+  }
+}

@@ -6,20 +6,27 @@ fontsize: 12pt
 format: html
 ---
 
-![](profile_portrait.jpg "Portrait by Sâmara Lígia"){fig-alt='An illustrated portrait of my face, smiling, by Sâmara Lígia' style="border-radius: 50%; width: 250px; height: 250px; object-fit: cover" fig-align='center' }
-
-:::{.text-muted style="text-align: center; font-size: 0.8em; margin-top: -0.75em"}
-Portrait by [Sâmara Lígia](https://samiligia.squarespace.com/)
-:::
 
 
 :::{.lead}
+
+:::::{.intro-wrap}
+
+::::{.portrait-float}
+![](profile_portrait.jpg "Portrait by Sâmara Lígia"){fig-alt='An illustrated portrait of my face, smiling, by Sâmara Lígia'}
+
+:::{.portrait-credit .text-muted}
+Portrait by [Sâmara Lígia](https://samiligia.squarespace.com/)
+:::
+::::
 
 I am a research scientist with a focus on statistical methodology, psychometrics, and research computing infrastructure. I have published on adolescent health and development, and more recently driven business strategy with insights about software developers and other technologists. My unique perspective and skillset comes from:
 
 - Deep methodological and empirical rigor (which has primarily meant statistical rigor to me), with particular strength in Bayesian modeling using Stan and <code class='bg-light'>brms</code> in R
 - A PhD in psychology and background as a (reformed fMRI) neuroscientist, specializing in adolescent development, stress, and well-being
 - A strong focus on both empirical and conceptual rigor, integrating quantitative methods with philosophical frameworks and qualitative discovery
+
+:::::
 
 My research approach stands out through:
 
