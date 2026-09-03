@@ -6,7 +6,11 @@ fontsize: 12pt
 format: html
 ---
 
-![](profile_portrait.jpg){fig-alt='An illustrated portrait of my face, smiling, by Samara Alves' style="border-radius: 50%; width: 250px; height: 250px; object-fit: cover" fig-align='center' }
+![](profile_portrait.jpg){fig-alt='An illustrated portrait of my face, smiling, by Sâmara Lígia' style="border-radius: 50%; width: 250px; height: 250px; object-fit: cover" fig-align='center' }
+
+:::{.text-muted style="text-align: center; font-size: 0.8em; margin-top: -0.75em"}
+Portrait by [Sâmara Lígia](https://samiligia.squarespace.com/)
+:::
 
 
 :::{.lead}
