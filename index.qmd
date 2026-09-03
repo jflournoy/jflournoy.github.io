@@ -20,18 +20,19 @@ Portrait by [Sâmara Lígia](https://samiligia.squarespace.com/)
 :::
 ::::
 
-I am a research scientist with a focus on statistical methodology, psychometrics, and research computing infrastructure. I have published on adolescent health and development, and more recently driven business strategy with insights about software developers and other technologists. My unique perspective and skillset comes from:
+I am a research scientist who builds and validates measures of psychological and health constructs, and models how they change over time. That work has spanned adolescent development and developmental neuroimaging, outcomes measurement at True Life Center (an outpatient psychiatry clinic), and the well-being of software developers and other technologists at work. My unique perspective and skillset comes from:
 
 - Deep methodological and empirical rigor (which has primarily meant statistical rigor to me), with particular strength in Bayesian modeling using Stan and <code class='bg-light'>brms</code> in R
-- A PhD in psychology and background as a (reformed fMRI) neuroscientist, specializing in adolescent development, stress, and well-being
+- A PhD in psychology and background as a neuroscientist, specializing in adolescent development, stress, and well-being
 - A strong focus on both empirical and conceptual rigor, integrating quantitative methods with philosophical frameworks and qualitative discovery
 
 :::::
 
 My research approach stands out through:
 
-- Advanced statistical modeling and uncertainty quantification across diverse data sources - from traditional surveys and experiments to incidental observational data like Jira tickets (in forthcoming work)
-- Extensive experience with longitudinal data at various cadences
+- Advanced statistical modeling and uncertainty quantification across diverse data sources - clinical assessment batteries and neuroimaging, traditional surveys and experiments, and incidental observational data like Jira tickets[Flournoy, J. C., Lee, C. S., Wu, M., & Hicks, C. M. (2025). No silver bullets: Why understanding software cycle time is messy, not magic. _Empirical Software Engineering, 30_(6), 174.]{.aside}
+- Scale development and item-level psychometrics - Bayesian item response models to build instruments, and to shorten existing batteries without losing the information practitioners actually use
+- Extensive experience with longitudinal data at various cadences, and with prediction that carries honest uncertainty rather than a single number
 - Deep commitment to construct validity and philosophical foundations, shaped profoundly by works like Alexandrova's "A Philosophy for the Science of Well-Being"[Alexandrova, A. (2017). _A philosophy for the science of well-being_. Oxford university press.]{.aside}.
 
 I strive to be effective through this intimate dialogue between our numeric approach, our theory, and our philosophy of the phenomena of interest.

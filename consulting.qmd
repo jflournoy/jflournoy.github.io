@@ -78,7 +78,7 @@ Packages start at **$500** for things like **analysis** or **research design rev
 
 ## Core expertise
 
-I earned my PhD in Psychology at the University of Oregon, completed post-doctoral work at Harvard where I was hired on as a Research Associate, and most recently led technologist-focused science as Principal Research Scientist at the Developer Success Lab. I'm available to bring that same rigor directly to your projects. 
+I earned my PhD in Psychology at the University of Oregon, completed post-doctoral work at Harvard where I was hired on as a Research Associate, and led technologist-focused science as Principal Research Scientist at the Developer Success Lab. I currently consult on outcomes measurement for True Life Center (an outpatient psychiatry clinic in La Jolla) and collaborate on developmental neuroimaging research. I'm available to bring that same rigor directly to your projects. 
 
 
 - **Statistical Methods & Modeling**
@@ -94,6 +94,7 @@ I earned my PhD in Psychology at the University of Oregon, completed post-doctor
 
 - **Surveys & Instrument Development**
   - Question wording, scale construction, psychometric evaluation
+  - Item response theory; shortening assessment batteries without losing information
   - Sampling strategies and weighting for representativeness
   - Missing-data handling, data cleaning
 
