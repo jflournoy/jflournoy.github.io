@@ -105,7 +105,14 @@ See [.claude/guides/workflow.md](.claude/guides/workflow.md) for full collaborat
 
 ## Rendering Quarto
 
-`.qmd` files render in the `jflournoy/verse-cmdstan` container, with `/home/rstudio` as home:
+Build the whole site with `./build-site.sh`. It runs the container invocation below, hands
+ownership of the output back from root, refuses single-file renders (they prune
+`_site/site_libs`), and checks that `_site/index.html` is actually the home page before
+reporting success. It does not commit — `_site/` is git-tracked and is what Pages deploys,
+so review the diff and commit to publish.
+
+Under the hood, `.qmd` files render in the `jflournoy/verse-cmdstan` container, with
+`/home/rstudio` as home:
 
 ```bash
 docker run --rm \
