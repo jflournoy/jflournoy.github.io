@@ -119,6 +119,12 @@
   "url": "http://www.cell.com/article/S0896627321002312/pdf",
   "version": "publishedVersion"
  },
+ "giulianiPresentationValidationDuckEES2017": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/6877251",
+  "version": "submittedVersion"
+ },
  "goodkindImpactExecutiveFunction2015": {
   "host": "repository",
   "kind": "landing",
@@ -189,6 +195,12 @@
   "host": "repository",
   "kind": "landing",
   "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/3326186",
+  "version": "submittedVersion"
+ },
+ "opdemacksNovelInsightsYellow2018": {
+  "host": "repository",
+  "kind": "landing",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/6777552",
   "version": "submittedVersion"
  },
  "rakeshAssociationsSocioeconomicStatus2025": {
