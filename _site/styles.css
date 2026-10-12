@@ -119,9 +119,10 @@ h2.pub-year {
   text-decoration-color: #1e4726;
 }
 /* Profile portrait, floated top-right of the intro text on the home page.
-   Quarto's .page-columns is a grid and floats do not affect sibling grid
-   items, so the portrait and the text it wraps share one grid cell:
-   .intro-wrap is a single grid item and establishes its own block context. */
+   .intro-wrap must not contain any margin content (footnotes, asides,
+   .column-margin). Quarto tags every div holding margin content with
+   .page-columns, and at >=992px `body .page-columns{display:grid}` outranks
+   the flow-root below: the portrait becomes a grid item and nothing wraps. */
 .intro-wrap {
   display: flow-root;
 }
@@ -153,4 +154,16 @@ h2.pub-year {
     float: none;
     margin: 0 auto 1.25rem;
   }
+}
+
+/* Margin footnotes: Quarto pads each by 0.5em top and bottom, which on the
+   home page stacked the notes well past the end of the text they annotate. */
+.column-margin.column-container > div[id^="fn"] {
+  line-height: 1.3;
+}
+.column-margin.column-container > div[id^="fn"]:not(:first-child) {
+  padding-top: 0.15em;
+}
+.column-margin.column-container > div[id^="fn"] {
+  padding-bottom: 0.15em;
 }
