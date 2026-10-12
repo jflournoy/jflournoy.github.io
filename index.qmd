@@ -22,15 +22,14 @@ Portrait by [Sâmara Lígia](https://samiligia.squarespace.com/)
 
 I'm a research scientist who has primarily worked on how psychological
 and health constructs get measured, how they change over time, and most of all how to model all that well. That work has spanned
-adolescent development and developmental neuroimaging,
-outcomes measurement at an outpatient
-psychiatry clinic, and, at the Developer Success Lab,
-what predicts how long software work takes. For me, the common thread is well-being: how young people develop and thrive, how people
-fare under stress, how patients respond in care, and how things get done at work. The unique skills I bring to that are:
+adolescent development and neuroimaging (at various academic labs),
+mental health measurement (at an outpatient
+psychiatry clinic), and how to think about what contributes to the pace of software work (at the Developer Success Lab). For me, the common thread is well-being: how young people develop and thrive, how patients respond in care, and how things get done at work. The unique skills I bring to that are:
 
 :::::
 
-- Bayesian modeling in Stan and <code class='bg-light'>brms</code> in R, and the ability to create durable, reproducible tools when they don't already exist (e.g., containers or packages)[^riclpmr]<sup>,</sup>[^auto-motion]
+- A broad, flexible understanding of methods (latent variable and structural equation models, multilevel and growth models, GAMs, missing data) that informs how I build a research strategy to ask the right question. These days, I often lean Bayesian, using Stan and <code class='bg-light'>brms</code> for the flexibility and the posterior[^flournoy2024-reliability]<sup>,</sup>[^no-silver-bullets]
+- The ability to create durable, reproducible tools when they don't already exist (e.g., containers or packages)[^verse-cmdstan]<sup>,</sup>[^riclpmr]<sup>,</sup>[^auto-motion]
 - A PhD in psychology from the University of Oregon and
 six years as a developmental neuroscientist at Harvard,
 working on adolescent development and stress, including
@@ -68,6 +67,8 @@ I strive to be effective through this intimate dialogue between our numeric appr
      references live on the Publications page. Kept reference-style because
      the container's pandoc 3.2 misreads two inline ^[...] notes on one line
      as superscript. -->
+
+[^verse-cmdstan]: Flournoy (2021). [*verse-cmdstan*](https://github.com/jflournoy/verse-cmdstan). Docker image.
 
 [^riclpmr]: Flournoy (2018). [*riclpmr*](https://github.com/jflournoy/riclpmr). R package.
 
