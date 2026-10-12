@@ -3,10 +3,10 @@ title: "John C. Flournoy, PhD"
 subtitle: "Social Scientist, Methods Geek---Currently open to [consulting](/consulting.html) and [full-time work](https://www.linkedin.com/in/johnflournoy/)"
 page-layout: article
 fontsize: 12pt
-format: html
+format:
+  html:
+    reference-location: margin
 ---
-
-
 
 :::{.lead}
 
@@ -28,28 +28,28 @@ psychiatry clinic, and, at the Developer Success Lab,
 what predicts how long software work takes. For me, the common thread is well-being: how young people develop and thrive, how people
 fare under stress, how patients respond in care, and how things get done at work. The unique skills I bring to that are:
 
-- Bayesian modeling in Stan and <code class='bg-light'>brms</code> in R, and the ability to create durable, reproducible tools when they don't already exist (e.g., containers or packages)[Flournoy, J. C. (2018). _riclpmr_ [R package]. [https://github.com/jflournoy/riclpmr](https://github.com/jflournoy/riclpmr)]{.aside}[Cosme, D., Flournoy, J. C., & Vijayakumar, N. (2018). _auto-motion_: Automated assessment of motion artifacts in fMRI data [Software]. [https://github.com/dsnlab/auto-motion](https://github.com/dsnlab/auto-motion)]{.aside}
+:::::
+
+- Bayesian modeling in Stan and <code class='bg-light'>brms</code> in R, and the ability to create durable, reproducible tools when they don't already exist (e.g., containers or packages)[^riclpmr]<sup>,</sup>[^auto-motion]
 - A PhD in psychology from the University of Oregon and
 six years as a developmental neuroscientist at Harvard,
 working on adolescent development and stress, including
 building the task-fMRI pipeline for the reward and
 cognitive control tasks in the Human Connectome Project
-in Development[Flournoy, J. C. (2024). *hcpd_tfMRI*: fMRI analyses for the CARIT and Guessing tasks in the HCP-D data [Software]. [https://github.com/andlab-harvard/hcpd_tfMRI](https://github.com/andlab-harvard/hcpd_tfMRI)]{.aside}
-- A critical thoughtfulness that leads me to ask things like what a number actually measures, and what causal story our analysis can actually tell[Flournoy, J. C. (2024). Causal inference in developer thriving science. _Developer Success Lab, 1_(1). [https://dsl.pubpub.org/pub/causal-inf-rohrer](https://dsl.pubpub.org/pub/causal-inf-rohrer)]{.aside}
-
-:::::
+in Development[^hcpd-tfmri]
+- A critical thoughtfulness that leads me to ask things like what a number actually measures, and what causal story our analysis can actually tell[^dsl-causal]
 
 In practice, that has meant:
 
 - Statistical modeling across very different kinds of
 data (clinical assessment batteries and neuroimaging,
 surveys and experiments, and incidental records like Jira
-tickets[Flournoy, J. C., Lee, C. S., Wu, M., & Hicks, C. M. (2025). No silver bullets: Why understanding software cycle time is messy, not magic. _Empirical Software Engineering, 30_(6), 174.]{.aside}), with appropriate uncertainty carried through from the measurement to the
+tickets[^no-silver-bullets]), with appropriate uncertainty carried through from the measurement to the
 conclusions
-- Measurement work across several projects: Bayesian item response models fit to a clinic's outcome batteries (and shorter forms built from them), tests of whether a scale means the same thing across age groups[Thalmayer, A. G., Saucier, G., Srivastava, S., Flournoy, J. C., & Costello, C. K. (2019). Ethics-relevant values in adulthood: Longitudinal findings from the Life and Time Study. _Journal of Personality, 87_(6), 1119–1135.]{.aside} and income levels[Ludwig, R. M., Flournoy, J. C., & Berkman, E. T. (2019). Inequality in personality and temporal discounting across socioeconomic status? Assessing the evidence. _Journal of Research in Personality, 81_, 79–87.]{.aside} (and an R package for setting the cutoffs those tests use[Flournoy, J. C. (2018). _milav_ [R package]. [https://github.com/jflournoy/milav](https://github.com/jflournoy/milav)]{.aside}), and the test-retest reliability of task-fMRI in adolescents scanned up to ten times, a month apart[Flournoy, J. C., Bryce, N. V., Dennison, M. J., Rodman, A. M., McNeilly, E. A., Lurie, L. A., Bitran, D., Reid-Russell, A., Vidal Bustamante, C. M., Madhyastha, T., & McLaughlin, K. A. (2024). A precision neuroscience approach to estimating reliability of neural responses during emotion processing: Implications for task-fMRI. _NeuroImage, 285_, 120503.]{.aside}
-- Longitudinal data at very different cadences (several surveys a day, monthly scans, multi-year panels), modeled so that change within a person isn't confused with stable differences between people[Matta, T. H., Flournoy, J. C., & Byrne, M. L. (2018). Making an unknown unknown a known unknown: Missing data in longitudinal neuroimaging studies. _Developmental Cognitive Neuroscience, 33_, 83–98.]{.aside}[Flournoy, J. C. (2024). *star_digital-phenotyping*: Digital phenotyping pipeline for the STAR study [Software]. [https://github.com/stressdev/star_digital-phenotyping](https://github.com/stressdev/star_digital-phenotyping)]{.aside}[Vidal Bustamante, C. M., Rodman, A. M., Dennison, M. J., Flournoy, J. C., Mair, P., & McLaughlin, K. A. (2020). Within-person fluctuations in stressful life events, sleep, and anxiety and depression symptoms during adolescence: A multiwave prospective study. _Journal of Child Psychology and Psychiatry, 61_(10), 1116–1125.]{.aside}
+- Measurement work across several projects: Bayesian item response models fit to a clinic's outcome batteries (and shorter forms built from them), tests of whether a scale means the same thing across age groups[^thalmayer2019] and income levels[^ludwig2019] (and an R package for setting the cutoffs those tests use[^milav]), and the test-retest reliability of task-fMRI in adolescents scanned up to ten times, a month apart[^flournoy2024-reliability]
+- Longitudinal data at very different cadences (several surveys a day, monthly scans, multi-year panels[^thalmayer2019-collabra]), modeled so that change within a person isn't confused with stable differences between people[^matta2018]<sup>,</sup>[^star-digital-phenotyping]
 - Construct validity as a starting point in the work rather than a box to be checked, a view shaped a lot by Alexandrova's "A
-Philosophy for the Science of Well-Being"[Alexandrova, A. (2017). _A philosophy for the science of well-being_. Oxford university press.]{.aside}
+Philosophy for the Science of Well-Being"[^alexandrova2017]
 
 I strive to be effective through this intimate dialogue between our numeric approach, our theory, and our philosophy of the phenomena of interest.
 
@@ -62,3 +62,35 @@ I strive to be effective through this intimate dialogue between our numeric appr
 <a href="trophy.html" style='text-decoration:none; color: #ccccff;'>.</a>
 
 :::
+
+<!-- Margin notes. reference-location: margin puts each beside the
+     block that cites it. Short author-year cites with the title linked; full
+     references live on the Publications page. Kept reference-style because
+     the container's pandoc 3.2 misreads two inline ^[...] notes on one line
+     as superscript. -->
+
+[^riclpmr]: Flournoy (2018). [*riclpmr*](https://github.com/jflournoy/riclpmr). R package.
+
+[^auto-motion]: Cosme et al. (2018). [*auto-motion*](https://doi.org/10.5281/zenodo.1240527). Software.
+
+[^hcpd-tfmri]: Flournoy (2024). [*hcpd_tfMRI*](https://github.com/andlab-harvard/hcpd_tfMRI). Software.
+
+[^dsl-causal]: Flournoy (2024). [Causal inference in developer thriving science](https://dsl.pubpub.org/pub/causal-inf-rohrer). *Developer Success Lab*.
+
+[^no-silver-bullets]: Flournoy et al. (2025). [No silver bullets](https://johnflournoy.science/no-silver-bullets/). *Empirical Software Engineering*.
+
+[^thalmayer2019]: Thalmayer et al. (2019). [Ethics-relevant values in adulthood](https://doi.org/10.1111/jopy.12462). *Journal of Personality*.
+
+[^ludwig2019]: Ludwig et al. (2019). [Inequality in personality and temporal discounting…](https://doi.org/10.1016/j.jrp.2019.05.003) *Journal of Research in Personality*.
+
+[^milav]: Flournoy (2018). [*milav*](https://github.com/jflournoy/milav). R package, with [simulations of the cutoffs](https://johnflournoy.science/milav/articles/simulate-mi-tests.html).
+
+[^flournoy2024-reliability]: Flournoy et al. (2024). [A precision neuroscience approach to estimating reliability…](https://doi.org/10.1016/j.neuroimage.2023.120503). *NeuroImage*.
+
+[^thalmayer2019-collabra]: Thalmayer et al. (2019). [Ethics-relevant values as antecedents of personality change](https://doi.org/10.1525/collabra.244). *Collabra: Psychology*.
+
+[^matta2018]: Matta et al. (2018). [Making an unknown unknown a known unknown](https://doi.org/10.1016/j.dcn.2017.10.001). *Developmental Cognitive Neuroscience*.
+
+[^star-digital-phenotyping]: Flournoy (2024). [*star_digital-phenotyping*](https://github.com/stressdev/star_digital-phenotyping). Software.
+
+[^alexandrova2017]: Alexandrova (2017). [*A philosophy for the science of well-being*](https://doi.org/10.1093/oso/9780199300518.001.0001). Oxford University Press.
