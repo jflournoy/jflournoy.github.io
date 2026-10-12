@@ -36,7 +36,7 @@ working on adolescent development and stress, including
 building the task-fMRI pipeline for the reward and
 cognitive control tasks in the Human Connectome Project
 in Development[^hcpd-tfmri]<sup>,</sup>[^star-digital-phenotyping]
-- A critical thoughtfulness that leads me to ask things like what a number actually measures, and what causal story our analysis can actually tell[^dsl-causal]
+- A critical thoughtfulness that leads me to ask things like what a measurement actually means, and what causal story our analysis can actually tell[^dsl-causal]
 
 In practice, that has meant:
 
@@ -47,8 +47,7 @@ tickets[^no-silver-bullets]), with appropriate uncertainty carried through from 
 conclusions
 - Measurement work across several projects: Bayesian item response models fit to a clinic's outcome batteries (and shorter forms built from them), tests of whether a scale means the same thing across age groups[^thalmayer2019] and income levels[^ludwig2019] (and an R package for setting the cutoffs those tests use[^milav]), and the test-retest reliability of task-fMRI in adolescents scanned up to ten times, a month apart[^flournoy2024-reliability]
 - Longitudinal data at very different cadences (several surveys a day, monthly scans, multi-year panels[^thalmayer2019-collabra]), modeled so that change within a person isn't confused with stable differences between people[^lagged-mlm]<sup>,</sup>[^matta2018]
-- Construct validity as a starting point in the work rather than a box to be checked, a view shaped a lot by Alexandrova's "A
-Philosophy for the Science of Well-Being"[^alexandrova2017]
+- Interrogating construct validity from the start rather than assuming it, an approach shaped a lot by Alexandrova's "A Philosophy for the Science of Well-Being"[^alexandrova2017]
 
 I strive to be effective through this intimate dialogue between our numeric approach, our theory, and our philosophy of the phenomena of interest.
 
