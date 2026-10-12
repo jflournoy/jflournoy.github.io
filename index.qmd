@@ -47,7 +47,7 @@ surveys and experiments, and incidental records like Jira
 tickets[^no-silver-bullets]), with appropriate uncertainty carried through from the measurement to the
 conclusions
 - Measurement work across several projects: Bayesian item response models fit to a clinic's outcome batteries (and shorter forms built from them), tests of whether a scale means the same thing across age groups[^thalmayer2019] and income levels[^ludwig2019] (and an R package for setting the cutoffs those tests use[^milav]), and the test-retest reliability of task-fMRI in adolescents scanned up to ten times, a month apart[^flournoy2024-reliability]
-- Longitudinal data at very different cadences (several surveys a day, monthly scans, multi-year panels[^thalmayer2019-collabra]), modeled so that change within a person isn't confused with stable differences between people[^matta2018]<sup>,</sup>[^star-digital-phenotyping]
+- Longitudinal data at very different cadences (several surveys a day, monthly scans, multi-year panels[^thalmayer2019-collabra]), modeled so that change within a person isn't confused with stable differences between people[^lagged-mlm]<sup>,</sup>[^matta2018]<sup>,</sup>[^star-digital-phenotyping]
 - Construct validity as a starting point in the work rather than a box to be checked, a view shaped a lot by Alexandrova's "A
 Philosophy for the Science of Well-Being"[^alexandrova2017]
 
@@ -88,6 +88,8 @@ I strive to be effective through this intimate dialogue between our numeric appr
 [^flournoy2024-reliability]: Flournoy et al. (2024). [A precision neuroscience approach to estimating reliability…](https://doi.org/10.1016/j.neuroimage.2023.120503). *NeuroImage*.
 
 [^thalmayer2019-collabra]: Thalmayer et al. (2019). [Ethics-relevant values as antecedents of personality change](https://doi.org/10.1525/collabra.244). *Collabra: Psychology*.
+
+[^lagged-mlm]: Flournoy (2018). [*lagged_mlm*](https://johnflournoy.science/lagged_mlm/ar_stuff.html). Simulation study.
 
 [^matta2018]: Matta et al. (2018). [Making an unknown unknown a known unknown](https://doi.org/10.1016/j.dcn.2017.10.001). *Developmental Cognitive Neuroscience*.
 
