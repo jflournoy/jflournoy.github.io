@@ -8,25 +8,9 @@
    "url": "https://www.humanconnectome.org/study/hcp-lifespan-development"
   },
   {
-   "id": "TAG",
-   "label": "TAG",
-   "name": "the Transitions in Adolescent Girls study"
-  },
-  {
-   "id": "SFIC",
-   "label": "SFIC",
-   "name": "SFIC, a three-wave longitudinal study at UCLA"
-  },
-  {
    "id": "SEA",
    "label": "SEA",
    "name": "SEA, a year-long, 12-wave study of 30 adolescents"
-  },
-  {
-   "id": "ABCD",
-   "label": "ABCD",
-   "name": "the Adolescent Brain Cognitive Development Study",
-   "url": "https://abcdstudy.org"
   },
   {
    "id": "GenR",
@@ -35,9 +19,25 @@
    "url": "https://generationr.nl"
   },
   {
+   "id": "ABCD",
+   "label": "ABCD",
+   "name": "the Adolescent Brain Cognitive Development Study",
+   "url": "https://abcdstudy.org"
+  },
+  {
+   "id": "TAG",
+   "label": "TAG",
+   "name": "the Transitions in Adolescent Girls study"
+  },
+  {
    "id": "LifeTime",
    "label": "Life & Time",
    "name": "the Life and Time Study"
+  },
+  {
+   "id": "SFIC",
+   "label": "SFIC",
+   "name": "SFIC, a three-wave longitudinal study at UCLA"
   }
  ],
  "papers": {
@@ -69,7 +69,7 @@
 
   "nelsonConcurrentProspectiveAssociations2022": ["ABCD"],
   "rakeshAssociationsSocioeconomicStatus2025": ["ABCD"],
-  "xuLimitedGeneralizabilityMultivariate2024": ["ABCD", "GenR"],
+  "xuLimitedGeneralizabilityMultivariate2024": ["GenR", "ABCD"],
 
   "lopez-vicenteDevelopmentalChangesDynamic2021": ["GenR"],
 
