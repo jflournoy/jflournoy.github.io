@@ -118,6 +118,64 @@ h2.pub-year {
   color: #1e4726;
   text-decoration-color: #1e4726;
 }
+
+/* Project tags under each entry and the filter bar above the list, both
+   emitted by project-tags.lua and driven by project-filter.html. */
+/* The bibliography's hanging indent is a negative text-indent, which the tag
+   row and the chips would otherwise inherit: the row lands in the margin and
+   each label slides out of its own border. */
+.csl-entry .pub-projects {
+  margin-top: 0.15em;
+  text-indent: 0;
+}
+.csl-entry a.pub-project,
+.pub-project-btn {
+  display: inline-block;
+  text-indent: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  padding: 0 0.5em;
+  border: 1px solid #d9d0e6;
+  border-radius: 999px;
+  background: #f6f2fa;
+  color: #5a2d82;
+  text-decoration: none;
+}
+.csl-entry a.pub-project:hover,
+.csl-entry a.pub-project:focus,
+.pub-project-btn:hover,
+.pub-project-btn:focus {
+  border-color: #5a2d82;
+}
+.pub-project-filter {
+  margin: 1.25rem 0 0.5rem;
+  scroll-margin-top: 4.5rem;
+}
+.pub-project-filter-label {
+  font-size: 0.85rem;
+  margin-right: 0.4em;
+  color: #4a3a5c;
+}
+.pub-project-btn {
+  margin: 0 0.25em 0.35em 0;
+  cursor: pointer;
+}
+.pub-project-btn[aria-pressed="true"] {
+  background: #5a2d82;
+  border-color: #5a2d82;
+  color: #fff;
+}
+.pub-project-count {
+  opacity: 0.7;
+}
+.pub-project-status {
+  font-size: 0.85rem;
+  color: #4a3a5c;
+  margin: 0.2rem 0 0;
+  min-height: 1.3em;
+}
 /* Profile portrait, floated top-right of the intro text on the home page.
    .intro-wrap must not contain any margin content (footnotes, asides,
    .column-margin). Quarto tags every div holding margin content with
