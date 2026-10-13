@@ -13,6 +13,11 @@
    "name": "the Transitions in Adolescent Girls study"
   },
   {
+   "id": "SEA",
+   "label": "SEA",
+   "name": "SEA, a year-long, 12-wave study of 30 adolescents"
+  },
+  {
    "id": "ABCD",
    "label": "ABCD",
    "name": "the Adolescent Brain Cognitive Development Study",
@@ -48,6 +53,11 @@
   "guazzelliwilliamsonLongitudinalNeuroimagingStudy2025": ["TAG"],
   "vijayakumarGettingKnowMe2020": ["TAG"],
   "vijayakumarPubertalHormonesBrain2019": ["TAG"],
+
+  "rodmanYearSocialLife2021": ["SEA"],
+  "nookHighEmotionDifferentiation2021": ["SEA"],
+  "vidalbustamanteWithinpersonFluctuationsStressful2020": ["SEA"],
+  "flournoyPrecisionNeuroscienceApproach2024": ["SEA"],
 
   "nelsonConcurrentProspectiveAssociations2022": ["ABCD"],
   "rakeshAssociationsSocioeconomicStatus2025": ["ABCD"],
