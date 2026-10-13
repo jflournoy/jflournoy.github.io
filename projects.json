@@ -13,6 +13,11 @@
    "name": "the Transitions in Adolescent Girls study"
   },
   {
+   "id": "SFIC",
+   "label": "SFIC",
+   "name": "SFIC, a three-wave longitudinal study at UCLA"
+  },
+  {
    "id": "SEA",
    "label": "SEA",
    "name": "SEA, a year-long, 12-wave study of 30 adolescents"
@@ -49,10 +54,13 @@
   "byrneAssociationsMultimethodLatent2023": ["TAG"],
   "byrneMultimethodConfirmatoryFactor2019": ["TAG"],
   "byrnePubertalHormonesMeasurement2022": ["TAG"],
-  "cosmeTestingAdolescentSocial2022": ["TAG"],
   "guazzelliwilliamsonLongitudinalNeuroimagingStudy2025": ["TAG"],
   "vijayakumarGettingKnowMe2020": ["TAG"],
   "vijayakumarPubertalHormonesBrain2019": ["TAG"],
+
+  "flournoyNeuralReactivityEmotional2016": ["SFIC"],
+  "vijayakumarAffectiveReactivityAdolescence2019": ["SFIC"],
+  "cosmeTestingAdolescentSocial2022": ["SFIC"],
 
   "rodmanYearSocialLife2021": ["SEA"],
   "nookHighEmotionDifferentiation2021": ["SEA"],
