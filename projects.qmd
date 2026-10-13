@@ -30,9 +30,9 @@ Bayesian time series analysis of PhD unemployment rates relative to general unem
 
 ### {{< fa solid heart-pulse >}} Garmin Health Data Analysis [{{< fa solid dumbbell size=sm >}}](https://johnflournoy.science/garmin-analysis/) [{{< fa brands github size=sm >}}](https://github.com/jflournoy/garmin-analysis)
 
-Bayesian analysis of personal wearable health data from Garmin, modeling trends and cross-metric relationships in weight, sleep, activity, and heart rate.
+Bayesian analysis of personal Garmin data, modeling how weight responds to strength and aerobic training.
 
-**Why and what:** Thanks to inspiration from several friends who lift (many of them women in academia, and my 80+ year old father), I've been working out. After developing the state-space model for the unemployment data, I wanted to see if I could model my personal data using similar methods, so I built a progression of Bayesian models---Gaussian processes, cross-lagged models, and state-space models---for noisy health time series (weight, sleep, activity, heart rate). As a developmental psychologist, what stood out to me about these data is how much I had to think about the time-lags at which processes unfold. I was reminded that this is an underappreciated point for many observational designs in psychology and beyond.
+**Why and what:** Thanks to inspiration from several friends who lift (many of them women in academia, and my 80+ year old father), I've been working out. After developing the state-space model for the unemployment data, I wanted to see if I could model my personal data using similar methods, so I built a progression of Bayesian models---Gaussian processes, cross-lagged models, and state-space models---for noisy health time series (weight, activity, heart rate). As a developmental psychologist, what stood out to me about these data is how much I had to think about the time-lags at which processes unfold. I was reminded that this is an underappreciated point for many observational designs in psychology and beyond.
 
 ## Research Publications & Infrastructure
 
