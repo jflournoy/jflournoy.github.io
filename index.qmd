@@ -1,6 +1,6 @@
 ---
 title: "John C. Flournoy, PhD"
-subtitle: "Social Scientist, Methods Geek---Currently open to [consulting](/consulting.html) and [full-time work](https://www.linkedin.com/in/johnflournoy/)"
+subtitle: "Computational Research Scientist, Methods Geek, Stats Maven---Currently open to [consulting](/consulting.html) and [full-time work](https://www.linkedin.com/in/johnflournoy/)"
 page-layout: article
 fontsize: 12pt
 format:
