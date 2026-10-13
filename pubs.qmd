@@ -8,6 +8,9 @@ format:
     # headings that group-years.lua injects can never appear in it. Leaving
     # the TOC on would render an empty sidebar.
     toc: false
+    # Shows and hides entries by project; the bar and tags come from
+    # project-tags.lua.
+    include-after-body: project-filter.html
 nocite: |
   @*
 # Run citeproc ourselves (via citeproc.lua) so the two filters below operate on
@@ -19,12 +22,16 @@ filters:
   - bold-it.lua
   # Before group-years.lua so it sees citeproc's own output shape.
   - oa-links.lua
+  # After oa-links.lua so the tags sit below the [PDF] link; before
+  # group-years.lua so it walks the flat list and emits one filter bar.
+  - project-tags.lua
   - group-years.lua
 ---
 
 Peer-reviewed articles, preprints, and my dissertation, newest first. My name
 is **bolded** throughout. Where a free copy exists, it is linked at the end of
-the reference.
+the reference. The tags under a paper name the larger study it came out of;
+click one to see only that study's papers.
 
 [{{< fa solid graduation-cap >}} Google Scholar](https://scholar.google.com/citations?user=ZzQlngkAAAAJ&hl=en) ·
 [{{< fa solid file-lines >}} CV (PDF)](jcflournoy-cv.pdf) ·

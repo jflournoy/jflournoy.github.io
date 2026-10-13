@@ -1,0 +1,75 @@
+<script>
+// Project filter for the publications page. The bar and the per-entry tags
+// are emitted by project-tags.lua; this only shows and hides them.
+// State lives in the URL hash (#project-TAG) so a filtered view can be linked.
+(function () {
+  var bar = document.getElementById("pub-project-filter");
+  if (!bar) {
+    console.error("project-filter: #pub-project-filter not found; project-tags.lua did not run");
+    return;
+  }
+  bar.hidden = false;
+
+  var buttons = Array.prototype.slice.call(bar.querySelectorAll(".pub-project-btn"));
+  var status = bar.querySelector(".pub-project-status");
+  var entries = Array.prototype.slice.call(document.querySelectorAll("#refs .csl-entry"));
+  var years = Array.prototype.slice.call(document.querySelectorAll("#refs section.pub-year"));
+  var known = {};
+  buttons.forEach(function (b) { if (b.dataset.project) known[b.dataset.project] = b; });
+
+  function apply(id) {
+    var shown = 0;
+    entries.forEach(function (e) {
+      var tags = (e.dataset.projects || "").split(" ");
+      e.hidden = Boolean(id) && tags.indexOf(id) === -1;
+      if (!e.hidden) shown++;
+    });
+    years.forEach(function (s) {
+      s.hidden = !s.querySelector(".csl-entry:not([hidden])");
+    });
+    buttons.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.project === (id || "")));
+    });
+
+    status.textContent = "";
+    if (!id) return;
+    var b = known[id];
+    status.append(shown + (shown === 1 ? " paper" : " papers") + " from " + b.dataset.name);
+    if (b.dataset.url) {
+      var a = document.createElement("a");
+      a.href = b.dataset.url;
+      a.textContent = "study site";
+      a.rel = "noopener";
+      status.append(" (", a, ")");
+    }
+  }
+
+  function fromHash() {
+    var m = location.hash.match(/^#project-(.+)$/);
+    var id = m ? decodeURIComponent(m[1]) : "";
+    if (id && !known[id]) {
+      console.warn("project-filter: unknown project '" + id + "' in URL; showing all");
+      id = "";
+    }
+    apply(id);
+    return id;
+  }
+
+  bar.addEventListener("click", function (ev) {
+    var b = ev.target.closest(".pub-project-btn");
+    if (!b) return;
+    if (b.dataset.project) {
+      location.hash = "project-" + b.dataset.project;
+    } else {
+      history.pushState(null, "", location.pathname + location.search);
+      apply("");
+    }
+  });
+
+  window.addEventListener("hashchange", function () {
+    if (fromHash()) bar.scrollIntoView({ block: "start" });
+  });
+  window.addEventListener("popstate", fromHash);
+  fromHash();
+})();
+</script>
