@@ -11,3 +11,10 @@ fonts/.uuid
 
 # generated from Flournoy.bib by make-public-bib.sh on every render
 flournoy-publications.bib
+
+# private contribution ledger and bio drafts (quotes confidential consulting details)
+contributions/
+
+# local code-search index and CLAUDE.md backups
+.vexp/
+CLAUDE.md.*backup*
