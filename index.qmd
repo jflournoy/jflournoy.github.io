@@ -89,7 +89,7 @@ I strive to be effective through this intimate dialogue between our numeric appr
 
 [^thalmayer2019-collabra]: Thalmayer et al. (2019). [Ethics-relevant values as antecedents of personality change](https://doi.org/10.1525/collabra.244). *Collabra: Psychology*.
 
-[^lagged-mlm]: Flournoy (2018, updated 2026). [*False positives in lagged multilevel models*](https://johnflournoy.science/lagged_mlm/). Simulation study.
+[^lagged-mlm]: Flournoy (2018, updated 2026). [*False positives in multilevel models for longitudinal data*](https://johnflournoy.science/lagged_mlm/). Simulation study.
 
 [^matta2018]: Matta et al. (2018). [Making an unknown unknown a known unknown](https://doi.org/10.1016/j.dcn.2017.10.001). *Developmental Cognitive Neuroscience*.
 
