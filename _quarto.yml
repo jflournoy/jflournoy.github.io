@@ -14,6 +14,7 @@ project:
     # would otherwise be published (and indexed in the site search).
     - "!CLAUDE.md"
     - "!tracking-implementation-plan.md"
+    - "!showcase-backlog.md"
     - "!README.md"
   resources:
     # BibTeX download for the publications page. This is the stripped copy
